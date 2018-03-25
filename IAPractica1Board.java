@@ -1,6 +1,6 @@
 package iapractica1;
 
-import IA.Desastres.Grupo;
+import IA.Desastres.*;
 import java.util.ArrayList;
 
 /**
@@ -15,21 +15,44 @@ public class IAPractica1Board {
         array for each helicopter which groups rescue
      */
     
+    private ArrayList<Centro> centros;
     private ArrayList<Grupo> grupos;
     private ArrayList<ArrayList<Trayecto>> rescates;
     
     /* Constructor */
-    public IAPractica1Board(int nHelicopteros, ArrayList<Grupo> gs) {
+    public IAPractica1Board(int nHelicopteros, ArrayList<Grupo> gs,  ArrayList<Centro> cs) {
         rescates = new ArrayList<>(nHelicopteros);       
+        centros = cs;
         grupos = gs;
         
+        int centro = 0, helis = 0;
         // Estado inicial
         for (int i = 0; i < grupos.size(); i++) {
-            rescates.get(i%nHelicopteros).add(grupos.get(i)); // Solución 1: Heli 1 recoge grupo 1 y vuelve
-                                                // Heli 2 recoge grupo 2 y vuelve, etc.
+            // Si Centro 1 tiene 4 helicopteros, son los [0,1,2,3,4]
+            //   Si Centro 2 tiene 3 helicopteros, son los [5,6,7] ....
+            
+            int heli = i%nHelicopteros;
+            int hCentro = centros.get(centro).getNHelicopteros();
+            
+            if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
+                centro++;
+                helis += hCentro;
+                if (centro > centros.size()) {
+                    centro = 0;
+                    helis = 0;
+                }
+            }
+            
+            Trayecto t = new Trayecto(centros.get(centro));
+            t.añadeGrupo(grupos.get(i));
+            rescates.get(i%nHelicopteros).add(t);
+            
+            // Solución 1: Heli 1 recoge grupo 1 y vuelve
+            //             Heli 2 recoge grupo 2 y vuelve, etc.
         }
         
-        
+        /*Grupo añadir = grupos.get(i);
+            if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
 
     }
 
@@ -45,16 +68,14 @@ public class IAPractica1Board {
         else if (board[i+1] == 0) board[i+1] = 1;
     }
     
-    public void swap(Grupo g1, int heli1, Grupo g2, int heli2){
-        // borramos el ultimo 
-        rescates.get(heli1).remove(rescates.get(heli1).size()-1);
+    public void swap(Grupo g1, int heli1, int trayecto1, Grupo g2, int heli2, int trayecto2){
+        // Eliminamos el grupo de los trayectos 
+        rescates.get(heli1).get(trayecto1).eliminaGrupo(g1);
+        rescates.get(heli2).get(trayecto2).eliminaGrupo(g2);
         
-        // borramos el ultimo
-        rescates.get(heli2).remove(rescates.get(heli2).size()-1);
-        
-        // reasignamos
-        rescates.get(heli1).add(g2);
-        rescates.get(heli2).add(g1);
+        // Añadimos los grupos de nuevo
+        rescates.get(heli1).get(trayecto1).añadeGrupo(g2);
+        rescates.get(heli2).get(trayecto2).añadeGrupo(g1);
     }
 
     /* Heuristic function */
