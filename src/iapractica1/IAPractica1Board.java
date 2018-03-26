@@ -2,6 +2,7 @@ package iapractica1;
 
 import IA.Desastres.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by bejar on 17/01/17.
@@ -18,25 +19,31 @@ public class IAPractica1Board {
     private ArrayList<Centro> centros;
     private ArrayList<Grupo> grupos;
     private ArrayList<ArrayList<Trayecto>> rescates;
-    // Si Centro 1 tiene 4 helicopteros, son los [0,1,2,3,4]
-    //  Si Centro 2 tiene 3 helicopteros, son los [5,6,7] ....
     
     /* Constructoras */
+
     public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
         rescates = new ArrayList<>(nHelicopteros);
         centros = cs;
         grupos = gs;
-        
+
         // Estado inicial
+
         /*  INITIAL STATE:
+
     
+
         1 ->    Heli 1 recoge grupo 1 y vuelve
+
                 Heli 2 recoge grupo 2 y vuelve, etc.
+
         
+
         2->
+
         
+
         */
-        
         switch (initialState) {
             case 1:
                 int centro = 0, helis = 0;
@@ -56,27 +63,43 @@ public class IAPractica1Board {
                     Trayecto t = new Trayecto(centros.get(centro));
                     t.añadeGrupo(grupos.get(i));
                     rescates.get(i%nHelicopteros).add(t);
+
                 }
+
                 
+
                 break;
+
                 
+
             case 2:
+
                 
+
                 break;
+
                 
+
             case 3:
+
                 
+
                 break;
+
         }
+
         
+
         
+
         /*Grupo añadir = grupos.get(i);
+
             if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
 
+
+
     }
-    
-    
-    
+
     public IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
         rescates = h;
         centros = cs;
@@ -85,7 +108,7 @@ public class IAPractica1Board {
 
     /* Operadores */
     public void flip_it(int i){
-        //move
+        // flip the coins i and i + 1
         if (i >= board.length || i+1 >= board.length) return;
         
         if (board[i] == 1) board[i] = 0;
@@ -105,25 +128,120 @@ public class IAPractica1Board {
         rescates.get(heli2).get(trayecto2).añadeGrupo(g1);
     }
 
-    /* Heuristic function */
+    /*********************************************************************************************************/
+    /** Función heurística
+     * @return Tiempo total de la solución según el heurístico 1 o 2
+     */
     public double heuristic(){
         // compute the number of coins out of place respect to solution
-        int cost = 0;
-        for (int i = 0; i < board.length; ++i){
-            if (board[i] != solution[i]) ++cost;
+        byte experiment = 1; // experimento 1 o 2
+        int inf = Integer.MAX_VALUE;
+        if (!todosLosGruposRescatados()) return inf; //solución mala, no se recogen todos los grupos
+        
+        if (experiment == 1){ 
+            return calculaTiempoTotal();
         }
-        return cost;
+        else{
+            float k = 0.7f;
+            float j = 1f - k;
+            
+            int tiempoTotal = calculaTiempoTotal();
+            int tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
+            
+            return k * tiempoTotal + j * (tiempoTotal-tiempoGruposPrio1);
+        }
     }
-
+    /**
+     * Función que calcula el tiempo total de rescatar a todos los grupos
+     * @return Tiempo total en rescatar a todos los grupos
+     */
+    private int calculaTiempoTotal(){
+        int tiempo = 0;
+        for (int i = 0; i < rescates.size(); ++i){ // cada helicoptero tendra t trayectos
+            ArrayList<Trayecto> trayectos = rescates.get(i);
+            for (int t = 0; t < trayectos.size(); ++t){ // por cada trayecto del helicoptero
+                tiempo += trayectos.get(t).getTiempo();
+            }
+            tiempo += 10 * (trayectos.size()-1); // +10 min por cada trayecto (el utlimo no cuenta)
+        }
+        return tiempo;
+    }
+    
+    /**
+     * Función que calcula el tiempo DESDE el final HASTA el primer grupo de prioridad 1
+     * @return tiempo desde el final hasta el primer grupo de prioridad 1
+     */
+    private int calculaTiempoHastaGrupoPrio1(){
+        int tiempoHastaElPrimero = 0;
+        int n = getUltimoTrayecto();
+        for (int t = n; t > 0; --t){
+            for (int i = 0; i < rescates.size(); ++i){ // Miramos por todos los helicopteros
+                if (rescates.get(i).size() == n){ 
+                    // Hemos encontrado el helicopteros con más trayectos
+                    Trayecto tray = rescates.get(i).get(n-1); //el último
+                    // Miramos si tiene algun grupo de prioridad 1, si no seguimos buscando
+                    for (int grupo = 1; grupo <= tray.getNGrupos(); ++grupo){
+                        if (tray.getGrupo(i).getPrioridad() == 1) return tiempoHastaElPrimero;
+                    }
+                    tiempoHastaElPrimero += tray.getTiempo();
+                }
+            }
+        }
+        return tiempoHastaElPrimero;
+    }
+    /** 
+     * Función que devuelve el máximo de trayectos de un helicóptero
+     * @return max: tamaño del helicoptero con más trayectos
+     */
+    private int getUltimoTrayecto(){
+        int max = 0;
+        for (int i = 0; i < rescates.size(); ++i){
+            if (rescates.get(i).size() > max)
+                max = rescates.get(i).size();
+        }
+        return max;
+    }
+    
+    /**
+     * Función que mira si todos los grupos han estado rescatados 
+     * @return True si todos los grupos han sido rescatados, False en caso contrario
+     */
+    private Boolean todosLosGruposRescatados(){
+        ArrayList<Boolean> visitats = new ArrayList<>(centros.size());
+        Collections.fill(visitats, Boolean.FALSE);
+        
+        for (int i = 0; i < rescates.size(); ++i){
+            for (int t = 0; t < rescates.get(i).size(); ++t){
+                Trayecto tray = rescates.get(i).get(t);
+                for (int grupo = 1; grupo <= tray.getNGrupos(); ++grupo){
+                    Grupo grupoTrayecto = tray.getGrupo(grupo);
+                    
+                    for (int k = 0; k < grupos.size(); ++k){
+                        if (grupoTrayecto.equals(grupos.get(k))){
+                            visitats.set(k, Boolean.TRUE);
+                            break;
+                        }
+                    }
+                 
+                }
+            }
+        }
+        
+        for (int i = 0; i < visitats.size(); ++i){
+            if (!visitats.get(i)) return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+    
+    /*****************************************************************************************/
      /* Goal test */
      public boolean is_goal(){
-         // No se utiliza en Búsqueda Local
-         return false;
+         return Boolean.FALSE; //No s'utilitza en cerca local
      }
 
      /* auxiliary functions */
      public IAPractica1Board clone(){
-         IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos);
+         IAPractica1Board clone = new IAPractica1Board(board,solution);
          return clone;
      }
      
