@@ -117,11 +117,8 @@ public class IAPractica1Board {
 
      /* Goal test */
      public boolean is_goal(){
-         // compute if board = solution
-        for (int i = 0; i < board.length; ++i){
-            if (board[i] != solution[i]) return false;
-        }
-        return true;
+         // No se utiliza en Búsqueda Local
+         return false;
      }
 
      /* auxiliary functions */
