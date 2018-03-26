@@ -90,6 +90,53 @@ class Trayecto {
         tiempo -= calculaTiempoRecoger(g);
     }
     
+    public boolean eliminaReordenaGrupo(Grupo g){
+        //eliminamos el grupo g y reordenamos los grupos para que los primeros
+        //esten siempre ocupados antes que los ultimos
+        //devuelve true cuando g1, g2 y g3 son null
+        if(g1.equals(g)){
+            if(g2 == null){
+                return true;
+            }
+            tiempo -= calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
+                        g1.getCoordX(), g1.getCoordY());
+            tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), g2.getCoordX(),
+                        g2.getCoordY());
+            g1 = g2;
+            g2 = null;
+            tiempo += calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
+                                    g1.getCoordX(), g1.getCoordY());
+            if(g3 != null){
+                g2 = g3;
+                g3 = null;
+            }
+
+        }
+        else{
+            if(g2.equals(g)){
+                tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), g2.getCoordX(),
+                        g2.getCoordY());
+                if(g3!= null){
+                    tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), g3.getCoordX(),
+                        g3.getCoordY());
+                    g2 = g3;
+                    g3 = null;
+                    tiempo += calculaTiempo(g1.getCoordX(), g1.getCoordY(), g2.getCoordX(),
+                        g2.getCoordY());
+                }
+                else{
+                    g2 = null;
+                }
+            }
+            if(g3.equals(g)){
+                tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), g3.getCoordX(),
+                    g3.getCoordY());
+                g3 = null;
+            }
+        }
+        return false;
+    }
+    
     public int getCapacidad(){ return capacidad;}
     
     public double getTiempo() {

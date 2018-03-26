@@ -107,15 +107,23 @@ public class IAPractica1Board {
     }
 
     /* Operadores */
-    public void flip_it(int i){
-        // flip the coins i and i + 1
-        if (i >= board.length || i+1 >= board.length) return;
+    public void move(Grupo gCambio, int heliActual, int trayectoActual, int heliCambio, int trayectoCambio){
+        // Eliminamos el grupo gCambio del trayectoActual
+        /**Pre: 
+         *  - gCambio existe en trayectoActual
+         *  - trayectoActual pertenece a heliActual
+         *  - trayectoCambio pertenece a heliCambio
+         *  - hay espacio en trayecto cambio para g (hay como maximo dos grupos y 
+         *        caben como minimo n personas mas en el helicoptero, donde n es el
+         *        numero de personas de gCambio)
+         */ 
+        boolean eliminarGrupo = rescates.get(heliActual).get(trayectoActual).eliminaReordenaGrupo(gCambio);
+        //Si en el trayecto no se recoge a ningun grupo lo eliminamos
+        if(eliminarGrupo)
+            rescates.get(heliActual).remove(trayectoActual);
         
-        if (board[i] == 1) board[i] = 0;
-        else if (board[i] == 0) board[i] = 1;
-        
-        if (board[i+1] == 1) board[i+1] = 0;
-        else if (board[i+1] == 0) board[i+1] = 1;
+        //Añadimos el grupo gCambio al trayectoCambio
+        rescates.get(heliCambio).get(trayectoCambio).añadeGrupo(gCambio);
     }
     
     public void swap(Grupo g1, int heli1, int trayecto1, Grupo g2, int heli2, int trayecto2){
