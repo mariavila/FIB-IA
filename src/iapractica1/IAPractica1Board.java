@@ -85,7 +85,7 @@ public class IAPractica1Board {
 
     /* Operadores */
     public void flip_it(int i){
-        // flip the coins i and i + 1
+        //move
         if (i >= board.length || i+1 >= board.length) return;
         
         if (board[i] == 1) board[i] = 0;
