@@ -16,18 +16,27 @@ import iapractica1.IAPractica1SuccesorFunction;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 public class IAPractica1 {   
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         
         int ncentros = 10;
         int ngrupos = 20;
-        int nhelicopteros = 10;
-        int seed = 5; // Aleatorizar
-        Centros cs = new Centros(ncentros, nhelicopteros, seed);
-        Grupos gs = new Grupos(ngrupos,seed);
+        int nhelicopteros = 10; // Numero de helicopteros en cada centro ¿? DUDA DOC.
+        
+        /*  SEEDS ALEATORIAS
+        int min = 0, max = 255, rango = max - min +1;
+        Random rand;
+        int seedCentros = rand.nextInt(rango) + min;
+        int seedGrupos = rand.nextInt(rango) + min;
+        */
+        int seedCentros = 5, seedGrupos = 5;
+        
+        Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
+        Grupos gs = new Grupos(ngrupos,seedGrupos);
           
-        IAPractica1Board board = new IAPractica1Board(prob, sol );
+        IAPractica1Board board = new IAPractica1Board(nhelicopteros*ncentros,cs,gs);
 
         // Create the Problem object
         Problem p = new  Problem(board,

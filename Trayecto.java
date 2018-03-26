@@ -110,6 +110,15 @@ class Trayecto {
         else return Boolean.FALSE;
     }
     
+    public int getNGrupos() {
+        int n=0;
+        if (g1 != null) n++;
+        if (g2 != null) n++;
+        if (g3 != null) n++;
+        
+        return n;
+    }
+    
     private double calculaTiempo(int x1, int y1, int x2, int y2){
         int xv = Math.abs(x2 - x1);
         int yv = Math.abs(y2 - y1);
