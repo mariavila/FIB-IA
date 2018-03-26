@@ -24,6 +24,7 @@ public class IAPractica1 {
         int ncentros = 10;
         int ngrupos = 20;
         int nhelicopteros = 10; // Numero de helicopteros en cada centro ¿? DUDA DOC.
+        int initialState = 1;
         
         /*  SEEDS ALEATORIAS
         int min = 0, max = 255, rango = max - min +1;
@@ -36,7 +37,7 @@ public class IAPractica1 {
         Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
         Grupos gs = new Grupos(ngrupos,seedGrupos);
           
-        IAPractica1Board board = new IAPractica1Board(nhelicopteros*ncentros,cs,gs);
+        IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs);
 
         // Create the Problem object
         Problem p = new  Problem(board,
