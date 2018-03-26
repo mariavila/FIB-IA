@@ -14,14 +14,14 @@ import IA.Desastres.Grupo;
  * @author albert.carreira
  */
 class Trayecto {
-    Grupo g1 = null;
-    Grupo g2 = null;
-    Grupo g3 = null;
+    private Grupo g1 = null;
+    private Grupo g2 = null;
+    private Grupo g3 = null;
     
-    Centro centroBase;
+    private Centro centroBase;
     
-    int capacidad;
-    double tiempo;
+    private int capacidad;
+    private double tiempo;
     
     public static final double velocidad = 100;
     
@@ -91,6 +91,7 @@ class Trayecto {
     }
     
     public int getCapacidad(){ return capacidad;}
+    
     public double getTiempo() {
         double tiempoVuelta = 0;
         
@@ -105,6 +106,7 @@ class Trayecto {
         return tiempo + tiempoVuelta;
     }
     
+    
     public Boolean cabeGrupo(Grupo g){
         if (g3 == null && g.getNPersonas() <= capacidad) return Boolean.TRUE;
         else return Boolean.FALSE;
@@ -118,6 +120,16 @@ class Trayecto {
         
         return n;
     }
+    
+    public Grupo getGrupo(int i) {
+        switch(i) {
+            case 1: return g1;
+            case 2: return g2;
+            case 3: return g3;
+            default: return null;
+        }
+    }
+    
     
     private double calculaTiempo(int x1, int y1, int x2, int y2){
         int xv = Math.abs(x2 - x1);

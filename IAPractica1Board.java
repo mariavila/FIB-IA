@@ -18,42 +18,69 @@ public class IAPractica1Board {
     private ArrayList<Centro> centros;
     private ArrayList<Grupo> grupos;
     private ArrayList<ArrayList<Trayecto>> rescates;
+    // Si Centro 1 tiene 4 helicopteros, son los [0,1,2,3,4]
+    //  Si Centro 2 tiene 3 helicopteros, son los [5,6,7] ....
     
-    /* Constructor */
-    public IAPractica1Board(int nHelicopteros, ArrayList<Grupo> gs,  ArrayList<Centro> cs) {
-        rescates = new ArrayList<>(nHelicopteros);       
+    /* Constructoras */
+    public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
+        rescates = new ArrayList<>(nHelicopteros);
         centros = cs;
         grupos = gs;
         
-        int centro = 0, helis = 0;
         // Estado inicial
-        for (int i = 0; i < grupos.size(); i++) {
-            // Si Centro 1 tiene 4 helicopteros, son los [0,1,2,3,4]
-            //   Si Centro 2 tiene 3 helicopteros, son los [5,6,7] ....
-            
-            int heli = i%nHelicopteros;
-            int hCentro = centros.get(centro).getNHelicopteros();
-            
-            if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
-                centro++;
-                helis += hCentro;
-                if (centro > centros.size()) {
-                    centro = 0;
-                    helis = 0;
+        /*  INITIAL STATE:
+    
+        1 ->    Heli 1 recoge grupo 1 y vuelve
+                Heli 2 recoge grupo 2 y vuelve, etc.
+        
+        2->
+        
+        */
+        
+        switch (initialState) {
+            case 1:
+                int centro = 0, helis = 0;
+                for (int i = 0; i < grupos.size(); i++) {
+                    int heli = i%nHelicopteros;
+                    int hCentro = centros.get(centro).getNHelicopteros();
+
+                    if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
+                        centro++;
+                        helis += hCentro;
+                        if (centro > centros.size()) {
+                            centro = 0;
+                            helis = 0;
+                        }
+                    }
+
+                    Trayecto t = new Trayecto(centros.get(centro));
+                    t.añadeGrupo(grupos.get(i));
+                    rescates.get(i%nHelicopteros).add(t);
                 }
-            }
-            
-            Trayecto t = new Trayecto(centros.get(centro));
-            t.añadeGrupo(grupos.get(i));
-            rescates.get(i%nHelicopteros).add(t);
-            
-            // Solución 1: Heli 1 recoge grupo 1 y vuelve
-            //             Heli 2 recoge grupo 2 y vuelve, etc.
+                
+                break;
+                
+            case 2:
+                
+                break;
+                
+            case 3:
+                
+                break;
         }
+        
         
         /*Grupo añadir = grupos.get(i);
             if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
 
+    }
+    
+    
+    
+    public IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
+        rescates = h;
+        centros = cs;
+        grupos = gs;
     }
 
     /* Operadores */
@@ -99,7 +126,7 @@ public class IAPractica1Board {
 
      /* auxiliary functions */
      public IAPractica1Board clone(){
-         IAPractica1Board clone = new IAPractica1Board(board,solution);
+         IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos);
          return clone;
      }
      
