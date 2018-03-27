@@ -177,6 +177,15 @@ class Trayecto {
         }
     }
     
+    public int getNpersonas(int grupo){
+        switch(grupo){
+            case 0: return g1.getNPersonas();
+            case 1: return g2.getNPersonas();
+            case 2: return g3.getNPersonas();
+            default: return -1;
+        }
+    }
+    
     
     private double calculaTiempo(int x1, int y1, int x2, int y2){
         int xv = Math.abs(x2 - x1);

@@ -253,11 +253,23 @@ public class IAPractica1Board {
          return clone;
      }
      
-     public int getLength(){
-         return board.length;
+     public int getNHeli(){
+         return rescates.size();
      }
-     // Some functions will be needed for creating a copy of the state
-
-    /* ^^^^^ TO COMPLETE ^^^^^ */
-
+     
+     public int getNTrayectorias(int heli){
+         return rescates.get(heli).size();
+     }
+     
+     public int getNgrupos(int heli, int tray){
+         return rescates.get(heli).get(tray).getNGrupos();
+     }
+     
+     public int getNpersonas(int heli, int tray, int grupo){
+         return rescates.get(heli).get(tray).getNpersonas(grupo);
+     }
+     
+     public Grupo getGrupo(int heli, int tray, int grupo){
+         return rescates.get(heli).get(tray).getGrupo(grupo);
+     }
 }
