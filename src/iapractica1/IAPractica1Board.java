@@ -135,11 +135,13 @@ public class IAPractica1Board {
             rescates.get(heliActual).remove(trayectoActual);
         
         //Añadimos el grupo gCambio al trayectoCambio
-        rescates.get(heliCambio).get(trayectoCambio).añadeGrupo(gCambio);
         if(rescates.get(heliCambio).size() == trayectoCambio){
             Trayecto t = new Trayecto(centros.get((int)heliCambio * centros.size() / rescates.size()));
             t.añadeGrupo(gCambio);
             rescates.get(heliCambio).add(t);
+        }
+        else{
+            rescates.get(heliCambio).get(trayectoCambio).añadeGrupo(gCambio);
         }
     }
     
