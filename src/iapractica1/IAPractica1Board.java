@@ -62,6 +62,7 @@ public class IAPractica1Board {
                     }
 
                     Trayecto t = new Trayecto(centros.get(centro));
+                    t.añadeGrupo(grupos.get(i));
                     rescates.get(i%nHelicopteros).add(t);
 
                 }
@@ -215,7 +216,8 @@ public class IAPractica1Board {
      * @return True si todos los grupos han sido rescatados, False en caso contrario
      */
     private Boolean todosLosGruposRescatados(){
-        ArrayList<Boolean> visitats = new ArrayList<>(centros.size());
+        Boolean temp = Boolean.FALSE;
+        ArrayList<Boolean> visitats = new ArrayList<>(Collections.nCopies(grupos.size(), temp));
         Collections.fill(visitats, Boolean.FALSE);
         
         for (int i = 0; i < rescates.size(); ++i){
