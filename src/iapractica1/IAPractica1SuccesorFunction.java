@@ -82,12 +82,14 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                     }
                     //MOVE
                     //añadir un nuevo trayecto a heli2 que recoja un grupo de heli1 tray1
-                    for(int i = 0; i< board.getNgrupos(heli1, tray1); ++i){
-                        IAPractica1Board b = board.clone();
-                        b.move(board.getGrupo(heli1, tray1, i), heli1, tray1, heli2, board.getNTrayectorias(heli2));
-                        Successor succ = new Successor("move g: " + i + " t: " + tray1 + " h: " + heli1 + 
-                                            "to t: " + board.getNTrayectorias(heli2) + " h: " + heli2, b);
-                        retval.add(succ);
+                    if(heli1!=heli2){
+                        for(int i = 0; i< board.getNgrupos(heli1, tray1); ++i){
+                            IAPractica1Board b = board.clone();
+                            b.move(board.getGrupo(heli1, tray1, i), heli1, tray1, heli2, board.getNTrayectorias(heli2));
+                            Successor succ = new Successor("move g: " + i + " t: " + tray1 + " h: " + heli1 + 
+                                                "to t: " + board.getNTrayectorias(heli2) + " h: " + heli2, b);
+                            retval.add(succ);
+                        }
                     }
                 }
             }
