@@ -139,12 +139,11 @@ public class IAPractica1Board {
     }
     
     public void swap(Grupo g1, int heli1, int trayecto1, Grupo g2, int heli2, int trayecto2){
-        // Eliminamos el grupo de los trayectos 
+        // Eliminamos el grupo de los trayectos y añadimos el otro grupo
         rescates.get(heli1).get(trayecto1).eliminaGrupo(g1);
-        rescates.get(heli2).get(trayecto2).eliminaGrupo(g2);
-        
-        // Añadimos los grupos de nuevo
         rescates.get(heli1).get(trayecto1).añadeGrupo(g2);
+        
+        rescates.get(heli2).get(trayecto2).eliminaGrupo(g2);
         rescates.get(heli2).get(trayecto2).añadeGrupo(g1);
     }
 
