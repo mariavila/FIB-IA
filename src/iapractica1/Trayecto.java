@@ -170,9 +170,9 @@ class Trayecto {
     
     public Grupo getGrupo(int i) {
         switch(i) {
-            case 1: return g1;
-            case 2: return g2;
-            case 3: return g3;
+            case 0: return g1;
+            case 1: return g2;
+            case 2: return g3;
             default: return null;
         }
     }

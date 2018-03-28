@@ -60,7 +60,7 @@ public class IAPractica1Board {
                             helis = 0;
                         }
                     }
-
+                    
                     Trayecto t = new Trayecto(centros.get(centro));
                     t.añadeGrupo(grupos.get(i));
                     rescates.get(i%nHelicopteros).add(t);
