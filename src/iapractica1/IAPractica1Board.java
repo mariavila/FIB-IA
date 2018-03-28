@@ -62,10 +62,7 @@ public class IAPractica1Board {
                     }
 
                     Trayecto t = new Trayecto(centros.get(centro));
-                    t.añadeGrupo(grupos.get(i));
-                    ArrayList<Trayecto> ar = new ArrayList<>();
-                    ar.add(t);
-                    rescates.set(i%nHelicopteros,ar);
+                    rescates.get(i%nHelicopteros).add(t);
 
                 }
 
