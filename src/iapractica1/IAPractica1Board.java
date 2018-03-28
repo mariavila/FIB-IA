@@ -249,7 +249,7 @@ public class IAPractica1Board {
 
      /* auxiliary functions */
      public IAPractica1Board clone(){
-         IAPractica1Board clone = new IAPractica1Board(board,solution);
+         IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos);
          return clone;
      }
      
