@@ -136,6 +136,11 @@ public class IAPractica1Board {
         
         //Añadimos el grupo gCambio al trayectoCambio
         rescates.get(heliCambio).get(trayectoCambio).añadeGrupo(gCambio);
+        if(rescates.get(heliCambio).size() == trayectoCambio){
+            Trayecto t = new Trayecto(centros.get((int)heliCambio * centros.size() / rescates.size()));
+            t.añadeGrupo(gCambio);
+            rescates.get(heliCambio).add(t);
+        }
     }
     
     public void swap(Grupo g1, int heli1, int trayecto1, Grupo g2, int heli2, int trayecto2){
