@@ -16,7 +16,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
         // Create new states using the operator move and swap
         for (int heli1 = 0; heli1 < nHeli; ++heli1){
             for(int tray1=0; tray1< board.getNTrayectorias(heli1); ++tray1){
-                for(int heli2 = heli1; heli2 < nHeli; ++heli2){ //!!!!!!!!!!!!!!!!!!
+                for(int heli2 = heli1; heli2 < nHeli; ++heli2){
                     for(int tray2 = 0; tray2 < board.getNTrayectorias(heli2); ++tray2){
                         
                         int nGrupos1 = board.getNgrupos(heli1, tray1);
@@ -75,6 +75,9 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                             }
                         }
                     }
+                    //MOVE
+                    //añadir un nuevo trayecto a heli2 que recoja grupo
+                    
                 }
             }
         }
