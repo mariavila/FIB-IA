@@ -2,6 +2,7 @@ package iapractica1;
 
 import IA.Desastres.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -23,7 +24,7 @@ public class IAPractica1Board {
     /* Constructoras */
 
     public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
-        rescates = new ArrayList<>(nHelicopteros);
+        rescates = new ArrayList<>(); for (int i = 0; i < nHelicopteros; ++i){ ArrayList<Trayecto> t = new ArrayList<>(); rescates.add(t);}
         centros = cs;
         grupos = gs;
 
@@ -62,7 +63,9 @@ public class IAPractica1Board {
 
                     Trayecto t = new Trayecto(centros.get(centro));
                     t.añadeGrupo(grupos.get(i));
-                    rescates.get(i%nHelicopteros).add(t);
+                    ArrayList<Trayecto> ar = new ArrayList<>();
+                    ar.add(t);
+                    rescates.set(i%nHelicopteros,ar);
 
                 }
 
