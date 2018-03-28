@@ -63,26 +63,26 @@ class Trayecto {
     // Para hacer SWAP eliminamos y volvemos a añadir
     public void eliminaGrupo(Grupo g){
         if (g1.equals(g)) {
-            g1 = null;
             tiempo -= calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
                                     g1.getCoordX(), g1.getCoordY());
             if (g2 != null) // Si hemos hecho swap
                 tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                         g2.getCoordX(), g2.getCoordY());
+            g1 = null;
         }
         else {
             if (g2.equals(g)){
-                g2 = null;
                 tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                     g2.getCoordX(), g2.getCoordY());
                 if (g3 != null) // Si hemos hecho swap
                 tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                         g3.getCoordX(), g3.getCoordY());
+                g2 = null;
             }
             else if (g3.equals(g)) {
-                g3 = null;
                 tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                     g3.getCoordX(), g3.getCoordY());
+                g3 = null;
             }
         }
 
@@ -170,9 +170,9 @@ class Trayecto {
     
     public Grupo getGrupo(int i) {
         switch(i) {
-            case 1: return g1;
-            case 2: return g2;
-            case 3: return g3;
+            case 0: return g1;
+            case 1: return g2;
+            case 2: return g3;
             default: return null;
         }
     }

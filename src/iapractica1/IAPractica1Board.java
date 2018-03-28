@@ -71,7 +71,6 @@ public class IAPractica1Board {
 
                 break;
 
-                
 
             case 2:
 
@@ -90,15 +89,27 @@ public class IAPractica1Board {
         }
 
         
-
         
 
         /*Grupo añadir = grupos.get(i);
 
             if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
 
-
-
+        
+        // DEBUG
+        int h = 0;
+        for (ArrayList<Trayecto> a : rescates) {
+            int t = 0;
+            for (Trayecto tr : a) {
+                System.out.print("Heli: " + h + " \t\tTray: " + t + "\t\tGrupos: " + tr.getNGrupos() + " -->");
+                for (int i=0; i<tr.getNGrupos(); i++)
+                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");
+                
+                System.out.println();
+                t++;
+            }
+            h++;
+        }
     }
 
     public IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
