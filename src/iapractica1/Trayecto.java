@@ -128,7 +128,7 @@ class Trayecto {
                     g2 = null;
                 }
             }
-            if(g3.equals(g)){
+            else if(g3.equals(g)){
                 tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), g3.getCoordX(),
                     g3.getCoordY());
                 g3 = null;
