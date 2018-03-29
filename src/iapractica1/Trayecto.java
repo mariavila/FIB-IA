@@ -186,6 +186,17 @@ class Trayecto {
         }
     }
     
+    public Trayecto clone() {
+        Trayecto clon = new Trayecto(centroBase);
+        clon.g1 = this.g1;
+        clon.g2 = this.g2;
+        clon.g3 = this.g3;
+        clon.capacidad = this.capacidad;
+        clon.tiempo = this.tiempo;
+        
+        return clon;
+    }
+    
     
     private double calculaTiempo(int x1, int y1, int x2, int y2){
         int xv = Math.abs(x2 - x1);

@@ -94,28 +94,38 @@ public class IAPractica1Board {
         /*Grupo añadir = grupos.get(i);
 
             if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
-
         
-        // DEBUG
-        int h = 0;
-        for (ArrayList<Trayecto> a : rescates) {
-            int t = 0;
-            for (Trayecto tr : a) {
-                System.out.print("Heli: " + h + " \t\tTray: " + t + "\t\tGrupos: " + tr.getNGrupos() + " -->");
-                for (int i=0; i<tr.getNGrupos(); i++)
-                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");
-                
-                System.out.println();
-                t++;
-            }
-            h++;
-        }
+        printEstado();
     }
 
-    public IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
-        rescates = h;
+    private IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
+        // Como centros y grupos no van a cambiar, todas las copias pueden apuntar al original
         centros = cs;
         grupos = gs;
+        
+        // Rescates sí que se modifica, por lo tanto hay que hacer que apunte a una nueva copia en memoria
+        rescates = new ArrayList<>();
+        for (int i=0; i<h.size(); i++) {
+            ArrayList<Trayecto> trays = h.get(i);
+            ArrayList<Trayecto> temp = new ArrayList<>();
+            for (Trayecto t : trays) {
+                Trayecto tclone = t.clone();
+                temp.add(tclone);
+            }
+            rescates.add(temp);
+        }
+        
+        /*  Si quisieramos que fueran nuevas copias en memoria (no eficiente por espacio)
+        centros = new ArrayList<>();
+        for (Centro c : cs) {
+            centros.add(c);
+        }
+        
+        grupos = new ArrayList<>();
+        for (Grupo g : gs) {
+            grupos.add(g);
+        }
+        */
     }
 
     /* Operadores */
@@ -281,14 +291,35 @@ public class IAPractica1Board {
      }
      
      public int getNgrupos(int heli, int tray){
+         if (rescates.get(heli).size() == 0) return 0;
          return rescates.get(heli).get(tray).getNGrupos();
      }
      
      public int getNpersonas(int heli, int tray, int grupo){
+         if (rescates.get(heli).size() == 0) return 0;
          return rescates.get(heli).get(tray).getNpersonas(grupo);
      }
      
      public Grupo getGrupo(int heli, int tray, int grupo){
+         if (rescates.get(heli).size() == 0) return null;
          return rescates.get(heli).get(tray).getGrupo(grupo);
+     }
+     
+     
+     public void printEstado() {
+         // DEBUG
+        int h = 0;
+        for (ArrayList<Trayecto> a : rescates) {
+            int t = 0;
+            for (Trayecto tr : a) {
+                System.out.print("Heli: " + h + " \t\tTray: " + t + "\t\tGrupos: " + tr.getNGrupos() + " -->");
+                for (int i=0; i<tr.getNGrupos(); i++)
+                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");
+                
+                System.out.println();
+                t++;
+            }
+            h++;
+        }
      }
 }

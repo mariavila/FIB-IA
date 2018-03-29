@@ -38,6 +38,22 @@ public class IAPractica1 {
         Grupos gs = new Grupos(ngrupos,seedGrupos);
           
         IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs);
+        
+        
+        // TEST CLONE 
+        /*
+        System.out.println("\n\nORIGINAL ANTES DEL SWAP:");
+        board.printEstado();
+        
+        IAPractica1Board temp = board.clone();
+        temp.swap(temp.getGrupo(0,0,0), 0, 0, temp.getGrupo(1,0,0), 1, 0);
+        
+        System.out.println("\n\nORIGINAL DESPUES DEL SWAP:");
+        board.printEstado();
+        
+        System.out.println("\n\nAHORA VIENE EL CLON:");
+        temp.printEstado();
+        */
 
         // Create the Problem object
         Problem p = new  Problem(board,
@@ -60,7 +76,6 @@ public class IAPractica1 {
 
         // You can access also to the goal state using the
 	// method getGoalState of class Search
-
     }
 
         private static void printInstrumentation(Properties properties) {
