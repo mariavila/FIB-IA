@@ -54,8 +54,8 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                                     if(nPersonas2 + board.getNpersonas(heli1, tray1, i) <= 15){
                                         IAPractica1Board b = board.clone();
                                         b.move(board.getGrupo(heli1, tray1, i), heli1, tray1, heli2, tray2);
-                                        Successor succ = new Successor("move g: " + i + " t: " + tray1 + " h: " + heli1 + 
-                                                            "to t: " + tray2 + " h: " + heli2, b);
+                                        Successor succ = new Successor("move to existing g: " + i + " t: " + tray1 + " h: " + heli1 + 
+                                                            " to t: " + tray2 + " h: " + heli2, b);
                                         retval.add(succ);
                                     }
                                 }
@@ -72,7 +72,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                                             IAPractica1Board b = board.clone();
                                             b.swap(board.getGrupo(heli1, tray1, g1), heli1, tray1, board.getGrupo(heli2, tray2, g2), heli2, tray2);
                                             Successor succ = new Successor("swap g: " + g1 + " t: " + tray1 + " h: " + heli1 + 
-                                                                "with g: " + g2 + " t: " + tray2 + " h: " + heli2, b);
+                                                                " with g: " + g2 + " t: " + tray2 + " h: " + heli2, b);
                                             retval.add(succ);
                                         }
                                     }
@@ -86,8 +86,8 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                         for(int i = 0; i< board.getNgrupos(heli1, tray1); ++i){
                             IAPractica1Board b = board.clone();
                             b.move(board.getGrupo(heli1, tray1, i), heli1, tray1, heli2, board.getNTrayectorias(heli2));
-                            Successor succ = new Successor("move g: " + i + " t: " + tray1 + " h: " + heli1 + 
-                                                "to t: " + board.getNTrayectorias(heli2) + " h: " + heli2, b);
+                            Successor succ = new Successor("move to new g: " + i + " t: " + tray1 + " h: " + heli1 + 
+                                                " to t: " + board.getNTrayectorias(heli2) + " h: " + heli2, b);
                             retval.add(succ);
                         }
                     }
