@@ -21,8 +21,8 @@ import java.util.Random;
 public class IAPractica1 {   
     public static void main(String[] args) throws Exception {
         
-        int ncentros = 5;
-        int ngrupos = 100;
+        int ncentros = 2;
+        int ngrupos = 7;
         int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
         
@@ -78,8 +78,8 @@ public class IAPractica1 {
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
         estadoFinal.printEstado();
         System.out.println();
-        //printActions(agent.getActions());
-        //printInstrumentation(agent.getInstrumentation());
+        printActions(agent.getActions());
+        printInstrumentation(agent.getInstrumentation());
 
         // You can access also to the goal state using the
 	// method getGoalState of class Search

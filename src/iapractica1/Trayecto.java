@@ -209,4 +209,8 @@ class Trayecto {
         if (g.getPrioridad() == 1) return 2*tiempo;
         else return tiempo;
     }
+
+    public Centro getCentroIni() {
+        return centroBase;
+    }
 }

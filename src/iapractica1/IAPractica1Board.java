@@ -171,29 +171,29 @@ public class IAPractica1Board {
 
     public double heuristic(){
         // compute the number of coins out of place respect to solution
-        byte experiment = 1; // experimento 1 o 2
+        byte experiment = 2; // experimento 1 o 2
         int inf = Integer.MAX_VALUE;
-        if (!todosLosGruposRescatados()) return inf; //solución mala, no se recogen todos los grupos
+        //if (!todosLosGruposRescatados()) return inf; //solución mala, no se recogen todos los grupos
         
         if (experiment == 1){ 
             return calculaTiempoTotal();
         }
         else{
-            float k = 0.8f;
+            float k = 0.7f;
             float j = 1f - k;
             
-            int tiempoTotal = calculaTiempoTotal();
-            int tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
+            double tiempoTotal = calculaTiempoTotal();
+            double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
             
-            return k * tiempoTotal + j * (tiempoTotal-tiempoGruposPrio1);
+            return k * tiempoTotal + j * tiempoGruposPrio1;
         }
     }
     /**
      * Función que calcula el tiempo total de rescatar a todos los grupos
      * @return Tiempo total en rescatar a todos los grupos
      */
-    private int calculaTiempoTotal(){
-        int tiempo = 0;
+    private double calculaTiempoTotal(){
+        double tiempo = 0;
         for (int i = 0; i < rescates.size(); ++i){ // cada helicoptero tendra t trayectos
             ArrayList<Trayecto> trayectos = rescates.get(i);
             for (int t = 0; t < trayectos.size(); ++t){ // por cada trayecto del helicoptero
@@ -208,23 +208,65 @@ public class IAPractica1Board {
      * Función que calcula el tiempo DESDE el final HASTA el primer grupo de prioridad 1
      * @return tiempo desde el final hasta el primer grupo de prioridad 1
      */
-    private int calculaTiempoHastaGrupoPrio1(){
-        int tiempoHastaElPrimero = 0;
+    private double calculaTiempoHastaGrupoPrio1(){
+        /*double tiempoHastaElPrimero = 0;
+        Boolean encontrado = false;
         int n = getUltimoTrayecto();
         for (int t = n; t > 0; --t){
-            for (int i = 0; i < rescates.size(); ++i){ // Miramos por todos los helicopteros
-                if (rescates.get(i).size() == n){ 
-                    // Hemos encontrado el helicopteros con más trayectos
-                    Trayecto tray = rescates.get(i).get(n-1); //el último
-                    // Miramos si tiene algun grupo de prioridad 1, si no seguimos buscando
-                    for (int grupo = 1; grupo <= tray.getNGrupos(); ++grupo){
-                        if (tray.getGrupo(i) != null && tray.getGrupo(i).getPrioridad() == 1) return tiempoHastaElPrimero;
+            for (int i = 0; i < rescates.size(); ++i){ // Miramos por todos los helicopteros, desde el que tiene más trayectos
+                if (rescates.get(i).size() == n){ // Nos quedamos con los que tienen más trayectos
+                    if (!encontrado){
+                        for (int j = n-1; j > 0; --j){ //De entre todos sus trayectos miramos si tiene algun grupo de prioridad 1, si no seguimos buscando
+                            Trayecto tray = rescates.get(i).get(j);
+                            for (int grupo = 0; grupo < tray.getNGrupos(); ++grupo){
+                                if (tray.getGrupo(grupo) != null && tray.getGrupo(grupo).getPrioridad() == 1) encontrado = true;
+                            }
+                            if (encontrado) break;
+                            tiempoHastaElPrimero += tray.getTiempo();
+                        }
                     }
-                    tiempoHastaElPrimero += tray.getTiempo();
+                    else{ //Ya hemos encontrado un grupo de prioridad 1, miramos el resto de posibles helicopteros con trayectos con grupos de prio1
+                        
+                    }
+                    
                 }
             }
         }
-        return tiempoHastaElPrimero;
+        return tiempoHastaElPrimero;*/
+        
+        double tiempoGruposPrio1 = 0;
+        for (int i = 0; i < rescates.size(); ++i){
+            ArrayList<Trayecto> trayectosHeli = rescates.get(i);
+            double tiempoHeli = 0;
+            Boolean first = true;
+            // Buscamos el tiempo de entre todos los trayectos hasta el primer grupo con prio 1 
+            for (int j = trayectosHeli.size() -1; j >= 0; --j){
+                Trayecto tray = trayectosHeli.get(j);
+                Boolean tieneGrupoPrio1 = false;
+                if (first) first = false;
+                else tiempoHeli += 10;
+                //Miramos si el trayecto tiene algun grupo de prioridad 1
+                for (int g = 0; g < tray.getNGrupos(); ++g){
+                    Grupo grupo = tray.getGrupo(g);
+                    if (grupo == null) break;
+                    if (grupo.getPrioridad() == 1){tieneGrupoPrio1 = true; break;}
+                }
+                
+                if (!tieneGrupoPrio1) tiempoHeli += tray.getTiempo();
+                else break;
+            }
+            //Calculamos el tiempo total de los trayectos del heli
+            double tiempoTotalTrayectos = 0;
+            for (int j = 0; j < trayectosHeli.size(); ++j){
+                tiempoTotalTrayectos += trayectosHeli.get(j).getTiempo();
+            } tiempoTotalTrayectos += 10*(trayectosHeli.size()-1);
+            
+            if (tiempoTotalTrayectos == tiempoHeli) tiempoGruposPrio1 += 0; //O no hay grupos de prio 1 o se recoge el primero
+            else {
+                tiempoGruposPrio1 += (tiempoTotalTrayectos-tiempoHeli); //Tiempo hasta llegar al trayecto que recoge el ultimo grupo de prio 1 del heli
+            }
+        }
+        return tiempoGruposPrio1;
     }
     /** 
      * Función que devuelve el máximo de trayectos de un helicóptero
@@ -314,17 +356,17 @@ public class IAPractica1Board {
         for (ArrayList<Trayecto> a : rescates) {
             int t = 0;
             for (Trayecto tr : a) {
-                System.out.print("Heli: " + h + " \t\tTray: " + t + "\t\tGrupos: " + tr.getNGrupos() + " -->");
+                System.out.print("Heli: " + h + "\t\t" + "XY: " + tr.getCentroIni().getCoordX() + " " + tr.getCentroIni().getCoordY() + "\tTray: " + t + "(" + tr.getTiempo() + ")" +"\t\tGrupos: " + tr.getNGrupos() + " -->");
                 for (int i=0; i<tr.getNGrupos(); i++)
-                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");                
+                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")" + "[" + tr.getGrupo(i).getPrioridad() + "]");                
                 System.out.println();
                 t++;
             }
             h++;
         }
-        int tiempoTotal = calculaTiempoTotal();
-        int tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
+        double tiempoTotal = calculaTiempoTotal();
+        double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
         System.out.println("Tiempo total: " + tiempoTotal);
-        System.out.println("Tiempo grupos prioridad 1: " + (tiempoTotal - tiempoGruposPrio1));
+        System.out.println("Tiempo grupos prioridad 1: " + tiempoGruposPrio1);
      }
 }
