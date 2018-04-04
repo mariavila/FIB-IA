@@ -21,9 +21,9 @@ import java.util.Random;
 public class IAPractica1 {   
     public static void main(String[] args) throws Exception {
         
-        int ncentros = 10;
-        int ngrupos = 20;
-        int nhelicopteros = 10; // Numero de helicopteros en cada centro ¿? DUDA DOC.
+        int ncentros = 5;
+        int ngrupos = 100;
+        int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
         
         /*  SEEDS ALEATORIAS
@@ -32,7 +32,7 @@ public class IAPractica1 {
         int seedCentros = rand.nextInt(rango) + min;
         int seedGrupos = rand.nextInt(rango) + min;
         */
-        int seedCentros = 5, seedGrupos = 5;
+        int seedCentros = 1234, seedGrupos = 1234;
         
         Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
         Grupos gs = new Grupos(ngrupos,seedGrupos);
@@ -62,14 +62,21 @@ public class IAPractica1 {
                                 new IAPractica1HeuristicFunction());
 
         // Instantiate the search algorithm
-	// HillClimbingSearch() or SimulatedAnnealing(int steps, int stiter, int k, double lamb)
-        //Search alg = new AStarSearch(new GraphSearch());
+	// HillClimbingSearch() or SimulatedAnnealing(int steps, int stiter, int k, double lamb)        
+        int steps = 50;
+        int stiter = 3;
+        int k = 4; 
+        double lamb = 3.5;
         Search alg = new HillClimbingSearch();
-
+        //Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); <-- No funciona con el printActions
+        
         // Instantiate the SearchAgent object
         SearchAgent agent = new SearchAgent(p, alg);
 
 	// We print the results of the search
+        System.out.println("---------------------- ESTADO FINAL ---------------");
+        IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
+        estadoFinal.printEstado();
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());

@@ -168,6 +168,7 @@ public class IAPractica1Board {
     /** Función heurística
      * @return Tiempo total de la solución según el heurístico 1 o 2
      */
+
     public double heuristic(){
         // compute the number of coins out of place respect to solution
         byte experiment = 1; // experimento 1 o 2
@@ -178,7 +179,7 @@ public class IAPractica1Board {
             return calculaTiempoTotal();
         }
         else{
-            float k = 0.7f;
+            float k = 0.8f;
             float j = 1f - k;
             
             int tiempoTotal = calculaTiempoTotal();
@@ -217,7 +218,7 @@ public class IAPractica1Board {
                     Trayecto tray = rescates.get(i).get(n-1); //el último
                     // Miramos si tiene algun grupo de prioridad 1, si no seguimos buscando
                     for (int grupo = 1; grupo <= tray.getNGrupos(); ++grupo){
-                        if (tray.getGrupo(i).getPrioridad() == 1) return tiempoHastaElPrimero;
+                        if (tray.getGrupo(i) != null && tray.getGrupo(i).getPrioridad() == 1) return tiempoHastaElPrimero;
                     }
                     tiempoHastaElPrimero += tray.getTiempo();
                 }
@@ -307,6 +308,7 @@ public class IAPractica1Board {
      
      
      public void printEstado() {
+        
          // DEBUG
         int h = 0;
         for (ArrayList<Trayecto> a : rescates) {
@@ -314,12 +316,15 @@ public class IAPractica1Board {
             for (Trayecto tr : a) {
                 System.out.print("Heli: " + h + " \t\tTray: " + t + "\t\tGrupos: " + tr.getNGrupos() + " -->");
                 for (int i=0; i<tr.getNGrupos(); i++)
-                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");
-                
+                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")");                
                 System.out.println();
                 t++;
             }
             h++;
         }
+        int tiempoTotal = calculaTiempoTotal();
+        int tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
+        System.out.println("Tiempo total: " + tiempoTotal);
+        System.out.println("Tiempo grupos prioridad 1: " + (tiempoTotal - tiempoGruposPrio1));
      }
 }
