@@ -63,12 +63,12 @@ public class IAPractica1 {
 
         // Instantiate the search algorithm
 	// HillClimbingSearch() or SimulatedAnnealing(int steps, int stiter, int k, double lamb)        
-        int steps = 50;
-        int stiter = 3;
-        int k = 4; 
+        int steps = 800;
+        int stiter = 100;
+        int k = 3; 
         double lamb = 3.5;
         Search alg = new HillClimbingSearch();
-        //Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); <-- No funciona con el printActions
+        //Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
         
         // Instantiate the SearchAgent object
         SearchAgent agent = new SearchAgent(p, alg);
@@ -78,8 +78,8 @@ public class IAPractica1 {
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
         estadoFinal.printEstado();
         System.out.println();
-        printActions(agent.getActions());
-        printInstrumentation(agent.getInstrumentation());
+        //printActions(agent.getActions());
+        //printInstrumentation(agent.getInstrumentation());
 
         // You can access also to the goal state using the
 	// method getGoalState of class Search
