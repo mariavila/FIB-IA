@@ -179,7 +179,7 @@ public class IAPractica1Board {
             return calculaTiempoTotal();
         }
         else{
-            float k = 0.7f;
+            float k = 0.4f;
             float j = 1f - k;
             
             double tiempoTotal = calculaTiempoTotal();

@@ -39,6 +39,9 @@ class Trayecto {
             if (g2 != null) // Si hemos hecho swap
                 tiempo += calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                         g2.getCoordX(), g2.getCoordY());
+            else
+                tiempo += calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
         }
         else {
             if (g2 == null){
@@ -46,13 +49,18 @@ class Trayecto {
                 tiempo += calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                     g2.getCoordX(), g2.getCoordY());
                 if (g3 != null) // Si hemos hecho swap
-                tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                    tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                         g3.getCoordX(), g3.getCoordY());
+                else
+                    tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
             }
             else if (g3 == null) {
                 g3 = g;
                 tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                     g3.getCoordX(), g3.getCoordY());
+                tiempo += calculaTiempo(g3.getCoordX(), g3.getCoordY(), 
+                                    centroBase.getCoordX(), centroBase.getCoordY());
             }
         }
 
@@ -65,23 +73,32 @@ class Trayecto {
         if (g1.equals(g)) {
             tiempo -= calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
                                     g1.getCoordX(), g1.getCoordY());
-            if (g2 != null) // Si hemos hecho swap
+            if (g2 != null)
                 tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                         g2.getCoordX(), g2.getCoordY());
+            else{
+                tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
+            }
             g1 = null;
         }
         else {
             if (g2.equals(g)){
                 tiempo -= calculaTiempo(g1.getCoordX(), g1.getCoordY(), 
                                     g2.getCoordX(), g2.getCoordY());
-                if (g3 != null) // Si hemos hecho swap
-                tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
-                                        g3.getCoordX(), g3.getCoordY());
+                if (g3 != null)
+                    tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                                    g3.getCoordX(), g3.getCoordY());
+                else
+                    tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                                    centroBase.getCoordX(), centroBase.getCoordY());
                 g2 = null;
             }
             else if (g3.equals(g)) {
                 tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                     g3.getCoordX(), g3.getCoordY());
+                tiempo -= calculaTiempo(g3.getCoordX(), g3.getCoordY(), 
+                                    centroBase.getCoordX(), centroBase.getCoordY());
                 g3 = null;
             }
         }
@@ -94,6 +111,7 @@ class Trayecto {
         //eliminamos el grupo g y reordenamos los grupos para que los primeros
         //esten siempre ocupados antes que los ultimos
         //devuelve true cuando g1, g2 y g3 son null
+        int nGrupos = this.getNGrupos();
         if(g1.equals(g)){
             if(g2 == null){
                 return true;
@@ -125,21 +143,31 @@ class Trayecto {
                         g2.getCoordY());
                 }
                 else{
+                    tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
                     g2 = null;
+                    tiempo += calculaTiempo(g1.getCoordX(), g1.getCoordY(),
+                                        centroBase.getCoordX(), centroBase.getCoordY());
                 }
             }
             else if(g3.equals(g)){
                 tiempo -= calculaTiempo(g2.getCoordX(), g2.getCoordY(), g3.getCoordX(),
                     g3.getCoordY());
+                tiempo -= calculaTiempo(g3.getCoordX(), g3.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
                 g3 = null;
+                tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
+                                        centroBase.getCoordX(), centroBase.getCoordY());
             }
-        }
+        }     
+        tiempo -= calculaTiempoRecoger(g);
         return false;
     }
     
     public int getCapacidad(){ return capacidad;}
     
     public double getTiempo() {
+        /**
         double tiempoVuelta = 0;
         
         if (g1 != null) {
@@ -151,6 +179,8 @@ class Trayecto {
                                         g3.getCoordX(), g3.getCoordY());
         }
         return tiempo + tiempoVuelta;
+        */
+        return tiempo;
     }
     
     

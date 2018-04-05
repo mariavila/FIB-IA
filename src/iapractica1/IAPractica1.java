@@ -23,7 +23,7 @@ public class IAPractica1 {
         
         int ncentros = 5;
         int ngrupos = 100;
-        int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
+        int nhelicopteros = 2; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
         int experiment = 1; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
         
