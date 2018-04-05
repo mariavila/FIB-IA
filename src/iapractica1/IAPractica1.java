@@ -20,10 +20,9 @@ import java.util.Random;
 
 public class IAPractica1 {   
     public static void main(String[] args) throws Exception {
-        
         int ncentros = 5;
         int ngrupos = 100;
-        int nhelicopteros = 2; // Numero de helicopteros en cada centro ¿? DUDA DOC.
+        int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
         int experiment = 1; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
         
@@ -72,8 +71,9 @@ public class IAPractica1 {
         //Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
         
         // Instantiate the SearchAgent object
+        long timeIni = java.lang.System.currentTimeMillis();
         SearchAgent agent = new SearchAgent(p, alg);
-
+        long timeFi = java.lang.System.currentTimeMillis();
 	// We print the results of the search
         System.out.println("---------------------- ESTADO FINAL ---------------");
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
@@ -86,6 +86,7 @@ public class IAPractica1 {
 	// method getGoalState of class Search
         IAPractica1Board b = (IAPractica1Board) alg.getGoalState();
         b.printEstado();
+        System.out.println("Total time: "+ (timeFi-timeIni) + "ms");
     }
 
         private static void printInstrumentation(Properties properties) {
