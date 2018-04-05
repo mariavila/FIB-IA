@@ -83,6 +83,8 @@ public class IAPractica1 {
 
         // You can access also to the goal state using the
 	// method getGoalState of class Search
+        IAPractica1Board b = (IAPractica1Board) alg.getGoalState();
+        b.printEstado();
     }
 
         private static void printInstrumentation(Properties properties) {
