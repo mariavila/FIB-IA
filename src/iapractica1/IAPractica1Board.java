@@ -20,14 +20,15 @@ public class IAPractica1Board {
     private ArrayList<Centro> centros;
     private ArrayList<Grupo> grupos;
     private ArrayList<ArrayList<Trayecto>> rescates;
-    
+    private int experiment = 0;
     /* Constructoras */
 
-    public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
+    public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs, int experiment) {
         rescates = new ArrayList<>(); for (int i = 0; i < nHelicopteros; ++i){ ArrayList<Trayecto> t = new ArrayList<>(); rescates.add(t);}
         centros = cs;
         grupos = gs;
-
+        this.experiment = experiment;
+        
         // Estado inicial
 
         /*  INITIAL STATE:
@@ -171,7 +172,6 @@ public class IAPractica1Board {
 
     public double heuristic(){
         // compute the number of coins out of place respect to solution
-        byte experiment = 2; // experimento 1 o 2
         int inf = Integer.MAX_VALUE;
         //if (!todosLosGruposRescatados()) return inf; //solución mala, no se recogen todos los grupos
         
@@ -261,10 +261,8 @@ public class IAPractica1Board {
                 tiempoTotalTrayectos += trayectosHeli.get(j).getTiempo();
             } tiempoTotalTrayectos += 10*(trayectosHeli.size()-1);
             
-            if (tiempoTotalTrayectos == tiempoHeli) tiempoGruposPrio1 += 0; //O no hay grupos de prio 1 o se recoge el primero
-            else {
-                tiempoGruposPrio1 += (tiempoTotalTrayectos-tiempoHeli); //Tiempo hasta llegar al trayecto que recoge el ultimo grupo de prio 1 del heli
-            }
+            //if (tiempoTotalTrayectos == tiempoHeli) tiempoGruposPrio1 += 0; //O no hay grupos de prio 1
+            tiempoGruposPrio1 += (tiempoTotalTrayectos-tiempoHeli); //Tiempo hasta llegar al trayecto que recoge el ultimo grupo de prio 1 del heli
         }
         return tiempoGruposPrio1;
     }

@@ -21,10 +21,11 @@ import java.util.Random;
 public class IAPractica1 {   
     public static void main(String[] args) throws Exception {
         
-        int ncentros = 2;
-        int ngrupos = 7;
+        int ncentros = 5;
+        int ngrupos = 100;
         int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
+        int experiment = 1; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
         
         /*  SEEDS ALEATORIAS
         int min = 0, max = 255, rango = max - min +1;
@@ -37,7 +38,7 @@ public class IAPractica1 {
         Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
         Grupos gs = new Grupos(ngrupos,seedGrupos);
           
-        IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs);
+        IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs, experiment);
         
         
         // TEST CLONE 
