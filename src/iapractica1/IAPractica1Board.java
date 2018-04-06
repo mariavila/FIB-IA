@@ -41,9 +41,9 @@ public class IAPractica1Board {
 
         
 
-        2->
-
-        
+        2->     Helicòpter 1 va recollint grups fins que tingui 
+                10 persones o 2 grups màxim (s’agafa per ordre d’id)
+                      
 
         */
         switch (initialState) {
@@ -74,8 +74,40 @@ public class IAPractica1Board {
 
 
             case 2:
+                int MAX_CAPACIDAD = 15;
+                int MAX_GRUPOS = 2;
 
-                
+                int heli = 0, centro2 = 0, helis2 = 0;
+                int persActual = 0;
+                Trayecto t = new Trayecto(centros.get(centro2));
+                Boolean nuevo = false;
+                for (int i = 0; i < grupos.size(); ++i){
+                    Grupo g = grupos.get(i);
+                    int nPers = g.getNPersonas();
+
+                    
+                    if (persActual + nPers <= MAX_CAPACIDAD){
+                        t.añadeGrupo(g);
+                        persActual += nPers;
+                        int n = t.getNGrupos();
+                        if (t.getNGrupos() == MAX_GRUPOS) nuevo = true;
+                    }
+                    else{nuevo = true; --i;}
+                    
+                    if (nuevo){
+                        //Añadimos el que tenemos
+                        rescates.get(heli%nHelicopteros).add(t);
+
+                        //cambiamos de heli e inicializamos un nuevo trayecto
+                        int centrosSize = centros.size();
+                        heli = (heli+1)%nHelicopteros;
+
+                        t = new Trayecto(centros.get(heli%centrosSize));
+                        persActual = 0;
+                        nuevo = false;
+                    }
+                }
+
 
                 break;
 
@@ -99,11 +131,11 @@ public class IAPractica1Board {
         printEstado();
     }
 
-    private IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs) {
+    private IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs, int exp) {
         // Como centros y grupos no van a cambiar, todas las copias pueden apuntar al original
         centros = cs;
         grupos = gs;
-        
+        experiment = exp;
         // Rescates sí que se modifica, por lo tanto hay que hacer que apunte a una nueva copia en memoria
         rescates = new ArrayList<>();
         for (int i=0; i<h.size(); i++) {
@@ -319,7 +351,7 @@ public class IAPractica1Board {
 
      /* auxiliary functions */
      public IAPractica1Board clone(){
-         IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos);
+         IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos,experiment);
          return clone;
      }
      
