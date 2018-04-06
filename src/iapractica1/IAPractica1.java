@@ -81,6 +81,9 @@ public class IAPractica1 {
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
+        
+        IAPractica1Board goal = (IAPractica1Board) alg.getGoalState();
+        goal.printEstado();
 
         // You can access also to the goal state using the
 	// method getGoalState of class Search

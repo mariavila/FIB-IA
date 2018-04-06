@@ -64,7 +64,7 @@ public class IAPractica1Board {
                     
                     Trayecto t = new Trayecto(centros.get(centro));
                     t.añadeGrupo(grupos.get(i));
-                    rescates.get(i%nHelicopteros).add(t);
+                    rescates.get(heli).add(t);
 
                 }
 
@@ -114,9 +114,45 @@ public class IAPractica1Board {
                 
 
             case 3:
-
+                /* //  Heli -> Grups (el que volem fer)
+                Boolean[] array = new Boolean[grupos.size()];
+                Arrays.fill(array, Boolean.FALSE);
+                ArrayList<Boolean> visitat = new ArrayList<>(Arrays.asList(array));
                 
-
+                while (visitat.contains(Boolean.FALSE)) {
+                    
+                }
+                */
+                
+                
+                /* Grups -> Heli (següent guió)
+                int centro = 0, helis = 0;
+                for (int i = 0; i<grupos.size(); i++) {
+                    int heli = i%nHelicopteros;
+                    int hCentro = centros.get(centro).getNHelicopteros();
+                    
+                    if ((heli - helis)>hCentro) { // Mirar si siguiente heli en mismo centro
+                        centro++;
+                        helis += hCentro;
+                        if (centro > centros.size()) {
+                            centro = 0;
+                            helis = 0;
+                        }
+                    }
+                    
+                    // Búsqueda del grupo más cercano
+                    Trayecto t;
+                    if (rescates.get(heli).isEmpty() )  // No había ningun trayecto
+                        t = new Trayecto(centros.get(centro));
+                    else {
+                        t = rescates.get(heli).get(rescates.get(heli).size() -1);
+                        if (t.getCapacidad() == 0 | t.getNGrupos() == 3) {
+                            // Creamos nuevo trayecto
+                            
+                        }
+                    }
+                }
+                */
                 break;
 
         }
