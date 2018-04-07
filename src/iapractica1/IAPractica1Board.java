@@ -114,12 +114,25 @@ public class IAPractica1Board {
                 
 
             case 3:
-                /* //  Heli -> Grups (el que volem fer)
+                /*
+                //  Heli -> Grups (el que volem fer)
                 Boolean[] array = new Boolean[grupos.size()];
                 Arrays.fill(array, Boolean.FALSE);
                 ArrayList<Boolean> visitat = new ArrayList<>(Arrays.asList(array));
                 
+                int heli = 0;
                 while (visitat.contains(Boolean.FALSE)) {
+                    if (heli > nHelicopteros ) heli = 0;
+                    
+                    // Pillamos los 3 mas cercanos¿?
+                    Grupo minG;
+                    double distG;
+                    
+                    for (int i=0; i<grupos.size(); i++) {
+                        if ( ! visitat.get(i)) {
+                            
+                        }
+                    }
                     
                 }
                 */
