@@ -32,22 +32,20 @@ public class IAPractica1Board {
         // Estado inicial
 
         /*  INITIAL STATE:
-
-    
-
         1 ->    Heli 1 recoge grupo 1 y vuelve
-
                 Heli 2 recoge grupo 2 y vuelve, etc.
-
-        
 
         2->     Helicòpter 1 va recollint grups fins que tingui 
                 10 persones o 2 grups màxim (s’agafa per ordre d’id)
-                      
-
+        
+        3->     Helicopter 1 busca els grups més a prop per fer un trajecte complet
+                Helicopter 2 busca els grups més a prop per fer un trajecte complet
+                ....  Fins que tots els grups estan recollits
+        
+        
         */
         switch (initialState) {
-            case 1:
+            case 1: {
                 int centro = 0, helis = 0;
                 for (int i = 0; i < grupos.size(); i++) {
                     int heli = i%nHelicopteros;
@@ -71,9 +69,10 @@ public class IAPractica1Board {
                 
 
                 break;
+            }
 
 
-            case 2:
+            case 2: {
                 int MAX_CAPACIDAD = 15;
                 int MAX_GRUPOS = 2;
 
@@ -110,11 +109,9 @@ public class IAPractica1Board {
 
 
                 break;
+            }
 
-                
-
-            case 3:
-                /*
+            case 3: {
                 //  Heli -> Grups (el que volem fer)
                 Boolean[] array = new Boolean[grupos.size()];
                 Arrays.fill(array, Boolean.FALSE);
@@ -122,23 +119,72 @@ public class IAPractica1Board {
                 
                 int heli = 0;
                 while (visitat.contains(Boolean.FALSE)) {
-                    if (heli > nHelicopteros ) heli = 0;
+                    if (heli >= nHelicopteros ) heli = 0;
                     
-                    // Pillamos los 3 mas cercanos¿?
-                    Grupo minG;
-                    double distG;
+                    Grupo minG = null;
+                    double distG = -1;
+                    Centro c = centros.get(heli/centros.size());
                     
                     for (int i=0; i<grupos.size(); i++) {
                         if ( ! visitat.get(i)) {
-                            
+                            if (distG == -1) {  // Primero que hemos encontrado
+                                minG = grupos.get(i);
+                                distG = Math.hypot( Math.abs(c.getCoordX() - minG.getCoordX()) ,
+                                                    Math.abs(c.getCoordY() - minG.getCoordY()));
+                            } else {            // Miramos si es mejor
+                                Grupo gActual = grupos.get(i);
+                                double distancia = Math.hypot( Math.abs(c.getCoordX() - gActual.getCoordX()) ,
+                                                               Math.abs(c.getCoordY() - gActual.getCoordY()));
+                                if (distG > distancia) {
+                                    minG = gActual;
+                                    distG = distancia;
+                                }
+                            }
+                        }
+                    }
+                    visitat.set(grupos.indexOf(minG), Boolean.TRUE);
+                    
+                    // Añadimos el encontrado como primero en el trayecto
+                    Trayecto t = new Trayecto(c);
+                    t.añadeGrupo(minG);
+                    
+                    while (visitat.contains(Boolean.FALSE) && t.getNGrupos()<3 && t.getCapacidad()>0) {
+                        Grupo minG2 = null; distG = -1;
+                        for (int i=0; i<grupos.size(); i++) {
+                            if ( ! visitat.get(i)) {
+                                if (distG == -1 && t.cabeGrupo(grupos.get(i))) {  // Primero que hemos encontrado
+                                    minG2 = grupos.get(i);
+                                    distG = Math.hypot( Math.abs(minG.getCoordX() - minG2.getCoordX()) ,
+                                                        Math.abs(minG.getCoordY() - minG2.getCoordY()));
+                                } else {            // Miramos si es mejor
+                                    Grupo gActual = grupos.get(i);
+                                    double distancia = Math.hypot( Math.abs(minG.getCoordX() - gActual.getCoordX()) ,
+                                                                   Math.abs(minG.getCoordY() - gActual.getCoordY()));
+                                    if (distG > distancia && t.cabeGrupo(gActual)) {
+                                        minG2 = gActual;
+                                        distG = distancia;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (distG == -1) // Hay que mirar si hemos encontrado algun grupo que pueda caber
+                            break;
+                        else {
+                            t.añadeGrupo(minG2);
+                            visitat.set(grupos.indexOf(minG2), Boolean.TRUE);
+                            minG = minG2;
                         }
                     }
                     
+                    rescates.get(heli).add(t);
+                    heli ++;
                 }
-                */
-                
-                
-                /* Grups -> Heli (següent guió)
+                break;
+            }
+            
+            case 4: {
+                /* Grups -> Heli (següent guió del cas 3)
                 int centro = 0, helis = 0;
                 for (int i = 0; i<grupos.size(); i++) {
                     int heli = i%nHelicopteros;
@@ -166,8 +212,7 @@ public class IAPractica1Board {
                     }
                 }
                 */
-                break;
-
+            }
         }
 
         
