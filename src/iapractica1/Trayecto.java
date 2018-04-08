@@ -159,7 +159,7 @@ class Trayecto {
                 tiempo += calculaTiempo(g2.getCoordX(), g2.getCoordY(), 
                                         centroBase.getCoordX(), centroBase.getCoordY());
             }
-        }     
+        }
         tiempo -= calculaTiempoRecoger(g);
         return false;
     }
@@ -232,7 +232,7 @@ class Trayecto {
         int xv = Math.abs(x2 - x1);
         int yv = Math.abs(y2 - y1);
         double distancia = Math.hypot(xv, yv);
-        return (distancia / velocidad);
+        return (distancia / (velocidad / 60));
     }
     private double calculaTiempoRecoger(Grupo g){
         double tiempo = g.getNPersonas();
