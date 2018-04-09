@@ -219,6 +219,14 @@ public class IAPractica1Board {
                 }
                 */
             }
+            case -1: {
+                for (int i = 0; i < grupos.size(); ++i){
+                    Trayecto t = new Trayecto(centros.get(0));
+                    t.añadeGrupo(grupos.get(i));
+                    rescates.get(0).add(t);
+                }
+            }
+                
         }
 
         
@@ -328,6 +336,7 @@ public class IAPractica1Board {
         double tiempo = 0;
         for (int i = 0; i < rescates.size(); ++i){ // cada helicoptero tendra t trayectos
             ArrayList<Trayecto> trayectos = rescates.get(i);
+            if (trayectos.isEmpty()) continue;
             for (int t = 0; t < trayectos.size(); ++t){ // por cada trayecto del helicoptero
                 tiempo += trayectos.get(t).getTiempo();
             }
@@ -487,8 +496,9 @@ public class IAPractica1Board {
             int t = 0;
             for (Trayecto tr : a) {
                 System.out.print("Heli: " + h + "\t\t" + "XY: " + tr.getCentroIni().getCoordX() + " " + tr.getCentroIni().getCoordY() + "\tTray: " + t + "(" + tr.getTiempo() + ")" +"\t\tGrupos: " + tr.getNGrupos() + " -->");
-                for (int i=0; i<tr.getNGrupos(); i++)
-                    System.out.print(" (" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")" + "[" + tr.getGrupo(i).getPrioridad() + "]");                
+                for (int i=0; i<tr.getNGrupos(); i++){
+                    System.out.print(grupos.indexOf(tr.getGrupo(i)) + ".(" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")" + "[" + tr.getGrupo(i).getPrioridad() + "]");    
+                }
                 System.out.println();
                 t++;
             }
