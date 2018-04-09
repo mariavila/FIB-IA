@@ -51,7 +51,7 @@ public class IAPractica1Board {
                     int heli = i%nHelicopteros;
                     int hCentro = centros.get(centro).getNHelicopteros();
 
-                    if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
+                    /*if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
                         centro++;
                         helis += hCentro;
                         if (centro > centros.size()) {
@@ -60,7 +60,13 @@ public class IAPractica1Board {
                         }
                     }
                     
-                    Trayecto t = new Trayecto(centros.get(centro));
+                    Trayecto t = new Trayecto(centros.get(centro));*/
+                    
+                    int centrosSize = centros.size();
+                        heli = (heli+1)%nHelicopteros;
+
+                    Trayecto t = new Trayecto(centros.get(heli%centrosSize));
+                    
                     t.añadeGrupo(grupos.get(i));
                     rescates.get(heli).add(t);
 
