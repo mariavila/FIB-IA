@@ -236,7 +236,7 @@ public class IAPractica1Board {
 
             if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
         
-        printEstado();
+        //printEstado();
     }
 
     private IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs, int exp) {
@@ -508,5 +508,9 @@ public class IAPractica1Board {
         double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
         System.out.println("Tiempo total: " + tiempoTotal);
         System.out.println("Tiempo grupos prioridad 1: " + tiempoGruposPrio1);
+     }
+     
+     public double return_tiempo1(){
+         return calculaTiempoTotal();
      }
 }

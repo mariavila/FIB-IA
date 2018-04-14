@@ -80,6 +80,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                             }
                         }
                     }
+                    
                     //MOVE
                     //añadir un nuevo trayecto a heli2 que recoja un grupo de heli1 tray1
                     if(heli1!=heli2){
@@ -91,6 +92,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                             retval.add(succ);
                         }
                     }
+                    
                 }
             }
         }
