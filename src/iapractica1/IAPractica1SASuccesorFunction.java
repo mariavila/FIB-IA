@@ -50,19 +50,19 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
                     }
                 }
             }
-            else if (operator == 1 && !(heli1 == heli2 && tray1==tray2) && heli2 >= heli1){
-                for(int g1 = 0; g1 < nGrupos1; ++g1){
-                    for(int g2 = 0; g2 < nGrupos2; ++g2){
-                        //si podemos hacer el swap entre g1 y g2
-                        //se tiene en cuenta que despues del swap no se supere el numero max de personas en cada trayecto
-                        if(nPersonas1 - board.getNpersonas(heli1, tray1, g1) + board.getNpersonas(heli2, tray2,g2) <= 15
-                            && nPersonas2 - board.getNpersonas(heli2, tray2, g2) + board.getNpersonas(heli1, tray1,g1) <= 15){
-                            validState = true;
-                            successor.swap(board.getGrupo(heli1, tray1, g1), heli1, tray1, board.getGrupo(heli2, tray2, g2), heli2, tray2);
-                            Successor succ = new Successor("swap g: " + g1 + " t: " + tray1 + " h: " + heli1 + 
-                                                " with g: " + g2 + " t: " + tray2 + " h: " + heli2, successor);
-                            retval.add(succ);
-                        }
+            else if (operator == 1){
+                min = 0; max = nGrupos1; rango = max - min ; int g1 = min + rand.nextInt(rango);
+                min = 0; max = nGrupos2; rango = max - min; int g2 = rand.nextInt(rango) + min;
+                if(!(heli1 == heli2 && tray1==tray2 && g1==g2)){ 
+                    //si podemos hacer el swap entre g1 y g2
+                    //se tiene en cuenta que despues del swap no se supere el numero max de personas en cada trayecto
+                    if(nPersonas1 - board.getNpersonas(heli1, tray1, g1) + board.getNpersonas(heli2, tray2,g2) <= 15
+                        && nPersonas2 - board.getNpersonas(heli2, tray2, g2) + board.getNpersonas(heli1, tray1,g1) <= 15){
+                        validState = true;
+                        successor.swap(board.getGrupo(heli1, tray1, g1), heli1, tray1, board.getGrupo(heli2, tray2, g2), heli2, tray2);
+                        Successor succ = new Successor("swap g: " + g1 + " t: " + tray1 + " h: " + heli1 + 
+                                            " with g: " + g2 + " t: " + tray2 + " h: " + heli2, successor);
+                        retval.add(succ);
                     }
                 }
             }
