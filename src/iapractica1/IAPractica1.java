@@ -22,7 +22,7 @@ import java.util.Random;
 public class IAPractica1 {   
     public static void main(String[] args) throws Exception {
         int ncentros = 5;
-        int ngrupos = 20;
+        int ngrupos = 100;
         int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
         int initialState = 1;
         int heuristic = 1; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
@@ -49,6 +49,10 @@ public class IAPractica1 {
           
         IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs, heuristic);
         
+        //Print the initial state
+        System.out.println("---------------------- ESTADO INICIAL ---------------");
+        board.printEstado();
+        System.out.println();
         
         // TEST CLONE 
         /*
@@ -83,7 +87,7 @@ public class IAPractica1 {
         long timeIni = java.lang.System.currentTimeMillis();
         SearchAgent agent = new SearchAgent(p, alg);
         long timeFi = java.lang.System.currentTimeMillis();
-	// We print the results of the search
+	// We print the results of the search     
         System.out.println("---------------------- ESTADO FINAL ---------------");
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
         estadoFinal.printEstado();

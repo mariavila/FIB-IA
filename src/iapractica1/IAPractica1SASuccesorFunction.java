@@ -19,9 +19,15 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
             /*  SEEDS ALEATORIAS */
             Random rand = new Random();
             int min = 0, max = nHeli, rango = max - min;                      int heli1 = rand.nextInt(rango) + min;
-            min = 0; max = board.getNTrayectorias(heli1); rango = max - min ; int tray1 = rand.nextInt(rango) + min;
+            min = 0; max = board.getNTrayectorias(heli1); rango = max - min ; 
+            int tray1 = 0;
+            if (rango == 0) continue; // No existirá ningún trayecto
+            else tray1 = rand.nextInt(rango) + min;
             min = 0; max = nHeli; rango = max - min;                          int heli2 = rand.nextInt(rango) + min;
-            min = 0; max = board.getNTrayectorias(heli2); rango = max - min ; int tray2 = rand.nextInt(rango) + min;
+            min = 0; max = board.getNTrayectorias(heli2); rango = max - min ; 
+            int tray2;
+            if (rango == 0) continue; // No existirá ningún trayecto
+            else tray2 = rand.nextInt(rango) + min;
             min = 0; max = 3; rango = max - min;                              int operator = rand.nextInt(rango) + min;
 
             // Conditions
@@ -47,12 +53,13 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
                         Successor succ = new Successor("move to existing g: " + i + " t: " + tray1 + " h: " + heli1 + 
                                             " to t: " + tray2 + " h: " + heli2, successor);
                         retval.add(succ);
+                        return retval;
                     }
                 }
             }
             else if (operator == 1){
-                min = 0; max = nGrupos1; rango = max - min ; int g1 = min + rand.nextInt(rango);
-                min = 0; max = nGrupos2; rango = max - min; int g2 = rand.nextInt(rango) + min;
+                min = 0; max = nGrupos1; rango = max - min ; if (rango == 0) rango = 1;int g1 = min + rand.nextInt(rango);
+                min = 0; max = nGrupos2; rango = max - min; if (rango == 0) rango = 1;int g2 = rand.nextInt(rango) + min;
                 if(!(heli1 == heli2 && tray1==tray2 && g1==g2)){ 
                     //si podemos hacer el swap entre g1 y g2
                     //se tiene en cuenta que despues del swap no se supere el numero max de personas en cada trayecto
@@ -63,6 +70,7 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
                         Successor succ = new Successor("swap g: " + g1 + " t: " + tray1 + " h: " + heli1 + 
                                             " with g: " + g2 + " t: " + tray2 + " h: " + heli2, successor);
                         retval.add(succ);
+                        return retval;
                     }
                 }
             }
@@ -73,6 +81,7 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
                     Successor succ = new Successor("move to new g: " + i + " t: " + tray1 + " h: " + heli1 + 
                                         " to t: " + board.getNTrayectorias(heli2) + " h: " + heli2, successor);
                     retval.add(succ);
+                    return retval;
                 }
             }
         }
