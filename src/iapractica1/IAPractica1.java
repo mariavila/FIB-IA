@@ -28,7 +28,7 @@ public class IAPractica1 {
                         int initialState, int heuristic,
                         int steps, int stiter, int k, double lamb) throws Exception{
         Search alg;
-            if (algoritmo.trim().toLowerCase().contains("HillClimbing")) alg = new HillClimbingSearch();
+            if (algoritmo.equals("HillClimbing")) alg = new HillClimbingSearch();
             else alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
         
         //  SEEDS ALEATORIAS 

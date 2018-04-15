@@ -11,6 +11,7 @@ import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.SimulatedAnnealingSearch;
+import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -345,7 +346,7 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new IAPractica1JFrame().setVisible(true);
+                new IAPractica1JFrame().setVisible(false);
                 Practica1Rescats p = new Practica1Rescats();
                 p.inicializar();
             }

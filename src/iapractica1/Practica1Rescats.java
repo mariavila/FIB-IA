@@ -73,7 +73,9 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_NumCentros.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumCentros.setText("Nº Centros");
 
+        Slider_NumCentros.setMaximum(30);
         Slider_NumCentros.setMinimum(1);
+        Slider_NumCentros.setValue(10);
         Slider_NumCentros.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 Slider_NumCentrosStateChanged(evt);
@@ -94,7 +96,9 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_NumHelis.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumHelis.setText("Helicóperos por Centro");
 
+        Slider_NumHelis.setMaximum(30);
         Slider_NumHelis.setMinimum(1);
+        Slider_NumHelis.setValue(1);
         Slider_NumHelis.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 Slider_NumHelisStateChanged(evt);
@@ -232,11 +236,11 @@ public class Practica1Rescats extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Label_ValNumCentros.setText("50");
+        Label_ValNumCentros.setText("10");
 
         Label_ValNumGrupos.setText("50");
 
-        Label_ValNumHelis.setText("50");
+        Label_ValNumHelis.setText("1");
 
         button_GO.setText("GO!");
         button_GO.addActionListener(new java.awt.event.ActionListener() {
@@ -390,6 +394,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
     }//GEN-LAST:event_Slider_NumHelisStateChanged
 
     private void button_GOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_GOActionPerformed
+        
         IAPractica1 practica = new IAPractica1();
         String alg = "HillClimbing";
         if (RB_HillClimbing.isSelected())            alg = "HillClimbing";
@@ -413,7 +418,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
         
         ArrayList<String> strings = new ArrayList<>();
         try {
-             strings = practica.main2(alg, nC, nG, nH, EI, H, S, ST, K, Lamb);
+            strings = practica.main2(alg, nC, nG, nH, EI, H, S, ST, K, Lamb);
         } catch (Exception ex) {
             System.out.println("No se ha podido inicializar el algoritmo de AIMA");
         }

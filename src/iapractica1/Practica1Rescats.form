@@ -171,7 +171,9 @@
     </Component>
     <Component class="javax.swing.JSlider" name="Slider_NumCentros">
       <Properties>
+        <Property name="maximum" type="int" value="30"/>
         <Property name="minimum" type="int" value="1"/>
+        <Property name="value" type="int" value="10"/>
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Slider_NumCentrosStateChanged"/>
@@ -204,7 +206,9 @@
     </Component>
     <Component class="javax.swing.JSlider" name="Slider_NumHelis">
       <Properties>
+        <Property name="maximum" type="int" value="30"/>
         <Property name="minimum" type="int" value="1"/>
+        <Property name="value" type="int" value="1"/>
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Slider_NumHelisStateChanged"/>
@@ -414,7 +418,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="Label_ValNumCentros">
       <Properties>
-        <Property name="text" type="java.lang.String" value="50"/>
+        <Property name="text" type="java.lang.String" value="10"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_ValNumGrupos">
@@ -424,7 +428,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_ValNumHelis">
       <Properties>
-        <Property name="text" type="java.lang.String" value="50"/>
+        <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="button_GO">
