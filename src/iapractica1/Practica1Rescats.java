@@ -5,29 +5,22 @@
  */
 package iapractica1;
 
-import IA.Desastres.Centros;
-import IA.Desastres.Grupos;
-import aima.search.framework.Problem;
-import aima.search.framework.Search;
-import aima.search.framework.SearchAgent;
-import aima.search.informed.SimulatedAnnealingSearch;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.awt.Component;
+import java.util.ArrayList;
+
 
 
 /**
  *
  * @author Bermellet
  */
-public class IAPractica1JFrame extends javax.swing.JFrame {
+public class Practica1Rescats extends javax.swing.JFrame {
     
     /**
      * Creates new form IAPractica1JFrame
      */
-    public IAPractica1JFrame() {
-        //initComponents();
+    public Practica1Rescats() {
+        initComponents();
     }
 
     /**
@@ -64,6 +57,16 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
         Label_ValNumCentros = new javax.swing.JLabel();
         Label_ValNumGrupos = new javax.swing.JLabel();
         Label_ValNumHelis = new javax.swing.JLabel();
+        button_GO = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textFin = new javax.swing.JTextArea();
+        Label_NumHelis1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textIni = new javax.swing.JTextArea();
+        Label_NumHelis2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textEjec = new javax.swing.JTextArea();
+        Label_NumHelis3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,7 +92,7 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
         });
 
         Label_NumHelis.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        Label_NumHelis.setText("Helicóperos por Grupo");
+        Label_NumHelis.setText("Helicóperos por Centro");
 
         Slider_NumHelis.setMinimum(1);
         Slider_NumHelis.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -235,37 +238,93 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
 
         Label_ValNumHelis.setText("50");
 
+        button_GO.setText("GO!");
+        button_GO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_GOActionPerformed(evt);
+            }
+        });
+
+        textFin.setColumns(20);
+        textFin.setRows(5);
+        jScrollPane1.setViewportView(textFin);
+
+        Label_NumHelis1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_NumHelis1.setText("Resultado inicial");
+
+        textIni.setColumns(20);
+        textIni.setRows(5);
+        textIni.setTabSize(2);
+        jScrollPane2.setViewportView(textIni);
+
+        Label_NumHelis2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_NumHelis2.setText("Resultado final");
+
+        textEjec.setColumns(1);
+        textEjec.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        textEjec.setRows(1);
+        textEjec.setTabSize(4);
+        textEjec.setAlignmentX(1.0F);
+        textEjec.setAlignmentY(1.0F);
+        jScrollPane3.setViewportView(textEjec);
+
+        Label_NumHelis3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_NumHelis3.setText("Tiempo de ejecución (ms)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Label_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Label_ValNumCentros))
+                                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Label_NumHelis)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Label_ValNumHelis))
-                            .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Label_NumGrupos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Label_ValNumGrupos))
-                            .addComponent(Slider_NumGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Slider_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(79, 79, 79)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Label_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_ValNumCentros))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Label_NumHelis)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_ValNumHelis))
+                                    .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Label_NumGrupos)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_ValNumGrupos))
+                                    .addComponent(Slider_NumGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Slider_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(127, 127, 127)
+                                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(button_GO, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(51, 51, 51)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(175, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_NumHelis3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Label_NumHelis1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Label_NumHelis2)
+                .addGap(273, 273, 273))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,9 +334,6 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
                     .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -296,8 +352,26 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
                             .addComponent(Label_NumHelis)
                             .addComponent(Label_ValNumHelis))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(233, Short.MAX_VALUE))
+                        .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Label_NumHelis3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(button_GO, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label_NumHelis1)
+                    .addComponent(Label_NumHelis2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -315,43 +389,47 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
         Label_ValNumHelis.setText(String.valueOf(Slider_NumHelis.getValue()));
     }//GEN-LAST:event_Slider_NumHelisStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void button_GOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_GOActionPerformed
+        IAPractica1 practica = new IAPractica1();
+        String alg = "HillClimbing";
+        if (RB_HillClimbing.isSelected())            alg = "HillClimbing";
+        else if (RB_SimulatedAnnealing.isSelected()) alg = "SimulatedAnnealing";
+        
+        int nC = Integer.valueOf(Label_ValNumCentros.getText());
+        int nG = Integer.valueOf(Label_ValNumGrupos.getText());
+        int nH = Integer.valueOf(Label_ValNumHelis.getText());
+        int EI = 1;
+        if (RB_EstadoInicial1.isSelected())      EI = 1;
+        else if (RB_EstadoInicial2.isSelected()) EI = 2;
+        else if (RB_EstadoInicial3.isSelected()) EI = 3;
+        int H = 1;
+        if (RB_Heuristic1.isSelected())      H = 1;
+        else if (RB_Heuristic2.isSelected()) H = 2;
+        
+        int S = 300000;
+        int ST = 5000;
+        int K = 5;
+        double Lamb = 0.01;
+        
+        ArrayList<String> strings = new ArrayList<>();
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IAPractica1JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IAPractica1JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IAPractica1JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IAPractica1JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+             strings = practica.main2(alg, nC, nG, nH, EI, H, S, ST, K, Lamb);
+        } catch (Exception ex) {
+            System.out.println("No se ha podido inicializar el algoritmo de AIMA");
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new IAPractica1JFrame().setVisible(true);
-                Practica1Rescats p = new Practica1Rescats();
-                p.inicializar();
-            }
-        });
+        
+        textIni.setText(strings.get(0));
+        textFin.setText(strings.get(1));
+        textEjec.setText(strings.get(2));
+        
+    }//GEN-LAST:event_button_GOActionPerformed
+    
+    public void inicializar(){
+        this.setVisible(true);
+        this.setFocusable(true);
+        this.setEnabled(true);
     }
-
+    
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup BG_Algoritmo;
@@ -363,6 +441,9 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel Label_NumCentros;
     private javax.swing.JLabel Label_NumGrupos;
     private javax.swing.JLabel Label_NumHelis;
+    private javax.swing.JLabel Label_NumHelis1;
+    private javax.swing.JLabel Label_NumHelis2;
+    private javax.swing.JLabel Label_NumHelis3;
     private javax.swing.JLabel Label_ValNumCentros;
     private javax.swing.JLabel Label_ValNumGrupos;
     private javax.swing.JLabel Label_ValNumHelis;
@@ -376,8 +457,15 @@ public class IAPractica1JFrame extends javax.swing.JFrame {
     private javax.swing.JSlider Slider_NumCentros;
     private javax.swing.JSlider Slider_NumGrupos;
     private javax.swing.JSlider Slider_NumHelis;
+    private javax.swing.JButton button_GO;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea textEjec;
+    private javax.swing.JTextArea textFin;
+    private javax.swing.JTextArea textIni;
     // End of variables declaration//GEN-END:variables
 }

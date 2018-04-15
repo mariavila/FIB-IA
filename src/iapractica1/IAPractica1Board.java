@@ -489,7 +489,6 @@ public class IAPractica1Board {
      
      
      public void printEstado() {
-        
          // DEBUG
         int h = 0;
         for (ArrayList<Trayecto> a : rescates) {
@@ -508,6 +507,29 @@ public class IAPractica1Board {
         double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
         System.out.println("Tiempo total: " + tiempoTotal);
         System.out.println("Tiempo grupos prioridad 1: " + tiempoGruposPrio1);
+     }
+     public String printEstadoString() {
+         String total = "";
+         // DEBUG
+        int h = 0;
+        for (ArrayList<Trayecto> a : rescates) {
+            int t = 0;
+            for (Trayecto tr : a) {
+                total += ("Heli: " + h + "\t\t" + "XY: " + tr.getCentroIni().getCoordX() + " " + tr.getCentroIni().getCoordY() + "\tTray: " + t + "(" + tr.getTiempo() + ")" +"\t\tGrupos: " + tr.getNGrupos() + " -->");
+                for (int i=0; i<tr.getNGrupos(); i++){
+                    total += (grupos.indexOf(tr.getGrupo(i)) + ".(" + tr.getGrupo(i).getCoordX() + ", " + tr.getGrupo(i).getCoordY() + ")" + "[" + tr.getGrupo(i).getPrioridad() + "]");    
+                }
+                total += "\n";
+                t++;
+            }
+            h++;
+        }
+        double tiempoTotal = calculaTiempoTotal();
+        double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
+        total += ("\n--------------------------------\nTiempo total: " + tiempoTotal + "\n");
+        total += ("Tiempo grupos prioridad 1: " + tiempoGruposPrio1);
+        
+        return total;
      }
      
      public double return_tiempo1(){
