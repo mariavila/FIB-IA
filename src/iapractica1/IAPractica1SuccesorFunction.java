@@ -33,22 +33,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                                 nPersonas2 += board.getNpersonas(heli2, tray2, i);
                             }
 
-                            //MOVE   
-                            /**
-                            //si hay uno o mas espacios en tray1
-                            if(nGrupos1 < 3){
-                                for(int i = 0; i<nGrupos2; ++i){
-                                    if(nPersonas1 + board.getNpersonas(heli2, tray2, i) <= 15){
-                                        IAPractica1Board b = board.clone();
-                                        b.move(board.getGrupo(heli2, tray2, i), heli2, tray2, heli1, tray1);
-                                        Successor succ = new Successor("move g: " + i + " t: " + tray2 + " h: " + heli2 + 
-                                                            "to t: " + tray1 + " h: " + heli1, b);
-                                        retval.add(succ);
-                                    }
-                                }
-                            }
-                           */
-                            //si hay uno o mas espacios en tray2
+                            //MOVE SIN Añadir
                             if(nGrupos2 < 3){
                                 for(int i = 0; i<nGrupos1; ++i){ //para no hacer dos veces el mismo swap
                                     if(nPersonas2 + board.getNpersonas(heli1, tray1, i) <= 15){
@@ -81,8 +66,7 @@ public class IAPractica1SuccesorFunction implements SuccessorFunction{
                         }
                     }
                     
-                    //MOVE
-                    //añadir un nuevo trayecto a heli2 que recoja un grupo de heli1 tray1
+                    //MOVE CON Añadir
                     if(heli1!=heli2){
                         for(int i = 0; i< board.getNgrupos(heli1, tray1); ++i){
                             IAPractica1Board b = board.clone();

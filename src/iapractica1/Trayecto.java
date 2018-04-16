@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
- 
 package iapractica1;
 
 import IA.Desastres.Centro;
@@ -11,7 +5,7 @@ import IA.Desastres.Grupo;
 
 /**
  *
- * @author albert.carreira
+ * @author albert.carreira & Bermellet
  */
 class Trayecto {
     private Grupo g1 = null;
@@ -167,19 +161,6 @@ class Trayecto {
     public int getCapacidad(){ return capacidad;}
     
     public double getTiempo() {
-        /**
-        double tiempoVuelta = 0;
-        
-        if (g1 != null) {
-            if (g2 == null) tiempoVuelta = calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
-                                        g1.getCoordX(), g1.getCoordY());
-            else if (g3 == null) tiempoVuelta = calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
-                                        g2.getCoordX(), g2.getCoordY());
-            else tiempoVuelta = calculaTiempo(centroBase.getCoordX(), centroBase.getCoordY(), 
-                                        g3.getCoordX(), g3.getCoordY());
-        }
-        return tiempo + tiempoVuelta;
-        */
         return tiempo;
     }
     

@@ -85,6 +85,7 @@ public class IAPractica1SASuccesorFunction implements SuccessorFunction{
                 }
             }
         }
+        
         return retval;
     }
 }

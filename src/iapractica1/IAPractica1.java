@@ -1,5 +1,4 @@
 package iapractica1;
-
 import IA.Desastres.Centros;
 import IA.Desastres.Grupos;
 
@@ -22,7 +21,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-public class IAPractica1 {   
+public class IAPractica1 {
+    
+    // Main adaptado a la parte Grafica
     public ArrayList<String> main2(String algoritmo,String seeds, int seedC, int seedG,
                         int ncentros, int ngrupos, int nhelicopteros,
                         int initialState, int heuristic,
@@ -50,24 +51,7 @@ public class IAPractica1 {
         
         ArrayList<String> strings = new ArrayList<>();
         //Print the initial state
-        //System.out.println("---------------------- ESTADO INICIAL ---------------");
         strings.add(board.printEstadoString());
-        //System.out.println();
-        
-        // TEST CLONE 
-        /*
-        System.out.println("\n\nORIGINAL ANTES DEL SWAP:");
-        board.printEstado();
-        
-        IAPractica1Board temp = board.clone();
-        temp.swap(temp.getGrupo(0,0,0), 0, 0, temp.getGrupo(1,0,0), 1, 0);
-        
-        System.out.println("\n\nORIGINAL DESPUES DEL SWAP:");
-        board.printEstado();
-        
-        System.out.println("\n\nAHORA VIENE EL CLON:");
-        temp.printEstado();
-        */
 
         // Create the Problem object
         Problem p ;
@@ -77,7 +61,7 @@ public class IAPractica1 {
                              new IAPractica1GoalTest(),
                              new IAPractica1HeuristicFunction());
         
-        else //if (alg.toString().contains("SimulatedAnnealing"))    
+        else
             p = new  Problem(board,
                              new IAPractica1SASuccesorFunction(),
                              new IAPractica1GoalTest(),
@@ -88,61 +72,54 @@ public class IAPractica1 {
         SearchAgent agent = new SearchAgent(p, alg);
         long timeFi = java.lang.System.currentTimeMillis();
 	// We print the results of the search     
-        //System.out.println("---------------------- ESTADO FINAL ---------------");
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
         strings.add(estadoFinal.printEstadoString());
-        //System.out.println();
         
         strings.add((timeFi-timeIni) + "ms");
         return strings;
     }
+    
+    // Main para EJECUTAR POR CÓDIGO (pasar funcion a static)
     public void main(String[] args) throws Exception {
+        // DETERMINAMOS LOS PARÁMETROS DE ENTRADA
         int ncentros = 5;
         int ngrupos = 100;
-        int nhelicopteros = 1; // Numero de helicopteros en cada centro ¿? DUDA DOC.
-        int initialState = 3;
-        int heuristic = 1; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
+        int nhelicopteros = 1; // Numero de helicopteros en cada centro
+        int initialState = 1;
+        int heuristic = 2; // Heurístico tiempo total(1) o minimizando grupos prioridad 1 (2)
         
-        // Algoritmo: HC o SA
+        // Parámetros Simulated Annealing
         int steps = 300000;
         int stiter = 5000;
         int k = 5; 
         double lamb = 0.01;
-        //Search alg = new HillClimbingSearch();
-        Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
+        
+        // ALGORITMO: HC o SA
+        Search alg = new HillClimbingSearch();
+        //Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
+        
         
         //  SEEDS ALEATORIAS 
+        /*
         int min = 0, max = 1000, rango = max - min +1;
         Random rand = new Random();
-        //int seedCentros = rand.nextInt(rango) + min;
-        //int seedGrupos = rand.nextInt(rango) + min;
+        int seedCentros = rand.nextInt(rango) + min;
+        int seedGrupos = rand.nextInt(rango) + min;
+        */
+        // SEEDS CONCRETAS
+        int seedCentros,seedGrupos;
+        seedCentros = seedGrupos = 500;
         
-        int seedCentros = 900, seedGrupos = seedCentros;
-        
+        // DETERMINAMOS EL PROBLEMA
         Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
         Grupos gs = new Grupos(ngrupos,seedGrupos);
-          
+        
         IAPractica1Board board = new IAPractica1Board(initialState, nhelicopteros*ncentros, cs, gs, heuristic);
         
-        //Print the initial state
+        //Print Initial State
         System.out.println("---------------------- ESTADO INICIAL ---------------");
         board.printEstado();
         System.out.println();
-        
-        // TEST CLONE 
-        /*
-        System.out.println("\n\nORIGINAL ANTES DEL SWAP:");
-        board.printEstado();
-        
-        IAPractica1Board temp = board.clone();
-        temp.swap(temp.getGrupo(0,0,0), 0, 0, temp.getGrupo(1,0,0), 1, 0);
-        
-        System.out.println("\n\nORIGINAL DESPUES DEL SWAP:");
-        board.printEstado();
-        
-        System.out.println("\n\nAHORA VIENE EL CLON:");
-        temp.printEstado();
-        */
 
         // Create the Problem object
         Problem p ;
@@ -152,7 +129,7 @@ public class IAPractica1 {
                              new IAPractica1GoalTest(),
                              new IAPractica1HeuristicFunction());
         
-        else //if (alg.toString().contains("SimulatedAnnealing"))    
+        else
             p = new  Problem(board,
                              new IAPractica1SASuccesorFunction(),
                              new IAPractica1GoalTest(),
@@ -162,11 +139,15 @@ public class IAPractica1 {
         long timeIni = java.lang.System.currentTimeMillis();
         SearchAgent agent = new SearchAgent(p, alg);
         long timeFi = java.lang.System.currentTimeMillis();
-	// We print the results of the search     
+        
+        
+	// PRINT DE LOS RESULTADOS
         System.out.println("---------------------- ESTADO FINAL ---------------");
         IAPractica1Board estadoFinal = (IAPractica1Board)alg.getGoalState();
         estadoFinal.printEstado();
         System.out.println();
+        
+        // Para ver los PASOS del algoritmo (Hill Climbing):
         //printActions(agent.getActions());
         //printInstrumentation(agent.getInstrumentation());
 
@@ -174,14 +155,13 @@ public class IAPractica1 {
         System.out.println("Total time: "+ (timeFi-timeIni) + "ms");
     }
 
-        private static void printInstrumentation(Properties properties) {
+    private static void printInstrumentation(Properties properties) {
         Iterator keys = properties.keySet().iterator();
         while (keys.hasNext()) {
             String key = (String) keys.next();
             String property = properties.getProperty(key);
             System.out.println(key + " : " + property);
         }
-        
     }
     
     private static void printActions(List actions) {

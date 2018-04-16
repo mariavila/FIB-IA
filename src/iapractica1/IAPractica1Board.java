@@ -5,24 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * Created by bejar on 17/01/17.
- */
-public class IAPractica1Board {
-    /* Class independent from AIMA classes
-       - It has to implement the state of the problem and its operators
-     *
 
-    /* State data structure
-        array for each helicopter which groups rescue
-     */
-    
+public class IAPractica1Board {
+    // Arrays para guardar los centros, los grupos y los trayectos de cada helicóptero
     private ArrayList<Centro> centros;
     private ArrayList<Grupo> grupos;
     private ArrayList<ArrayList<Trayecto>> rescates;
     private int experiment = 0;
+    
     /* Constructoras */
-
     public IAPractica1Board(int initialState, int nHelicopteros, ArrayList<Centro> cs, ArrayList<Grupo> gs, int experiment) {
         rescates = new ArrayList<>(); for (int i = 0; i < nHelicopteros; ++i){ ArrayList<Trayecto> t = new ArrayList<>(); rescates.add(t);}
         centros = cs;
@@ -32,35 +23,30 @@ public class IAPractica1Board {
         // Estado inicial
 
         /*  INITIAL STATE:
-        1 ->    Heli 1 recoge grupo 1 y vuelve
-                Heli 2 recoge grupo 2 y vuelve, etc.
+        
+        1 ->    Helicóptero 1 recoge grupo 1 y vuelve
+                Helicóptero 2 recoge grupo 2 y vuelve
+                ....  Hasta que no quedan grupos sin recoger
 
-        2->     Helicòpter 1 va recollint grups fins que tingui 
-                10 persones o 2 grups màxim (s’agafa per ordre d’id)
+        2->     Helicóptero 1 va recogiendo grupos hasta que tenga
+                10 personas o 2 grupos máximo (se cogen por orden de id)
+                ....  Hasta que no quedan grupos sin recoger
         
-        3->     Helicopter 1 busca els grups més a prop per fer un trajecte complet
-                Helicopter 2 busca els grups més a prop per fer un trajecte complet
-                ....  Fins que tots els grups estan recollits
+        3->     Helicóptero 1 busca los grupos más cercanos para hacer un
+                trayecto completo.
+                Helicóptero 2 busca los grupos más cercanos para hacer un
+                trayecto completo.
+                ....  Hasta que no quedan grupos sin recoger
         
+        -1 ->   Helicóptero 1 recoge todos los grupos, uno en cada trayecto
         
         */
+        
         switch (initialState) {
             case 1: {
                 int centro = 0, helis = 0;
                 for (int i = 0; i < grupos.size(); i++) {
                     int heli = i%nHelicopteros;
-                    int hCentro = centros.get(centro).getNHelicopteros();
-
-                    /*if ((heli - helis) > hCentro) { // Ver si el siguiente heli está en el mismo centro
-                        centro++;
-                        helis += hCentro;
-                        if (centro > centros.size()) {
-                            centro = 0;
-                            helis = 0;
-                        }
-                    }
-                    
-                    Trayecto t = new Trayecto(centros.get(centro));*/
                     
                     int centrosSize = centros.size();
                         heli = (heli+1)%nHelicopteros;
@@ -71,13 +57,10 @@ public class IAPractica1Board {
                     rescates.get(heli).add(t);
 
                 }
-
-                
-
                 break;
             }
-
-
+            
+            
             case 2: {
                 int MAX_CAPACIDAD = 15;
                 int MAX_GRUPOS = 2;
@@ -100,10 +83,10 @@ public class IAPractica1Board {
                     else{nuevo = true; --i;}
                     
                     if (nuevo){
-                        //Añadimos el que tenemos
+                        // Añadimos el que tenemos
                         rescates.get(heli%nHelicopteros).add(t);
 
-                        //cambiamos de heli e inicializamos un nuevo trayecto
+                        // Cambiamos de heli e inicializamos un nuevo trayecto
                         int centrosSize = centros.size();
                         heli = (heli+1)%nHelicopteros;
 
@@ -112,13 +95,10 @@ public class IAPractica1Board {
                         nuevo = false;
                     }
                 }
-
-
                 break;
             }
 
             case 3: {
-                //  Heli -> Grups (el que volem fer)
                 Boolean[] array = new Boolean[grupos.size()];
                 Arrays.fill(array, Boolean.FALSE);
                 ArrayList<Boolean> visitat = new ArrayList<>(Arrays.asList(array));
@@ -189,36 +169,6 @@ public class IAPractica1Board {
                 break;
             }
             
-            case 4: {
-                /* Grups -> Heli (següent guió del cas 3)
-                int centro = 0, helis = 0;
-                for (int i = 0; i<grupos.size(); i++) {
-                    int heli = i%nHelicopteros;
-                    int hCentro = centros.get(centro).getNHelicopteros();
-                    
-                    if ((heli - helis)>hCentro) { // Mirar si siguiente heli en mismo centro
-                        centro++;
-                        helis += hCentro;
-                        if (centro > centros.size()) {
-                            centro = 0;
-                            helis = 0;
-                        }
-                    }
-                    
-                    // Búsqueda del grupo más cercano
-                    Trayecto t;
-                    if (rescates.get(heli).isEmpty() )  // No había ningun trayecto
-                        t = new Trayecto(centros.get(centro));
-                    else {
-                        t = rescates.get(heli).get(rescates.get(heli).size() -1);
-                        if (t.getCapacidad() == 0 | t.getNGrupos() == 3) {
-                            // Creamos nuevo trayecto
-                            
-                        }
-                    }
-                }
-                */
-            }
             case -1: {
                 for (int i = 0; i < grupos.size(); ++i){
                     Trayecto t = new Trayecto(centros.get(0));
@@ -226,19 +176,11 @@ public class IAPractica1Board {
                     rescates.get(0).add(t);
                 }
             }
-                
         }
-
-        
-        
-
-        /*Grupo añadir = grupos.get(i);
-
-            if (rescates.get(i%nHelicopteros).get(rescate).cabeGrupo(añadir))*/
-        
-        //printEstado();
+        // printEstado();
     }
-
+    
+    // Constructora para hacer CLONE
     private IAPractica1Board(ArrayList<ArrayList<Trayecto>> h, ArrayList<Centro> cs, ArrayList<Grupo> gs, int exp) {
         // Como centros y grupos no van a cambiar, todas las copias pueden apuntar al original
         centros = cs;
@@ -268,7 +210,8 @@ public class IAPractica1Board {
         }
         */
     }
-
+    
+    /*********************************************************************************************************/
     /* Operadores */
     public void move(Grupo gCambio, int heliActual, int trayectoActual, int heliCambio, int trayectoCambio){
         // Eliminamos el grupo gCambio del trayectoActual
@@ -309,18 +252,16 @@ public class IAPractica1Board {
     /** Función heurística
      * @return Tiempo total de la solución según el heurístico 1 o 2
      */
-
     public double heuristic(){
-        // compute the number of coins out of place respect to solution
         int inf = Integer.MAX_VALUE;
-        //if (!todosLosGruposRescatados()) return inf; //solución mala, no se recogen todos los grupos
         
         if (experiment == 1){ 
             return calculaTiempoTotal();
         }
         else{
-            float k = 0.4f;
-            float j = 1f - k;
+            //float k = 0.4f;
+            //float j = 1f - k;
+            float k=1f, j=1*k;
             
             double tiempoTotal = calculaTiempoTotal();
             double tiempoGruposPrio1 = calculaTiempoHastaGrupoPrio1();
@@ -350,31 +291,6 @@ public class IAPractica1Board {
      * @return tiempo desde el final hasta el primer grupo de prioridad 1
      */
     private double calculaTiempoHastaGrupoPrio1(){
-        /*double tiempoHastaElPrimero = 0;
-        Boolean encontrado = false;
-        int n = getUltimoTrayecto();
-        for (int t = n; t > 0; --t){
-            for (int i = 0; i < rescates.size(); ++i){ // Miramos por todos los helicopteros, desde el que tiene más trayectos
-                if (rescates.get(i).size() == n){ // Nos quedamos con los que tienen más trayectos
-                    if (!encontrado){
-                        for (int j = n-1; j > 0; --j){ //De entre todos sus trayectos miramos si tiene algun grupo de prioridad 1, si no seguimos buscando
-                            Trayecto tray = rescates.get(i).get(j);
-                            for (int grupo = 0; grupo < tray.getNGrupos(); ++grupo){
-                                if (tray.getGrupo(grupo) != null && tray.getGrupo(grupo).getPrioridad() == 1) encontrado = true;
-                            }
-                            if (encontrado) break;
-                            tiempoHastaElPrimero += tray.getTiempo();
-                        }
-                    }
-                    else{ //Ya hemos encontrado un grupo de prioridad 1, miramos el resto de posibles helicopteros con trayectos con grupos de prio1
-                        
-                    }
-                    
-                }
-            }
-        }
-        return tiempoHastaElPrimero;*/
-        
         double tiempoGruposPrio1 = 0;
         for (int i = 0; i < rescates.size(); ++i){
             ArrayList<Trayecto> trayectosHeli = rescates.get(i);
@@ -402,8 +318,8 @@ public class IAPractica1Board {
                 tiempoTotalTrayectos += trayectosHeli.get(j).getTiempo();
             } tiempoTotalTrayectos += 10*(trayectosHeli.size()-1);
             
-            //if (tiempoTotalTrayectos == tiempoHeli) tiempoGruposPrio1 += 0; //O no hay grupos de prio 1
-            tiempoGruposPrio1 += (tiempoTotalTrayectos-tiempoHeli); //Tiempo hasta llegar al trayecto que recoge el ultimo grupo de prio 1 del heli
+            //Tiempo hasta llegar al trayecto que recoge el ultimo grupo de prio 1 del heli
+            tiempoGruposPrio1 += (tiempoTotalTrayectos-tiempoHeli);
         }
         return tiempoGruposPrio1;
     }
@@ -455,10 +371,11 @@ public class IAPractica1Board {
     /*****************************************************************************************/
      /* Goal test */
      public boolean is_goal(){
-         return Boolean.FALSE; //No s'utilitza en cerca local
+         // No s'utilitza en cerca local
+         return Boolean.FALSE;
      }
 
-     /* auxiliary functions */
+     /* Auxiliary functions */
      public IAPractica1Board clone(){
          IAPractica1Board clone = new IAPractica1Board(rescates,centros,grupos,experiment);
          return clone;
