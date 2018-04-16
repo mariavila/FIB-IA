@@ -35,6 +35,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
         BG_Algoritmo = new javax.swing.ButtonGroup();
         BG_Heuristic = new javax.swing.ButtonGroup();
         BG_EstadoInicial = new javax.swing.ButtonGroup();
+        BG_Semillas = new javax.swing.ButtonGroup();
         Label_NumCentros = new javax.swing.JLabel();
         Slider_NumCentros = new javax.swing.JSlider();
         Label_NumGrupos = new javax.swing.JLabel();
@@ -47,9 +48,9 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_Heuristico = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         RB_EstadoInicial3 = new javax.swing.JRadioButton();
-        Label_EstadoInicial = new javax.swing.JLabel();
-        RB_EstadoInicial1 = new javax.swing.JRadioButton();
         RB_EstadoInicial2 = new javax.swing.JRadioButton();
+        RB_EstadoInicial0 = new javax.swing.JRadioButton();
+        RB_EstadoInicial1 = new javax.swing.JRadioButton();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         RB_HillClimbing = new javax.swing.JRadioButton();
         RB_SimulatedAnnealing = new javax.swing.JRadioButton();
@@ -67,8 +68,19 @@ public class Practica1Rescats extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         textEjec = new javax.swing.JTextArea();
         Label_NumHelis3 = new javax.swing.JLabel();
+        Label_EstadoInicial = new javax.swing.JLabel();
+        jLayeredPane4 = new javax.swing.JLayeredPane();
+        Label_Semillas = new javax.swing.JLabel();
+        textfieldGrupos = new javax.swing.JTextField();
+        textfieldCentros = new javax.swing.JTextField();
+        Label_SemillaCentro = new javax.swing.JLabel();
+        Label_SemillaGrupo = new javax.swing.JLabel();
+        RB_SemillasEspecificas = new javax.swing.JRadioButton();
+        RB_SemillasAleatorias = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Practica 1 IA - Rescates");
+        setResizable(false);
 
         Label_NumCentros.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumCentros.setText("Nº Centros");
@@ -115,10 +127,6 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_Heuristico.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_Heuristico.setText("Heurístico");
 
-        jLayeredPane1.setLayer(RB_Heuristic1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(RB_Heuristic2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(Label_Heuristico, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
@@ -145,55 +153,52 @@ public class Practica1Rescats extends javax.swing.JFrame {
                 .addComponent(RB_Heuristic2)
                 .addContainerGap())
         );
+        jLayeredPane1.setLayer(RB_Heuristic1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(RB_Heuristic2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(Label_Heuristico, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         BG_EstadoInicial.add(RB_EstadoInicial3);
         RB_EstadoInicial3.setText("3 (Avanzado)");
 
-        Label_EstadoInicial.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        Label_EstadoInicial.setText("Estado Inicial");
+        BG_EstadoInicial.add(RB_EstadoInicial2);
+        RB_EstadoInicial2.setText("2 (Medio)");
+
+        BG_EstadoInicial.add(RB_EstadoInicial0);
+        RB_EstadoInicial0.setText("-1 (Debug)");
 
         BG_EstadoInicial.add(RB_EstadoInicial1);
         RB_EstadoInicial1.setSelected(true);
         RB_EstadoInicial1.setText("1 (Simple)");
-
-        BG_EstadoInicial.add(RB_EstadoInicial2);
-        RB_EstadoInicial2.setText("2 (Medio)");
-
-        jLayeredPane2.setLayer(RB_EstadoInicial3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(Label_EstadoInicial, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(RB_EstadoInicial1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(RB_EstadoInicial2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Label_EstadoInicial))
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RB_EstadoInicial1)
-                            .addComponent(RB_EstadoInicial2)
-                            .addComponent(RB_EstadoInicial3))))
-                .addGap(40, 40, 40))
+                    .addComponent(RB_EstadoInicial0)
+                    .addComponent(RB_EstadoInicial3)
+                    .addComponent(RB_EstadoInicial2)
+                    .addComponent(RB_EstadoInicial1))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(Label_EstadoInicial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_EstadoInicial0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(RB_EstadoInicial1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RB_EstadoInicial2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RB_EstadoInicial3)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
+        jLayeredPane2.setLayer(RB_EstadoInicial3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(RB_EstadoInicial2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(RB_EstadoInicial0, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(RB_EstadoInicial1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         BG_Algoritmo.add(RB_HillClimbing);
         RB_HillClimbing.setSelected(true);
@@ -204,10 +209,6 @@ public class Practica1Rescats extends javax.swing.JFrame {
 
         Label_Algoritmo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_Algoritmo.setText("Algoritmo");
-
-        jLayeredPane3.setLayer(RB_HillClimbing, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(RB_SimulatedAnnealing, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(Label_Algoritmo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
         jLayeredPane3.setLayout(jLayeredPane3Layout);
@@ -235,6 +236,9 @@ public class Practica1Rescats extends javax.swing.JFrame {
                 .addComponent(RB_SimulatedAnnealing)
                 .addContainerGap())
         );
+        jLayeredPane3.setLayer(RB_HillClimbing, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(RB_SimulatedAnnealing, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(Label_Algoritmo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         Label_ValNumCentros.setText("10");
 
@@ -249,6 +253,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
             }
         });
 
+        textFin.setEditable(false);
         textFin.setColumns(20);
         textFin.setRows(5);
         jScrollPane1.setViewportView(textFin);
@@ -256,6 +261,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_NumHelis1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumHelis1.setText("Resultado inicial");
 
+        textIni.setEditable(false);
         textIni.setColumns(20);
         textIni.setRows(5);
         textIni.setTabSize(2);
@@ -264,6 +270,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_NumHelis2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumHelis2.setText("Resultado final");
 
+        textEjec.setEditable(false);
         textEjec.setColumns(1);
         textEjec.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         textEjec.setRows(1);
@@ -275,53 +282,105 @@ public class Practica1Rescats extends javax.swing.JFrame {
         Label_NumHelis3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_NumHelis3.setText("Tiempo de ejecución (ms)");
 
+        Label_EstadoInicial.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_EstadoInicial.setText("Estado Inicial");
+
+        Label_Semillas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_Semillas.setText("Semillas:");
+
+        textfieldGrupos.setEditable(false);
+        textfieldGrupos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textfieldGruposKeyTyped(evt);
+            }
+        });
+
+        textfieldCentros.setEditable(false);
+        textfieldCentros.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textfieldCentrosKeyTyped(evt);
+            }
+        });
+
+        Label_SemillaCentro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_SemillaCentro.setText("Centros");
+
+        Label_SemillaGrupo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Label_SemillaGrupo.setText("Grupos");
+
+        BG_Semillas.add(RB_SemillasEspecificas);
+        RB_SemillasEspecificas.setText("Específica");
+        RB_SemillasEspecificas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RB_SemillasEspecificasActionPerformed(evt);
+            }
+        });
+
+        BG_Semillas.add(RB_SemillasAleatorias);
+        RB_SemillasAleatorias.setSelected(true);
+        RB_SemillasAleatorias.setText("Aleatorias");
+        RB_SemillasAleatorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RB_SemillasAleatoriasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
+        jLayeredPane4.setLayout(jLayeredPane4Layout);
+        jLayeredPane4Layout.setHorizontalGroup(
+            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Label_Semillas)
+                    .addComponent(RB_SemillasEspecificas)
+                    .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Label_SemillaCentro, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Label_SemillaGrupo))
+                        .addGap(15, 15, 15)
+                        .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(textfieldGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(textfieldCentros)))
+                    .addComponent(RB_SemillasAleatorias))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+        jLayeredPane4Layout.setVerticalGroup(
+            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                .addComponent(Label_Semillas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(RB_SemillasAleatorias)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_SemillasEspecificas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label_SemillaCentro)
+                    .addComponent(textfieldCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label_SemillaGrupo)
+                    .addComponent(textfieldGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
+        );
+        jLayeredPane4.setLayer(Label_Semillas, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(textfieldGrupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(textfieldCentros, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(Label_SemillaCentro, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(Label_SemillaGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(RB_SemillasEspecificas, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(RB_SemillasAleatorias, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Label_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_ValNumCentros))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Label_NumHelis)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_ValNumHelis))
-                                    .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Label_NumGrupos)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_ValNumGrupos))
-                                    .addComponent(Slider_NumGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Slider_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(127, 127, 127)
-                                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(button_GO, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(51, 51, 51)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_NumHelis3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -329,16 +388,59 @@ public class Practica1Rescats extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Label_NumHelis2)
                 .addGap(273, 273, 273))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(Label_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Label_ValNumCentros))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(Label_NumHelis)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Label_ValNumHelis))
+                        .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(Label_NumGrupos)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Label_ValNumGrupos))
+                        .addComponent(Slider_NumGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Slider_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Label_EstadoInicial))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(button_GO, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Label_NumHelis3)
+                            .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 56, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Label_NumCentros, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,9 +460,14 @@ public class Practica1Rescats extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Slider_NumHelis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Label_EstadoInicial)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLayeredPane4))
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Label_NumHelis3)
@@ -375,7 +482,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
@@ -400,34 +507,79 @@ public class Practica1Rescats extends javax.swing.JFrame {
         if (RB_HillClimbing.isSelected())            alg = "HillClimbing";
         else if (RB_SimulatedAnnealing.isSelected()) alg = "SimulatedAnnealing";
         
-        int nC = Integer.valueOf(Label_ValNumCentros.getText());
-        int nG = Integer.valueOf(Label_ValNumGrupos.getText());
-        int nH = Integer.valueOf(Label_ValNumHelis.getText());
-        int EI = 1;
-        if (RB_EstadoInicial1.isSelected())      EI = 1;
-        else if (RB_EstadoInicial2.isSelected()) EI = 2;
-        else if (RB_EstadoInicial3.isSelected()) EI = 3;
-        int H = 1;
-        if (RB_Heuristic1.isSelected())      H = 1;
-        else if (RB_Heuristic2.isSelected()) H = 2;
-        
-        int S = 300000;
-        int ST = 5000;
-        int K = 5;
-        double Lamb = 0.01;
-        
-        ArrayList<String> strings = new ArrayList<>();
-        try {
-            strings = practica.main2(alg, nC, nG, nH, EI, H, S, ST, K, Lamb);
-        } catch (Exception ex) {
-            System.out.println("No se ha podido inicializar el algoritmo de AIMA");
+        String seed = "Aleatorias"; int sG = 1234; int sC = 1234;
+        Boolean inputOK = true;
+        if (RB_SemillasAleatorias.isSelected())       seed = "Aleatorias";
+        else if (RB_SemillasEspecificas.isSelected()){
+            seed = "Especificas";
+            if (!textfieldGrupos.getText().equals("") && !textfieldCentros.getText().equals("")){
+                sG = Integer.valueOf(textfieldGrupos.getText());
+                sC = Integer.valueOf(textfieldCentros.getText());
+            }
+            else inputOK = false;
         }
         
-        textIni.setText(strings.get(0));
-        textFin.setText(strings.get(1));
-        textEjec.setText(strings.get(2));
-        
+        if(!inputOK){
+            textEjec.setText("Input no OK");
+            textIni.setText("");
+            textFin.setText("");
+        }
+        else{
+            int nC = Integer.valueOf(Label_ValNumCentros.getText());
+            int nG = Integer.valueOf(Label_ValNumGrupos.getText());
+            int nH = Integer.valueOf(Label_ValNumHelis.getText());
+            int EI = 1;
+            if (RB_EstadoInicial1.isSelected())      EI = 1;
+            else if (RB_EstadoInicial2.isSelected()) EI = 2;
+            else if (RB_EstadoInicial3.isSelected()) EI = 3;
+            else if (RB_EstadoInicial0.isSelected()) EI = -1;
+            int H = 1;
+            if (RB_Heuristic1.isSelected())      H = 1;
+            else if (RB_Heuristic2.isSelected()) H = 2;
+
+            int S = 300000;
+            int ST = 5000;
+            int K = 5;
+            double Lamb = 0.01;
+
+            ArrayList<String> strings = new ArrayList<>();
+            try {
+                strings = practica.main2(alg, seed, sC, sG, nC, nG, nH, EI, H, S, ST, K, Lamb);
+            } catch (Exception ex) {
+                System.out.println("No se ha podido inicializar el algoritmo de AIMA");
+            }
+
+            textIni.setText(strings.get(0));
+            textFin.setText(strings.get(1));
+            textEjec.setText(strings.get(2));
+        }
     }//GEN-LAST:event_button_GOActionPerformed
+
+    private void RB_SemillasAleatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RB_SemillasAleatoriasActionPerformed
+        textfieldCentros.setEditable(false);
+        textfieldGrupos.setEditable(false);
+        textfieldCentros.setText("");
+        textfieldGrupos.setText("");
+    }//GEN-LAST:event_RB_SemillasAleatoriasActionPerformed
+
+    private void RB_SemillasEspecificasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RB_SemillasEspecificasActionPerformed
+        textfieldCentros.setEditable(true);
+        textfieldGrupos.setEditable(true);
+    }//GEN-LAST:event_RB_SemillasEspecificasActionPerformed
+
+    private void textfieldCentrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfieldCentrosKeyTyped
+        char enter = evt.getKeyChar();
+        if(!(Character.isDigit(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_textfieldCentrosKeyTyped
+
+    private void textfieldGruposKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textfieldGruposKeyTyped
+        char enter = evt.getKeyChar();
+        if(!(Character.isDigit(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_textfieldGruposKeyTyped
     
     public void inicializar(){
         this.setVisible(true);
@@ -440,6 +592,7 @@ public class Practica1Rescats extends javax.swing.JFrame {
     private javax.swing.ButtonGroup BG_Algoritmo;
     private javax.swing.ButtonGroup BG_EstadoInicial;
     private javax.swing.ButtonGroup BG_Heuristic;
+    private javax.swing.ButtonGroup BG_Semillas;
     private javax.swing.JLabel Label_Algoritmo;
     private javax.swing.JLabel Label_EstadoInicial;
     private javax.swing.JLabel Label_Heuristico;
@@ -449,15 +602,21 @@ public class Practica1Rescats extends javax.swing.JFrame {
     private javax.swing.JLabel Label_NumHelis1;
     private javax.swing.JLabel Label_NumHelis2;
     private javax.swing.JLabel Label_NumHelis3;
+    private javax.swing.JLabel Label_SemillaCentro;
+    private javax.swing.JLabel Label_SemillaGrupo;
+    private javax.swing.JLabel Label_Semillas;
     private javax.swing.JLabel Label_ValNumCentros;
     private javax.swing.JLabel Label_ValNumGrupos;
     private javax.swing.JLabel Label_ValNumHelis;
+    private javax.swing.JRadioButton RB_EstadoInicial0;
     private javax.swing.JRadioButton RB_EstadoInicial1;
     private javax.swing.JRadioButton RB_EstadoInicial2;
     private javax.swing.JRadioButton RB_EstadoInicial3;
     private javax.swing.JRadioButton RB_Heuristic1;
     private javax.swing.JRadioButton RB_Heuristic2;
     private javax.swing.JRadioButton RB_HillClimbing;
+    private javax.swing.JRadioButton RB_SemillasAleatorias;
+    private javax.swing.JRadioButton RB_SemillasEspecificas;
     private javax.swing.JRadioButton RB_SimulatedAnnealing;
     private javax.swing.JSlider Slider_NumCentros;
     private javax.swing.JSlider Slider_NumGrupos;
@@ -466,11 +625,14 @@ public class Practica1Rescats extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
+    private javax.swing.JLayeredPane jLayeredPane4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea textEjec;
     private javax.swing.JTextArea textFin;
     private javax.swing.JTextArea textIni;
+    private javax.swing.JTextField textfieldCentros;
+    private javax.swing.JTextField textfieldGrupos;
     // End of variables declaration//GEN-END:variables
 }

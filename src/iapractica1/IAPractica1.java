@@ -23,7 +23,7 @@ import java.util.Properties;
 import java.util.Random;
 
 public class IAPractica1 {   
-    public ArrayList<String> main2(String algoritmo,
+    public ArrayList<String> main2(String algoritmo,String seeds, int seedC, int seedG,
                         int ncentros, int ngrupos, int nhelicopteros,
                         int initialState, int heuristic,
                         int steps, int stiter, int k, double lamb) throws Exception{
@@ -31,13 +31,17 @@ public class IAPractica1 {
             if (algoritmo.equals("HillClimbing")) alg = new HillClimbingSearch();
             else alg = new SimulatedAnnealingSearch(steps, stiter, k, lamb); //<-- No funciona con el printActions
         
-        //  SEEDS ALEATORIAS 
-        int min = 0, max = 1000, rango = max - min +1;
-        Random rand = new Random();
-        int seedCentros = rand.nextInt(rango) + min;
-        int seedGrupos = rand.nextInt(rango) + min;
+        //  SEEDS ALEATORIAS O ESPECIFICA
+        int seedCentros;
+        int seedGrupos;
+        if (seeds.equals("Aleatorias")){
+            int min = 0, max = 10000, rango = max - min +1;
+            Random rand = new Random();
+            seedCentros = rand.nextInt(rango) + min;
+            seedGrupos = rand.nextInt(rango) + min;
+        }
         
-        //int seedCentros = 900, seedGrupos = seedCentros;
+        else{ seedCentros = seedC; seedGrupos = seedG;}
         
         Centros cs = new Centros(ncentros, nhelicopteros, seedCentros);
         Grupos gs = new Grupos(ngrupos,seedGrupos);
