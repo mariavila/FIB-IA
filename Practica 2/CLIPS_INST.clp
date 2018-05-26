@@ -1,5 +1,5 @@
 ; Sat May 26 19:20:49 CEST 2018
-; 
+;
 ;+ (version "3.5")
 ;+ (build "Build 663")
 
@@ -530,7 +530,7 @@
 
 (definstances Instancias
 	; Sat May 26 19:20:49 CEST 2018
-; 
+;
 ;+ (version "3.5")
 ;+ (build "Build 663")
 
@@ -2629,7 +2629,7 @@
 		(bind ?curr-cont (send ?curr-rec get-contenido))
 		(bind ?curr-punt (send ?curr-rec get-puntuacion))
 		(if (> ?curr-punt ?maximo)
-			then 
+			then
 			(bind ?maximo ?curr-punt)
 			(bind ?elemento ?curr-rec)
 		)
@@ -2641,22 +2641,22 @@
 (deffunction pregunta-opciones (?question $?allowed-values)
    (printout t ?question)
    (bind ?answer (read))
-   (if (lexemep ?answer) 
+   (if (lexemep ?answer)
        then (bind ?answer (lowcase ?answer)))
    (while (not (member ?answer ?allowed-values)) do
       (printout t ?question)
       (bind ?answer (read))
-      (if (lexemep ?answer) 
+      (if (lexemep ?answer)
           then (bind ?answer (lowcase ?answer))))
    ?answer
 )
 
-   
+
 ;;; Funcion para hacer una pregunta de tipo si/no
 (deffunction pregunta-si-no (?question)
    (bind ?response (pregunta-opciones ?question si no))
    (if (or (eq ?response si) (eq ?response s))
-       then TRUE 
+       then TRUE
        else FALSE)
 )
 
@@ -2675,7 +2675,7 @@
 (deffunction pregunta-indice (?pregunta $?valores-posibles)
     (bind ?linea (format nil "%s" ?pregunta))
     (printout t ?linea crlf)
-    (progn$ (?var ?valores-posibles) 
+    (progn$ (?var ?valores-posibles)
             (bind ?linea (format nil "  %d. %s" ?var-index ?var))
             (printout t ?linea crlf)
     )
@@ -2687,7 +2687,7 @@
 (deffunction pregunta-multi (?pregunta $?valores-posibles)
     (bind ?linea (format nil "%s" ?pregunta))
     (printout t ?linea crlf)
-    (progn$ (?var ?valores-posibles) 
+    (progn$ (?var ?valores-posibles)
             (bind ?linea (format nil "  %d. %s" ?var-index ?var))
             (printout t ?linea crlf)
     )
@@ -2695,13 +2695,13 @@
     (bind ?resp (readline))
     (bind ?numeros (str-explode ?resp))
     (bind $?lista (create$ ))
-    (progn$ (?var ?numeros) 
+    (progn$ (?var ?numeros)
         (if (and (integerp ?var) (and (>= ?var 1) (<= ?var (length$ ?valores-posibles))))
-            then 
+            then
                 (if (not (member$ ?var ?lista))
                     then (bind ?lista (insert$ ?lista (+ (length$ ?lista) 1) ?var))
                 )
-        ) 
+        )
     )
     ?lista
 )
@@ -2730,7 +2730,7 @@
 	(printout t "====================================================================" crlf)
   	(printout t "=         Sistema de recomendacion de viajes      				    =" crlf)
 	(printout t "====================================================================" crlf)
-  	(printout t crlf)  	
+  	(printout t crlf)
 	(printout t "¡Bienvenido al sistema de recomendacion de viajes! A continuacion se le formularan una serie de preguntas para poder recomendarle un paquete vacacional que se ajuste a sus necesidades." crlf)
 	(printout t crlf)
 	(assert (nuevo_viaje))
@@ -2752,27 +2752,27 @@
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-    (if (pregunta-si-no "Va a viajar con ninos? [si/no] ") 
-       then 
+    (if (pregunta-si-no "Va a viajar con ninos? [si/no] ")
+       then
 	   (assert (info-viaje con-ninos)))
-       else 
+       else
        (assert (info-viaje sin-ninos)))
-	   
+
 (defrule ciudad-europea ""
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-    (if (pregunta-si-no "Quiere viajar más allá de Europa? [si/no] ") 
-       then 
+    (if (pregunta-si-no "Quiere viajar más allá de Europa? [si/no] ")
+       then
 	   (assert (info-viaje europa-y-internacional)))
-       else 
-       (assert (info-viaje solo-europa)))	   
+       else
+       (assert (info-viaje solo-europa)))
 
 (defrule numero-dias ""
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-	(bind ?respuesta (pregunta-numerica "Cuantos dias vas a querer estar viajando? [entre 0 - 30] " 0 30)) 
+	(bind ?respuesta (pregunta-numerica "Cuantos dias vas a querer estar viajando? [entre 0 - 30] " 0 30))
 	(assert (info-viaje numero-dias ?respuesta))
 )
 
@@ -2780,17 +2780,17 @@
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-	(bind ?respuesta (pregunta-opciones "Que tipo de vacaciones desea? [aventura/ocio/relax/cultural] " aventura ocio relax cultural)) 
-	(if (eq ?respuesta aventura) 
-	   then 
+	(bind ?respuesta (pregunta-opciones "Que tipo de vacaciones desea? [aventura/ocio/relax/cultural] " aventura ocio relax cultural))
+	(if (eq ?respuesta aventura)
+	   then
 	   (assert (info-viaje tipo-actividad aventura))
 	   else (if (eq ?respuesta ocio)
-				 then 
+				 then
 				 (assert (info-viaje tipo-actividad ocio))
 				 else (if (eq ?respuesta relax)
-						then 
+						then
 						 (assert (info-viaje tipo-actividad relax))
-						 else 
+						 else
 						 (assert (info-viaje tipo-actividad cultural)))))
 )
 
@@ -2806,7 +2806,7 @@
 	else
 		;(bind ?cantidad (pregunta-numerica "Cuantas personas realizaran el viaje? (numero) " 1 50))
 		;(assert (cantidad-personas ?cantidad))
-		
+
 		(if (eq ?respuesta familiar) then
 		(assert (tipo-viaje viaje-familiar))
 		else (if (eq ?respuesta escolar) then
@@ -2915,7 +2915,7 @@
 	(loop-for-count (?i 1 (length$ ?actividades)) do
 		(bind ?actividad (nth$ ?i ?actividades))
 		(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-		
+
 		(send ?actividad put-PuntuacionActividad (+ ?puntuacionAnterior ?valor))
 	)
 )
@@ -2930,14 +2930,14 @@
 		(anadePuntuacionActividadTipo ocio      100)
 		(anadePuntuacionActividadTipo relax    -100)
 		(anadePuntuacionActividadTipo cultural -100)
-		
+
 	else(if (eq ?tipoActividad aventura) then
 		(printout t "ASSSSSSSSSSSSS" crlf)
 		(anadePuntuacionActividadTipo aventura  100)
 		(anadePuntuacionActividadTipo ocio     -100)
 		(anadePuntuacionActividadTipo relax    -100)
 		(anadePuntuacionActividadTipo cultural -100)
-		
+
 	else(if (eq ?tipoActividad relax) then
 		(anadePuntuacionActividadTipo aventura -100)
 		(anadePuntuacionActividadTipo ocio     -100)
@@ -2972,7 +2972,7 @@
 (defmodule recomendaciones
 	(import MAIN ?ALL)
 	(import inferir_datos ?ALL)
-	
+
 	(export ?ALL)
 )
 
@@ -2990,93 +2990,93 @@
 	(bind ?actividadesOcio 		 (find-all-instances ((?ins ActividadOcio)) TRUE))
 	(bind ?actividadesRelax      (find-all-instances ((?ins ActividadRelax)) TRUE))
 	(bind ?actividadesAventura   (find-all-instances ((?ins ActividadAventura)) TRUE))
-	
+
 	(bind ?lista (create$ ?actividadesOcio ?actividadesCulturales))
 	(bind ?lista (create$ ?lista ?actividadesRelax))
 	(bind ?lista (create$ ?lista ?actividadesAventura))
-	
+
 	?lista
 )
 (deffunction buscaActividadesOfrecidas (?ciudad ?todasActividades) "Busca todas las actividades que se pueden realizar en esa ciudad"
 	(bind ?actividadesOfrecidasPorCiudad (send ?ciudad get-ActividadesDisponible))
 	(bind ?actividadesOfrecidas (create$))
-	
+
 	(loop-for-count (?i 1 (length$ ?todasActividades)) do
 		(bind ?act (nth$ ?i ?todasActividades))
 		(bind ?esta 0)
-		
+
 		; si act esta en actividadesOfrecidasPorCiudad la añadimos
 		; sino pasamos
 		; (recordemos que la lista de todasActividades YA ESTA ORDENADA)
-		
+
 		(loop-for-count (?j 1 (length$ ?actividadesOfrecidasPorCiudad)) do
 			(bind ?actOfrecida (nth$ ?j ?actividadesOfrecidasPorCiudad))
-			
+
 			(if (eq (send ?act get-NombreActividad) (send ?actOfrecida get-NombreActividad)) then
 				(bind ?esta 1)
 				(break)
 			)
 		)
-		
+
 		(if (eq ?esta 1) then ;está, la añadimos a la lista
 			(bind ?actividadesOfrecidas (create$ ?actividadesOfrecidas ?act))
 		)
 	)
-	
+
 	?actividadesOfrecidas
 )
 
 (deffunction encuentra3Aleatorias (?lista) "Funcion que devuelve tres elementos aleatorios de la lista"
 	(bind ?lista3 (create$))
 	(bind ?yaEscogidos (create$))
-	
+
 	(loop-for-count (?z 1 3) do
 		(bind ?noEscogido TRUE)
 		(bind ?roll 0)
-		(while (eq ?noEscogido TRUE) do	
+		(while (eq ?noEscogido TRUE) do
 			(bind ?roll (+ (mod (random) (length$ ?lista)) 1)) ;tirada aleatoria
 			(bind ?noEscogido FALSE)
 			(loop-for-count (?i 1 (length$ ?yaEscogidos)) do ; miramos que no lo hayamos cogido ya
-				(if (eq ?roll (nth$ ?i ?yaEscogidos)) then 
+				(if (eq ?roll (nth$ ?i ?yaEscogidos)) then
 					(bind ?noEscogido TRUE)
 					(break)
 				)
 			)
 		)
-		
+
 		(bind ?lista3 (create$ ?lista3 (nth$ ?roll ?lista))) ;añadimos el elemento
 		(bind ?yaEscogidos (create$ ?yaEscogidos ?roll)) ;añadimos el indice escogido
 	)
-	
+
 	?lista3
 )
 
 (deffunction encuentra3Actividades (?actividadesOfrecidas) "Funcion que devuelve 3 actividades escogiendo al azar entre las de puntuacion maxima. PRE: actividadesOfrecidas está ordenado"
 	(bind ?posibles (create$))
-	
+
 	(bind ?i 1)
 	(while (<= ?i (length$ ?actividadesOfrecidas)) do
 		(bind ?act1 (nth$ ?i ?actividadesOfrecidas)) ; actividad i
 		(bind ?posibles (create$ ?posibles ?act1)) ; añade la actividad1
-		
+
 		(bind ?dondeNosHemosQuedado (+ ?i 1))
 		; Añadimos todas aquellas acts que tengan puntuacion = maxima hasta el momento
 		(loop-for-count (?j (+ ?i 1) (length$ ?actividadesOfrecidas)) do
 			(bind ?act2 (nth$ ?j ?actividadesOfrecidas)) ; actividad i+1,+2,...
-			
+
 			(if (eq (send ?act1 get-PuntuacionActividad) (send ?act2 get-PuntuacionActividad)) then
 				(bind ?posibles (create$ ?posibles ?act2)) ; añade la actividad2
-				(if (neq ?i 1) then (if (>= (length$ ?posibles) 3) then (break))) ;Para la busqueda --> Tenemos todas las maximas + la que faltaba P.E: 2 de 100 y 1 de 99, en vez de 2 de 100 y 5 de 99 
-			else 
+				(if (neq ?i 1) then (if (>= (length$ ?posibles) 3) then (break))) ;Para la busqueda --> Tenemos todas las maximas + la que faltaba P.E: 2 de 100 y 1 de 99, en vez de 2 de 100 y 5 de 99
+			else
 				(bind ?dondeNosHemosQuedado ?j)
 				(break)
 			)
 		)
 		(if (>= (length$ ?posibles) 3) then (break)) ;No necesitamos mas
-		
+
 		(bind ?i ?dondeNosHemosQuedado);sino seguimos buscando incrementando en 1 o hasta la siguiente actividad con puntuacion diferente
 	)
-	
+
 	(bind ?tresActividades (encuentra3Aleatorias ?posibles))
 	?tresActividades
 )
@@ -3087,20 +3087,20 @@
 	(bind ?actActual 1)
 	(bind ?nActs (* ?nDias 3))
 	(bind ?listaFinal (create$))
-	
+
 	(while (<= ?acts ?nActs) do
 		(bind ?lista (create$))
 		(if (> ?actActual (length$ ?actividadesOfrecidas)) then (bind ?actActual 1)) ;por si no hay suficientes
-		
+
 		; Buscamos las actividades con puntuacion maxima
 		(bind ?act (nth$ ?actActual ?actividadesOfrecidas))
 		(bind ?puntuacionMaxima (send ?act get-PuntuacionActividad))
 		(bind ?lista (create$ ?lista ?act))
-		
+
 		(loop-for-count (?i (+ ?actActual 1) (length$ ?actividadesOfrecidas)) do
 			(bind ?act2 (nth$ ?i ?actividadesOfrecidas))
 			(bind ?puntAct2 (send ?act2 get-PuntuacionActividad))
-			
+
 			(if (neq ?puntuacionMaxima ?puntAct2) then (break))
 			(bind ?lista (create$ ?lista ?act2))
 		)
@@ -3108,27 +3108,27 @@
 		; Tenemos que coger al azar cada una de ellas y rellenar con las siguientes
 		(bind ?yaEscogidos (create$))
 		(while (and (neq (length$ ?yaEscogidos) (length$ ?lista)) (<= ?acts ?nActs)) do ;mientras no haya puesto todas las actvidades con puntuacion maxima o haya acabado de colocar todas las actividades
-			
+
 			(bind ?noEscogido TRUE)
 			(bind ?roll 0)
-			(while (eq ?noEscogido TRUE) do	
+			(while (eq ?noEscogido TRUE) do
 				(bind ?roll (+ (mod (random) (length$ ?lista)) 1)) ;tirada aleatoria
 				(bind ?noEscogido FALSE)
 				(loop-for-count (?i 1 (length$ ?yaEscogidos)) do ; miramos que no lo hayamos cogido ya
-					(if (eq ?roll (nth$ ?i ?yaEscogidos)) then 
+					(if (eq ?roll (nth$ ?i ?yaEscogidos)) then
 						(bind ?noEscogido TRUE)
 						(break)
 					)
 				)
 			)
-			
+
 			(bind ?listaFinal (create$ ?listaFinal (nth$ ?roll ?lista))) ;añadimos el elemento
 			(bind ?yaEscogidos (create$ ?yaEscogidos ?roll)) ;añadimos el indice escogido
 			(bind ?acts (+ ?acts 1))
 			(bind ?actActual (+ ?actActual 1))
 		)
 	)
-	
+
 ;	(loop-for-count (?i 1 (length$ ?listaFinal)) do
 ;		(printout t (send (nth$ ?i ?listaFinal) get-NombreActividad) crlf)
 ;	)
@@ -3175,23 +3175,23 @@
 		(bind ?c1 (send ?c1 get-Nombre))
 	)
 	(bind ?c2 (send ?c2 get-Nombre))
-		
+
 	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
 	(bind ?transportes (sort sort_transporte ?transportes))
-	
+
 	(bind ?transporte)
-	
+
 	(loop-for-count (?i 1 (length ?transportes)) do
 		(bind ?transporte (nth$ ?i ?transportes))
 		(bind ?ciudad1 (send ?transporte get-Ciudad1)) (bind ?ciudad1 (send ?ciudad1 get-Nombre))
 		(bind ?ciudad2 (send ?transporte get-Ciudad2)) (bind ?ciudad2 (send ?ciudad2 get-Nombre))
-		
+
 		(if (or	(and (eq ?ciudad1 ?c1) (eq ?ciudad2 ?c2)) (and (eq ?ciudad1 ?c2) (eq ?ciudad2 ?c1))) then
-			
+
 			(break)
 		)
 	)
-	
+
 	?transporte
 )
 
@@ -3218,6 +3218,8 @@
 
 	(bind ?todasActividades (obtenerTodasLasActividades))
 	(bind ?todasActividades (sort sort_actividad ?todasActividades)) ; Y ASI SE ORDENA FUCK YEA
+
+	(bind ?coste 0.0)
 
 	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 1 ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
 	(printout t "| DIA |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
@@ -3251,6 +3253,7 @@
 				(loop-for-count (?x ?pasada (+ ?pasada 2)) do
 					(printout t (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))
 					(bind ?nChars (+ ?nChars (str-length (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))))
+					(bind ?coste (+ ?coste (send (nth$ ?x ?actividadesAHacer) get-PrecioActividad)))
 					(if (neq ?x (+ ?pasada 2)) then
 						(printout t ", ")
 						(bind ?nChars (+ ?nChars 2)))
