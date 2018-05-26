@@ -2827,7 +2827,7 @@
 	=>
 	(bind ?respuesta (pregunta-opciones "Desde que ciudad desea iniciar su viaje? [Barcelona/Madrid/RioDeJaneiro/Paris/Roma/Berlin/NuevaYork/Bahamas/Moscu/Japon/Egipto/Cuba/Delhi/Londres/Sidney] "
 	barcelona madrid riodejaneiro paris roma berlin nuevayork bahamas moscu japon egipto cuba delhi londres sidney))
-	;(assert (RestriccionCiudadOrigen (ciudadOrigen ?respuesta)))
+	(assert (ciudadOrigen ?respuesta))
 )
 
 ;(defrule precio-maximo "Regla para saber el precio maximo del viaje"
@@ -3212,8 +3212,10 @@
 	(recomendacion-ready)
 	(info-viaje numero-dias ?dias)
 	(RestriccionPresupuesto (presupuesto ?presupuesto))
+	(ciudadOrigen ?ciudadOrigen)
 	=>
-	(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
+	;(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
+	(bind ?ciudades (find-all-instances ((?ins Ciudad)) (neq (lowcase ?ins:Nombre) (lowcase (str-cat ?ciudadOrigen))))) ; no añadimos la ciudad inicial en las ciudades a visitar
 	(bind ?ciudades (sort sort_puntuacion ?ciudades)) ; Y ASI SE ORDENA FUCK YEA
 
 	(bind ?todasActividades (obtenerTodasLasActividades))
@@ -3424,7 +3426,7 @@
 					(bind ?nChars (+ ?nChars 2)))
 			)
 			(bind ?pasada (+ ?pasada 3))
-			(loop-for-count (?z 1 (- 53 ?nChars)) do (printout t " ")) ;espacios hasta alojamientos
+			(loop-for-count (?z 1 (- 61 ?nChars)) do (printout t " ")) ;espacios hasta alojamientos
 
 			; ALOJAMIENTOS
 			(printout t "| ")
