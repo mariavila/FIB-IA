@@ -3140,16 +3140,12 @@
 (deffunction obtenerHotel (?ciudad ?presupuesto) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
 	(bind ?hotels (send ?ciudad get-AlojamientosDisponibles))
 	(bind ?hotels (sort sort_precio_por_noche ?hotels))
-	(if (eq ?presupuesto "alto") then
-		(bind ?hotel (nth$ 1 ?hotels))
-		else
-		(if (eq ?presupuesto "bajo") then
-			(bind ?hotel (nth$ 3 ?hotels))
-			else
-				;presupuesto medio
-				(bind ?hotel (nth$ 2 ?hotels))
-		)
-	)
+	(if (eq (str-cat ?presupuesto) "alto") then
+		(bind ?hotel (nth$ 1 ?hotels)))
+	(if (eq (str-cat ?presupuesto) "bajo") then
+		(bind ?hotel (nth$ 3 ?hotels)))
+	(if (eq (str-cat ?presupuesto) "medio") then
+		(bind ?hotel (nth$ 2 ?hotels)))
 	?hotel
 )
 
