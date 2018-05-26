@@ -3332,7 +3332,7 @@
 	)
 	;VUELTA
 		(printout t "|VUELTA")
-		(printout t "| " ?ciudadOrigen)
+		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
@@ -3474,7 +3474,7 @@
 		)
 		;VUELTA
 		(printout t "|VUELTA")
-		(printout t "| " ?ciudadOrigen)
+		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
@@ -3535,7 +3535,7 @@
 		)
 		;VUELTA
 		(printout t "|VUELTA")
-		(printout t "| " ?ciudadOrigen)
+		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
