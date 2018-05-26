@@ -3140,12 +3140,12 @@
 (deffunction obtenerHotel (?ciudad ?presupuesto) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
 	(bind ?hotels (send ?ciudad get-AlojamientosDisponibles))
 	(bind ?hotels (sort sort_precio_por_noche ?hotels))
-	(if (eq (str-cat ?presupuesto) "alto") then
-		(bind ?hotel (nth$ 1 ?hotels)))
-	(if (eq (str-cat ?presupuesto) "bajo") then
-		(bind ?hotel (nth$ 3 ?hotels)))
-	(if (eq (str-cat ?presupuesto) "medio") then
-		(bind ?hotel (nth$ 2 ?hotels)))
+	(if (eq (str-cat ?presupuesto) "alto") then 
+		(bind ?hotel (nth$ 1 ?hotels))) 
+	(if (eq (str-cat ?presupuesto) "bajo") then 
+		(bind ?hotel (nth$ 3 ?hotels))) 
+	(if (eq (str-cat ?presupuesto) "medio") then 
+		(bind ?hotel (nth$ 2 ?hotels))) 
 	?hotel
 )
 
@@ -3167,7 +3167,6 @@
 (deffunction encuentraMejorTransporte (?c1 ?c2 ?arg1) "Funcion que devuelve el transporte con mas puntuacion entre dos ciudades"
 	(if (= ?arg1 2) then	; Con arg1 = 1 ?c1 es un String
 		(bind ?c1 (lowcase (send ?c1 get-Nombre)))
-		(printout f "ARG = 2" crlf)
 	)
 	(bind ?c2 (lowcase (send ?c2 get-Nombre)))
 
@@ -3212,18 +3211,19 @@
 	(bind ?ciudadOrigen (str-cat ?ciudadOrigen))
 	(bind ?ciudades (find-all-instances ((?ins Ciudad)) (neq (lowcase ?ins:Nombre) (lowcase ?ciudadOrigen)))) ; no añadimos la ciudad inicial en las ciudades a visitar
 	(bind ?ciudades (sort sort_puntuacion ?ciudades)) ; Y ASI SE ORDENA FUCK YEA
+	(bind ?ciudadActual ?ciudadOrigen)
 
 	(bind ?todasActividades (obtenerTodasLasActividades))
 	(bind ?todasActividades (sort sort_actividad ?todasActividades)) ; Y ASI SE ORDENA FUCK YEA
 
 	(bind ?coste 0.0)
 
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 1 ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "| DIA |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 1 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "| DIA  |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(bind ?diasPorCiudad (integer (/ ?dias 3)))
 	(bind ?residuo (mod ?dias 3))
 	(bind ?numCiudadesNegativas 0)
@@ -3241,7 +3241,7 @@
 			(loop-for-count (?j 1 (+ ?residuo ?diasPorCiudad)) do
 				; DIA
 				(printout t "| " ?j)
-				(loop-for-count (?z 1 (- 4 (str-length (str-cat ?j)))) do (printout t " ")) ;espacios hasta ciudad
+				(loop-for-count (?z 1 (- 5 (str-length (str-cat ?j)))) do (printout t " ")) ;espacios hasta ciudad
 
 				; CIUDAD
 				(printout t "| " (send ?ciudad get-Nombre))
@@ -3266,14 +3266,19 @@
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
 				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
-				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
+				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta transportes
 
 
 				; TRANSPORTE
 				(if (eq ?j 1) then
 					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
-					(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
-				)
+					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+					(printout t "| " ?transp)
+					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+					(bind ?ciudadActual ?ciudad)
+				else 
+					(printout t "|")
+					(loop-for-count (?z 1 18) do (printout t " ")))
 
 
 				(printout t "| " crlf)
@@ -3284,7 +3289,7 @@
 			(loop-for-count (?j 1 ?diasPorCiudad) do
 				; DIA
 				(printout t "| "  (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo))
-				(loop-for-count (?z 1 (- 4 (str-length (str-cat  (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo) )))) do (printout t " ")) ;espacios hasta ciudad
+				(loop-for-count (?z 1 (- 5 (str-length (str-cat  (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo) )))) do (printout t " ")) ;espacios hasta ciudad
 
 				; CIUDAD
 				(printout t "| " (send ?ciudad get-Nombre))
@@ -3311,41 +3316,59 @@
 				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
-				(printout t "| " crlf)
-
 				; TRANSPORTE
 				(if (eq ?j 1) then
-					(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
-					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
-					(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
-				)
-			)
+					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+					(printout t "| " ?transp)
+					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+					(bind ?ciudadActual ?ciudad)
+				else 
+					(printout t "|")
+					(loop-for-count (?z 1 18) do (printout t " ")))
+				(printout t "| " crlf)
+			)		
 		)
 	)
+	;VUELTA
+		(printout t "|VUELTA")
+		(printout t "| " ?ciudadOrigen)
+		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+		(printout t "| -------------------------------------                        ")
+		(printout t "| -----------------------    ")
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(printout t "| " ?transp)
+		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+		(printout t "|" crlf)
+					
+					
+					
 	(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
 	(printout t "|                                                          PRESUPUESTO " ?coste " euros" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "                                                                                                                                      " crlf)
+	(printout t "                                                                                                                                      " crlf)
 
 	(bind ?coste 0.0)
 
 
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 2 ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "| DIA |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 2 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "| DIA  |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(if (> ?dias 8) then
 		; Limitamos a 8 ciudades maximo
 		(bind ?diasPorCiudad (integer (/ ?dias 8)))
 		(bind ?residuo (mod ?dias 8))
 		(bind ?numCiudadesNegativas 0)
+		(bind ?d 1) ;controla los dias
 		(loop-for-count (?i 1 8) do
 			(bind ?ciudad (nth$ ?i ?ciudades))
 			(bind ?puntuacionCiudad (send ?ciudad get-PuntuacionCiudad))
@@ -3356,12 +3379,12 @@
 			(if (<= ?i ?residuo) then
 				(bind ?actividadesAHacer (encuentraActividades (+ 1 ?diasPorCiudad) ?actividadesOfrecidas))
 				(bind ?pasada 1)
-
 				(loop-for-count (?j 1 (+ ?diasPorCiudad 1)) do
 					; DIA
-					(printout t "| " ?j)
-					(loop-for-count (?z 1 (- 4 (str-length (str-cat ?j)))) do (printout t " ")) ;espacios hasta ciudad
-
+					(printout t "| " ?d)
+					(loop-for-count (?z 1 (- 5 (str-length (str-cat ?d)))) do (printout t " ")) ;espacios hasta ciudad
+					(bind ?d (+ ?d 1))
+					
 					; CIUDAD
 					(printout t "| " (send ?ciudad get-Nombre))
 					(loop-for-count (?z 1 (- 15 (str-length (send ?ciudad get-Nombre)))) do (printout t " ")) ;espacios hasta actividades
@@ -3391,10 +3414,15 @@
 					; TRANSPORTE
 					(if (eq ?j 1) then
 						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
-						(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
-					)
-
-					(printout t "| " crlf)
+						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+						(printout t "| " ?transp)
+						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+						(bind ?ciudadActual ?ciudad)
+					else 
+						(printout t "|")
+						(loop-for-count (?z 1 18) do (printout t " ")))
+						
+						(printout t "| " crlf)
 				)
 			else
 				(bind ?actividadesAHacer (encuentraActividades ?diasPorCiudad ?actividadesOfrecidas))
@@ -3403,7 +3431,7 @@
 				(loop-for-count (?j 1 ?diasPorCiudad) do
 					; DIA
 					(printout t "| " (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo))
-					(loop-for-count (?z 1 (- 4 (str-length (str-cat (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo))))) do (printout t " ")) ;espacios hasta ciudad
+					(loop-for-count (?z 1 (- 5 (str-length (str-cat (+ (+ ?j (* (- ?i 1) ?diasPorCiudad)) ?residuo))))) do (printout t " ")) ;espacios hasta ciudad
 
 					; CIUDAD
 					(printout t "| " (send ?ciudad get-Nombre))
@@ -3432,15 +3460,30 @@
 
 					; TRANSPORTE
 					(if (eq ?j 1) then
-						(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
-						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
-						(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
-					)
-
+						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+						(printout t "| " ?transp)
+						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+						(bind ?ciudadActual ?ciudad)
+					else 
+						(printout t "|")
+						(loop-for-count (?z 1 18) do (printout t " ")))
 					(printout t "| " crlf)
 				)
 			)
 		)
+		;VUELTA
+		(printout t "|VUELTA")
+		(printout t "| " ?ciudadOrigen)
+		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+		(printout t "| -------------------------------------                        ")
+		(printout t "| -----------------------    ")
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(printout t "| " ?transp)
+		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+		(printout t "|" crlf)
+
 		(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 
 	else ;sino, una por dia
@@ -3457,7 +3500,7 @@
 			(bind ?pasada 1)
 			; DIA
 			(printout t "| " ?i)
-			(loop-for-count (?z 1 (- 4 (str-length (str-cat ?i)))) do (printout t " ")) ;espacios hasta ciudad
+			(loop-for-count (?z 1 (- 5 (str-length (str-cat ?i)))) do (printout t " ")) ;espacios hasta ciudad
 
 			; CIUDAD
 			(printout t "| " (send ?ciudad get-Nombre))
@@ -3484,19 +3527,31 @@
 			(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 			; TRANSPORTE
-			(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
-			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
-			(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
-
-			(printout t "| " crlf)
+			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+			(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+			(printout t "| " ?transp)
+			(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+			(printout t "|" crlf)
 		)
+		;VUELTA
+		(printout t "|VUELTA")
+		(printout t "| " ?ciudadOrigen)
+		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+		(printout t "| -------------------------------------                        ")
+		(printout t "| -----------------------    ")
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(printout t "| " ?transp)
+		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
+		(printout t "|" crlf)
+
 		(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 	)
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|                                                          PRESUPUESTO " ?coste " euros" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|                                                           PRESUPUESTO " ?coste " euros" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 )
 
 (deffunction sort_puntuacion (?c1 ?c2)
