@@ -3262,6 +3262,7 @@
 				(printout t "| ")
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
+				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 				(printout t "| " crlf)
 			)
@@ -3294,6 +3295,7 @@
 				(printout t "| ")
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
+				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 				(printout t "| " crlf)
 			)
@@ -3348,6 +3350,7 @@
 					(printout t "| ")
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
+					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 					(printout t "| " crlf)
 				)
@@ -3381,6 +3384,7 @@
 					(printout t "| ")
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
+					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 					(printout t "| " crlf)
 				)
@@ -3423,7 +3427,10 @@
 			(loop-for-count (?z 1 (- 53 ?nChars)) do (printout t " ")) ;espacios hasta alojamientos
 
 			; ALOJAMIENTOS
-			;(printout t "| ")
+			(printout t "| ")
+			(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+			(printout t (send ?hotel get-NombreAlojamiento))
+			(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 			(printout t "| " crlf)
 		)
