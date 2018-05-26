@@ -3139,10 +3139,11 @@
 
 (deffunction obtenerHotel (?ciudad ?presupuesto) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
 	(bind ?hotels (send ?ciudad get-AlojamientosDisponibles))
-	(bind ?hotel1 (nth$ 1 ?hotels))
-	(bind ?hotel2 (nth$ 2 ?hotels))
-	(bind ?hotel3 (nth$ 3 ?hotels))
-	(bind ?ciudades (sort sort_precio_por_noche ?hotels)) ; Y ASI SE ORDENA FUCK YEA
+	(bind ?hotels (sort sort_precio_por_noche ?hotels))
+		(printout t "presupuesto" ?presupuesto crlf)
+	(printout t "presupuesto alto " (send (nth$ 1 ?hotels) get-NombreAlojamiento) crlf)
+	(printout t "presupuesto medio " (send (nth$ 2 ?hotels) get-NombreAlojamiento) crlf)
+	(printout t "presupuesto bajo " (send (nth$ 3 ?hotels) get-NombreAlojamiento) crlf)
 	(if (eq ?presupuesto "alto") then
 		(bind ?hotel (nth$ 1 ?hotels))
 		else
