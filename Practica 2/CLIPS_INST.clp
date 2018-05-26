@@ -2980,8 +2980,9 @@
 	(nuevo_viaje)
 	(restricciones-inferencia)
 	=>
-	(printout t "TUS VIAJES RECOMENDADOS SON: " crlf)
-	(printout t "---------------------------- " crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                              TUS VIAJES RECOMENDADOS SON:                                                           |" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(assert (recomendacion-ready))
 )
 
@@ -3224,7 +3225,10 @@
 
 	(bind ?coste 0.0)
 
+	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 1 ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(printout t "| DIA |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
 	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(bind ?diasPorCiudad (integer (/ ?dias 3)))
@@ -3268,6 +3272,7 @@
 				(printout t "| ")
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
+				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 				
 				
@@ -3298,6 +3303,7 @@
 				(loop-for-count (?x ?pasada (+ ?pasada 2)) do
 					(printout t (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))
 					(bind ?nChars (+ ?nChars (str-length (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))))
+					(bind ?coste (+ ?coste (send (nth$ ?x ?actividadesAHacer) get-PrecioActividad)))
 					(if (neq ?x (+ ?pasada 2)) then
 						(printout t ", ")
 						(bind ?nChars (+ ?nChars 2)))
@@ -3309,6 +3315,7 @@
 				(printout t "| ")
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
+				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 				(printout t "| " crlf)
@@ -3325,8 +3332,20 @@
 	(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 
 	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
-	(printout t "                                                   ................................                                                   " crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                                          PRESUPUESTO " ?coste " euros" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+
+	(bind ?coste 0.0)
+
+
+	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 2 ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(printout t "| DIA |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
 	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(if (> ?dias 8) then
@@ -3360,6 +3379,7 @@
 					(loop-for-count (?x ?pasada (+ ?pasada 2)) do
 						(printout t (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))
 						(bind ?nChars (+ ?nChars (str-length (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))))
+						(bind ?coste (+ ?coste (send (nth$ ?x ?actividadesAHacer) get-PrecioActividad)))
 						(if (neq ?x (+ ?pasada 2)) then
 							(printout t ", ")
 							(bind ?nChars (+ ?nChars 2)))
@@ -3371,6 +3391,7 @@
 					(printout t "| ")
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
+					(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 					
 					
@@ -3401,6 +3422,7 @@
 					(loop-for-count (?x ?pasada (+ ?pasada 2)) do
 						(printout t (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))
 						(bind ?nChars (+ ?nChars (str-length (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))))
+						(bind ?coste (+ ?coste (send (nth$ ?x ?actividadesAHacer) get-PrecioActividad)))
 						(if (neq ?x (+ ?pasada 2)) then
 							(printout t ", ")
 							(bind ?nChars (+ ?nChars 2)))
@@ -3412,6 +3434,7 @@
 					(printout t "| ")
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
+					(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 					
 					; TRANSPORTE
@@ -3426,7 +3449,6 @@
 			)
 		)
 		(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
-
 
 	else ;sino, una por dia
 		(bind ?numCiudadesNegativas 0)
@@ -3454,6 +3476,7 @@
 			(loop-for-count (?x ?pasada (+ ?pasada 2)) do
 				(printout t (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))
 				(bind ?nChars (+ ?nChars (str-length (send (nth$ ?x ?actividadesAHacer) get-NombreActividad))))
+				(bind ?coste (+ ?coste (send (nth$ ?x ?actividadesAHacer) get-PrecioActividad)))
 				(if (neq ?x (+ ?pasada 2)) then
 					(printout t ", ")
 					(bind ?nChars (+ ?nChars 2)))
@@ -3476,6 +3499,10 @@
 		)
 		(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 	)
+	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                                          PRESUPUESTO " ?coste " euros" crlf)
+	(printout t "|                                                                                                                                     |" crlf)
 	(printout t "|-------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 )
 
