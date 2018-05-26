@@ -3171,10 +3171,11 @@
 )
 
 (deffunction encuentraMejorTransporte (?c1 ?c2 ?arg1) "Funcion que devuelve el transporte con mas puntuacion entre dos ciudades"
-	(if (eq arg1 2) then	; Con arg1 = 1 ?c1 es un String
-		(bind ?c1 (send ?c1 get-Nombre))
+	(if (= ?arg1 2) then	; Con arg1 = 1 ?c1 es un String
+		(bind ?c1 (lowcase (send ?c1 get-Nombre)))
+		(printout f "ARG = 2" crlf)
 	)
-	(bind ?c2 (send ?c2 get-Nombre))
+	(bind ?c2 (lowcase (send ?c2 get-Nombre)))
 
 	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
 	(bind ?transportes (sort sort_transporte ?transportes))
@@ -3183,11 +3184,10 @@
 
 	(loop-for-count (?i 1 (length ?transportes)) do
 		(bind ?transporte (nth$ ?i ?transportes))
-		(bind ?ciudad1 (send ?transporte get-Ciudad1)) (bind ?ciudad1 (send ?ciudad1 get-Nombre))
-		(bind ?ciudad2 (send ?transporte get-Ciudad2)) (bind ?ciudad2 (send ?ciudad2 get-Nombre))
+		(bind ?ciudad1 (send ?transporte get-Ciudad1)) (bind ?ciudad1 (lowcase (send ?ciudad1 get-Nombre)))
+		(bind ?ciudad2 (send ?transporte get-Ciudad2)) (bind ?ciudad2 (lowcase(send ?ciudad2 get-Nombre)))
 
 		(if (or	(and (eq ?ciudad1 ?c1) (eq ?ciudad2 ?c2)) (and (eq ?ciudad1 ?c2) (eq ?ciudad2 ?c1))) then
-
 			(break)
 		)
 	)
@@ -3215,7 +3215,8 @@
 	(ciudadOrigen ?ciudadOrigen)
 	=>
 	;(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
-	(bind ?ciudades (find-all-instances ((?ins Ciudad)) (neq (lowcase ?ins:Nombre) (lowcase (str-cat ?ciudadOrigen))))) ; no añadimos la ciudad inicial en las ciudades a visitar
+	(bind ?ciudadOrigen (str-cat ?ciudadOrigen))
+	(bind ?ciudades (find-all-instances ((?ins Ciudad)) (neq (lowcase ?ins:Nombre) (lowcase ?ciudadOrigen)))) ; no añadimos la ciudad inicial en las ciudades a visitar
 	(bind ?ciudades (sort sort_puntuacion ?ciudades)) ; Y ASI SE ORDENA FUCK YEA
 
 	(bind ?todasActividades (obtenerTodasLasActividades))
@@ -3268,6 +3269,14 @@
 				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 				(printout t (send ?hotel get-NombreAlojamiento))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
+				
+				
+				; TRANSPORTE
+				(if (eq ?j 1) then
+					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
+					(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
+				)
+				
 
 				(printout t "| " crlf)
 			)
@@ -3303,6 +3312,13 @@
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 				(printout t "| " crlf)
+				
+				; TRANSPORTE
+				(if (eq ?j 1) then
+					(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
+					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
+					(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
+				)
 			)
 		)
 	)
@@ -3356,7 +3372,14 @@
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
-
+					
+					
+					; TRANSPORTE
+					(if (eq ?j 1) then
+						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
+						(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
+					)
+					
 					(printout t "| " crlf)
 				)
 			else
@@ -3390,7 +3413,14 @@
 					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 					(printout t (send ?hotel get-NombreAlojamiento))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
-
+					
+					; TRANSPORTE
+					(if (eq ?j 1) then
+						(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
+						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
+						(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
+					)
+				
 					(printout t "| " crlf)
 				)
 			)
@@ -3436,7 +3466,12 @@
 			(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
 			(printout t (send ?hotel get-NombreAlojamiento))
 			(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
-
+			
+			; TRANSPORTE
+			(bind ?ciudadAnterior (nth$ (- ?i 1) ?ciudades))
+			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadAnterior ?ciudad 2))
+			(printout t "| " (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio) "   (" (send ?transporteCiudad get-PrecioViaje) ") C1: "  (send (send ?transporteCiudad get-Ciudad1) get-Nombre) "   C2:" (send (send ?transporteCiudad get-Ciudad2) get-Nombre))
+				
 			(printout t "| " crlf)
 		)
 		(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
