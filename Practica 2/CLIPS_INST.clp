@@ -2867,7 +2867,7 @@
 	(declare(salience 80))
 	(nuevo_viaje)
 	=>
-	(bind ?respuesta (pregunta-opciones "Cual es el presupuesto del viaje? [bajo/medio/alto]" bajo medio alto))
+	(bind ?respuesta (pregunta-opciones "Cual es el presupuesto del viaje? [bajo/medio/alto] " bajo medio alto))
 	(assert (RestriccionPresupuesto (presupuesto ?respuesta)))
 )
 
@@ -3227,6 +3227,14 @@
 	(bind ?diasPorCiudad (integer (/ ?dias 3)))
 	(bind ?residuo (mod ?dias 3))
 	(bind ?numCiudadesNegativas 0)
+	
+	;IDA
+	(printout t "| IDA  ")
+	(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
+	(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+	(printout t "| -------------------------------------                        ")
+	(printout t "| -----------------------    ")
+	(printout t "| ------------     |" crlf)
 
 	(loop-for-count (?i 1 3) do
 		(bind ?ciudad (nth$ ?i ?ciudades))
@@ -3369,6 +3377,15 @@
 		(bind ?residuo (mod ?dias 8))
 		(bind ?numCiudadesNegativas 0)
 		(bind ?d 1) ;controla los dias
+		
+		;IDA
+		(printout t "| IDA  ")
+		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
+		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+		(printout t "| -------------------------------------                        ")
+		(printout t "| -----------------------    ")
+		(printout t "| ------------     |" crlf)
+		
 		(loop-for-count (?i 1 8) do
 			(bind ?ciudad (nth$ ?i ?ciudades))
 			(bind ?puntuacionCiudad (send ?ciudad get-PuntuacionCiudad))
@@ -3488,7 +3505,15 @@
 
 	else ;sino, una por dia
 		(bind ?numCiudadesNegativas 0)
-
+		
+		;IDA
+		(printout t "| IDA  ")
+		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
+		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
+		(printout t "| -------------------------------------                        ")
+		(printout t "| -----------------------    ")
+		(printout t "| ------------     |" crlf)
+		
 		(loop-for-count (?i 1 ?dias) do
 			(bind ?ciudad (nth$ ?i ?ciudades))
 			(bind ?puntuacionCiudad (send ?ciudad get-PuntuacionCiudad))
