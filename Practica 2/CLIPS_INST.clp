@@ -3156,8 +3156,6 @@
 
 
 
-
-
 ; ////////////////////////////////////////////////
 
 (deffunction sort_transporte (?t1 ?t2) "Funcion comparativa para ordenar transportes"
@@ -3189,6 +3187,38 @@
 )
 
 ; //////////////////////////////////////////////////
+
+(defrule filtraTransportePresupuesto "Da prioridad a los transportes acordes al nivel de presupuesto dado"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(RestriccionPresupuesto (presupuesto ?presupuesto))
+	=>
+	
+	(if (eq ?presupuesto alto) then
+		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Avion")))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+		)
+	else (if (eq ?presupuesto medio) then
+		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (or (eq ?ins:MedioTransporte:NombreMedio "Tren") (eq ?ins:MedioTransporte:NombreMedio "Barco"))))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+		)
+	else
+		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Autobus")))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+		)
+	))
+)
+
+
 
 
 
