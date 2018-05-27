@@ -3135,13 +3135,17 @@
 	
 	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
 	;Riesgo (en caso de que sea actividad de aventura)
-	(if (and (neq ?riesgo nil) (neq ?riesgo 10)) then
+	(if (neq ?riesgo nil) then
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?nriesgo (send ?actividad get-NivelDeRiesgo))
 			(if (> ?nriesgo ?riesgo) then 
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 30))
+			)
+			(if (< ?nriesgo ?riesgo) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior (- 10 ?nriesgo)))
 			)
 		)
 	)
