@@ -2739,7 +2739,7 @@
 	(initial-fact)
 	=>
 	(printout t "====================================================================" crlf)
-  	(printout t "=         Sistema de recomendacion de viajes      				    =" crlf)
+  	(printout t "=         Sistema de recomendacion de viajes      			   	    =" crlf)
 	(printout t "====================================================================" crlf)
   	(printout t crlf)
 	(printout t "¡Bienvenido al sistema de recomendacion de viajes! A continuacion se le formularan una serie de preguntas para poder recomendarle un paquete vacacional que se ajuste a sus necesidades." crlf)
@@ -2846,29 +2846,29 @@
 )
 
 
-(defrule caracteristicas-viaje ""
-	(declare (salience 10))
-	(nuevo_viaje)
-	=>
-	(bind ?respuesta (pregunta-opciones "Que tipo de viaje esta buscando? [familiar/pareja/escolar/amigos] " familiar pareja escolar amigos))
-	(if (eq ?respuesta pareja) then
-		(assert (tipo-viaje viaje-pareja))
-	else
-		;(bind ?cantidad (pregunta-numerica "Cuantas personas realizaran el viaje? (numero) " 1 50))
-		;(assert (cantidad-personas ?cantidad))
+;(defrule caracteristicas-viaje ""
+;	(declare (salience 10))
+;	(nuevo_viaje)
+;	=>
+;	(bind ?respuesta (pregunta-opciones "Que tipo de viaje esta buscando? [familiar/pareja/escolar/amigos] " familiar pareja escolar amigos))
+;	(if (eq ?respuesta pareja) then
+;		(assert (tipo-viaje viaje-pareja))
+;	else
+;		;(bind ?cantidad (pregunta-numerica "Cuantas personas realizaran el viaje? (numero) " 1 50))
+;		;(assert (cantidad-personas ?cantidad))
+;
+;		(if (eq ?respuesta familiar) then
+;		(assert (tipo-viaje viaje-familiar))
+;		else (if (eq ?respuesta escolar) then
+;			(assert (tipo-viaje viaje-escolar))
+;			else (if (eq ?respuesta amigos) then
+;				(assert (tipo-viaje viaje-amigos))
+;				(if (pregunta-si-no "Son todos los componentes del grupo mayores de edad? [si/no] ") then
+;					(assert (componentes-grupo mayor-edad))
+;					else
+;					(assert (componentes-grupo menor-edad)))))))
 
-		(if (eq ?respuesta familiar) then
-		(assert (tipo-viaje viaje-familiar))
-		else (if (eq ?respuesta escolar) then
-			(assert (tipo-viaje viaje-escolar))
-			else (if (eq ?respuesta amigos) then
-				(assert (tipo-viaje viaje-amigos))
-				(if (pregunta-si-no "Son todos los componentes del grupo mayores de edad? [si/no] ") then
-					(assert (componentes-grupo mayor-edad))
-					else
-					(assert (componentes-grupo menor-edad)))))))
-
-)
+;)
 
 
 (defrule ciudad-origen ""
@@ -2951,10 +2951,10 @@
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
 			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
-			(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
+			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
 			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
-			(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
+			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
 	)
 )
@@ -2971,10 +2971,10 @@
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
 			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
-			(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
+			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
 			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
-			(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
+			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
 	)
 )
@@ -3110,7 +3110,6 @@
 	(RestriccionesRiesgos (nivel-de-riesgo ?riesgo))
 	(RestriccionesNinos (viaja-con-ninos ?ninos))
 	=>
-	(printout t "KJKJBK" crlf)
 	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
 	
 	; Niños
@@ -3218,9 +3217,9 @@
 	(nuevo_viaje)
 	(restricciones-inferencia)
 	=>
-	(printout t "|                                                                                                                                     |" crlf)
-	(printout t "|                                              TUS VIAJES RECOMENDADOS SON:                                                           |" crlf)
-	(printout t "|                                                                                                                                     |" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
+	(printout t "|                                               TUS VIAJES RECOMENDADOS SON:                                                           |" crlf)
+	(printout t "|                                                                                                                                      |" crlf)
 	(assert (recomendacion-ready))
 )
 
@@ -3476,7 +3475,7 @@
 	(info-viaje numero-dias ?dias)
 	(RestriccionPresupuesto (presupuesto ?presupuesto))
 	(ciudadOrigen ?ciudadOrigen)
-	(RestriccionNinos (viaja-con-ninos ?viaja-ninos))
+	(RestriccionesNinos (viaja-con-ninos ?viaja-ninos))
 	=>
 	;(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
 	(bind ?ciudadOrigen (str-cat ?ciudadOrigen))
