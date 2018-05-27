@@ -3330,6 +3330,7 @@
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 					(bind ?ciudadActual (send ?ciudad get-Nombre))
+					(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 				else 
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3377,6 +3378,7 @@
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 					(bind ?ciudadActual (send ?ciudad get-Nombre))
+					(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 				else 
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3481,6 +3483,7 @@
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 						(bind ?ciudadActual (send ?ciudad get-Nombre))
+						(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 					else 
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3528,6 +3531,7 @@
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 						(bind ?ciudadActual (send ?ciudad get-Nombre))
+						(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 					else 
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
