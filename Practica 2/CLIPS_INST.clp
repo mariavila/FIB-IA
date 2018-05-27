@@ -2794,9 +2794,11 @@
 	=>
     (if (pregunta-si-no "Va a viajar con ninos? [si/no] ")
        then
-	   (assert (RestriccionNinos) (viaja-con-ninos TRUE)))
+	   (assert (RestriccionNinos (viaja-con-ninos TRUE)))
        else
-	   (assert (RestriccionNinos) (viaja-con-ninos FALSE)))
+	   (assert (RestriccionNinos (viaja-con-ninos FALSE)))
+ 	)
+)
 
 
 
@@ -2966,7 +2968,7 @@
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
-			(if (eq ?para-ninos FALSE) then 
+			(if (eq ?para-ninos FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 50))
 			)
@@ -3201,15 +3203,54 @@
 )
 
 
-(deffunction obtenerHotel (?ciudad ?presupuesto) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
+(deffunction obtenerHotel (?ciudad ?presupuesto ?viaje-ninos) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
 	(bind ?hotels (send ?ciudad get-AlojamientosDisponibles))
 	(bind ?hotels (sort sort_precio_por_noche ?hotels))
 	(if (eq (str-cat ?presupuesto) "alto") then
-		(bind ?hotel (nth$ 1 ?hotels)))
+		(if (eq ?viaje-ninos TRUE) then
+			(if (eq (send (nth$ 1 ?hotels) get-HabitacionesMasDe3) TRUE) then
+				(bind ?hotel (nth$ 1 ?hotels))
+			else
+				(if (eq (send (nth$ 2 ?hotels) get-HabitacionesMasDe3) TRUE) then
+					(bind ?hotel (nth$ 2 ?hotels))
+				else
+					(bind ?hotel (nth$ 3 ?hotels))
+				)
+			)
+		else
+			(bind ?hotel (nth$ 1 ?hotels))
+		)
+	)
 	(if (eq (str-cat ?presupuesto) "bajo") then
-		(bind ?hotel (nth$ 3 ?hotels)))
+		(if (eq ?viaje-ninos TRUE) then
+			(if (eq (send (nth$ 3 ?hotels) get-HabitacionesMasDe3) TRUE) then
+				(bind ?hotel (nth$ 3 ?hotels))
+			else
+				(if (eq (send (nth$ 2 ?hotels) get-HabitacionesMasDe3) TRUE) then
+					(bind ?hotel (nth$ 2 ?hotels))
+				else
+					(bind ?hotel (nth$ 1 ?hotels))
+				)
+			)
+		else
+			(bind ?hotel (nth$ 3 ?hotels))
+		)
+	)
 	(if (eq (str-cat ?presupuesto) "medio") then
-		(bind ?hotel (nth$ 2 ?hotels)))
+		(if (eq ?viaje-ninos TRUE) then
+			(if (eq (send (nth$ 2 ?hotels) get-HabitacionesMasDe3) TRUE) then
+				(bind ?hotel (nth$ 2 ?hotels))
+			else
+				(if (eq (send (nth$ 3 ?hotels) get-HabitacionesMasDe3) TRUE) then
+					(bind ?hotel (nth$ 3 ?hotels))
+				else
+					(bind ?hotel (nth$ 1 ?hotels))
+				)
+			)
+		else
+			(bind ?hotel (nth$ 2 ?hotels))
+		)
+	)
 	?hotel
 )
 
@@ -3258,24 +3299,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 (defrule obtenerRecomendaciones "Regla para obtener las recomendaciones de viaje calculadas por el sistema"
 	(recomendacion-ready)
 	(info-viaje numero-dias ?dias)
 	(RestriccionPresupuesto (presupuesto ?presupuesto))
 	(ciudadOrigen ?ciudadOrigen)
+	(RestriccionNinos (viaja-con-ninos ?viaja-ninos))
 	=>
 	;(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
 	(bind ?ciudadOrigen (str-cat ?ciudadOrigen))
@@ -3341,7 +3370,7 @@
 
 				; ALOJAMIENTOS
 				(printout t "| ")
-				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto ?viaja-ninos))
 				(printout t (send ?hotel get-NombreAlojamiento))
 				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta transportes
@@ -3390,7 +3419,7 @@
 
 				; ALOJAMIENTOS
 				(printout t "| ")
-				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+				(bind ?hotel (obtenerHotel ?ciudad ?presupuesto ?viaja-ninos))
 				(printout t (send ?hotel get-NombreAlojamiento))
 				(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 				(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
@@ -3494,7 +3523,7 @@
 
 					; ALOJAMIENTOS
 					(printout t "| ")
-					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto ?viaja-ninos))
 					(printout t (send ?hotel get-NombreAlojamiento))
 					(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
@@ -3543,7 +3572,7 @@
 
 					; ALOJAMIENTOS
 					(printout t "| ")
-					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+					(bind ?hotel (obtenerHotel ?ciudad ?presupuesto ?viaja-ninos))
 					(printout t (send ?hotel get-NombreAlojamiento))
 					(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 					(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
@@ -3621,8 +3650,9 @@
 
 			; ALOJAMIENTOS
 			(printout t "| ")
-			(bind ?hotel (obtenerHotel ?ciudad ?presupuesto))
+			(bind ?hotel (obtenerHotel ?ciudad ?presupuesto ?viaja-ninos))
 			(printout t (send ?hotel get-NombreAlojamiento))
+			(bind ?coste (+ ?coste (send ?hotel get-PrecioPorNoche)))
 			(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 			; TRANSPORTE
