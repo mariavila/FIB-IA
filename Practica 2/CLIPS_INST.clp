@@ -2717,7 +2717,6 @@
 )
 
 
-
 ;; --------------------------------------------------------------------------------------------------------------------
 ;; -----------------------------------------------------  MAIN  -------------------------------------------------------
 ;; --------------------------------------------------------------------------------------------------------------------
@@ -2973,7 +2972,7 @@
 		(loop-for-count (?i 1 (length$ ?transportes)) do
 			(bind ?transporte (nth$ ?i ?transportes))
 			(bind ?medio (send ?transporte get-MedioTransporte))
-			(if (eq (send ?medio get-NombreMedio) "Avion") then 
+			(if (eq (send ?medio get-NombreMedio) "Avion") then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
@@ -2983,7 +2982,7 @@
 		(loop-for-count (?i 1 (length$ ?transportes)) do
 			(bind ?transporte (nth$ ?i ?transportes))
 			(bind ?medio (send ?transporte get-MedioTransporte))
-			(if (or (eq (send ?medio get-NombreMedio) "Tren") (eq (send ?medio get-NombreMedio) "Barco")) then 
+			(if (or (eq (send ?medio get-NombreMedio) "Tren") (eq (send ?medio get-NombreMedio) "Barco")) then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
@@ -2993,7 +2992,7 @@
 		(loop-for-count (?i 1 (length$ ?transportes)) do
 			(bind ?transporte (nth$ ?i ?transportes))
 			(bind ?medio (send ?transporte get-MedioTransporte))
-			(if (eq (send ?medio get-NombreMedio) "Autobus") then 
+			(if (eq (send ?medio get-NombreMedio) "Autobus") then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
@@ -3180,12 +3179,12 @@
 (deffunction obtenerHotel (?ciudad ?presupuesto) "obtiene el hotel de la ciudad que se adhiere al presupuesto"
 	(bind ?hotels (send ?ciudad get-AlojamientosDisponibles))
 	(bind ?hotels (sort sort_precio_por_noche ?hotels))
-	(if (eq (str-cat ?presupuesto) "alto") then 
-		(bind ?hotel (nth$ 1 ?hotels))) 
-	(if (eq (str-cat ?presupuesto) "bajo") then 
-		(bind ?hotel (nth$ 3 ?hotels))) 
-	(if (eq (str-cat ?presupuesto) "medio") then 
-		(bind ?hotel (nth$ 2 ?hotels))) 
+	(if (eq (str-cat ?presupuesto) "alto") then
+		(bind ?hotel (nth$ 1 ?hotels)))
+	(if (eq (str-cat ?presupuesto) "bajo") then
+		(bind ?hotel (nth$ 3 ?hotels)))
+	(if (eq (str-cat ?presupuesto) "medio") then
+		(bind ?hotel (nth$ 2 ?hotels)))
 	?hotel
 )
 
@@ -3207,10 +3206,10 @@
 		(bind ?c1 (lowcase (send ?c1 get-Nombre)))
 		else (bind ?c1 (lowcase ?c1)) ;nos aseguramos de que sea lowcase
 	)
-	
+
 	(if (= ?arg1 3) then (bind ?c2 (lowcase ?c2))  ; Con arg1 = 3 ?c2 tambien es un String
-		else (bind ?c2 (lowcase (send ?c2 get-Nombre)))) 
-		
+		else (bind ?c2 (lowcase (send ?c2 get-Nombre))))
+
 	;(printout t ?c1 " AAA" ?c2) ;DEBUG
 	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
 	(bind ?transportes (sort sort_transporte ?transportes))
@@ -3273,7 +3272,7 @@
 	(bind ?diasPorCiudad (integer (/ ?dias 3)))
 	(bind ?residuo (mod ?dias 3))
 	(bind ?numCiudadesNegativas 0)
-	
+
 	;IDA
 	(printout t "| IDA  ")
 	(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
@@ -3326,12 +3325,12 @@
 				; TRANSPORTE
 				(if (eq ?j 1) then
 					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
-					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 					(bind ?ciudadActual (send ?ciudad get-Nombre))
 					(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
-				else 
+				else
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
 
@@ -3374,16 +3373,16 @@
 				; TRANSPORTE
 				(if (eq ?j 1) then
 					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
-					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 					(bind ?ciudadActual (send ?ciudad get-Nombre))
 					(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
-				else 
+				else
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
 				(printout t "| " crlf)
-			)		
+			)
 		)
 	)
 	;VUELTA
@@ -3393,13 +3392,13 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
-		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-		(printout t "|" crlf) 
-					
-					
-					
+		(printout t "|" crlf)
+
+
+
 	(if (>= ?numCiudadesNegativas 3) then (printout t "ATENCION: No se ha podido planificar un viaje que cumpla con todas las restricciones" crlf))
 
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
@@ -3425,7 +3424,7 @@
 		(bind ?residuo (mod ?dias 8))
 		(bind ?numCiudadesNegativas 0)
 		(bind ?d 1) ;controla los dias
-		
+
 		;IDA
 		(printout t "| IDA  ")
 		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
@@ -3433,7 +3432,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(printout t "| ------------     |" crlf)
-		
+
 		(loop-for-count (?i 1 8) do
 			(bind ?ciudad (nth$ ?i ?ciudades))
 			(bind ?puntuacionCiudad (send ?ciudad get-PuntuacionCiudad))
@@ -3449,7 +3448,7 @@
 					(printout t "| " ?d)
 					(loop-for-count (?z 1 (- 5 (str-length (str-cat ?d)))) do (printout t " ")) ;espacios hasta ciudad
 					(bind ?d (+ ?d 1))
-					
+
 					; CIUDAD
 					(printout t "| " (send ?ciudad get-Nombre))
 					(loop-for-count (?z 1 (- 15 (str-length (send ?ciudad get-Nombre)))) do (printout t " ")) ;espacios hasta actividades
@@ -3479,15 +3478,15 @@
 					; TRANSPORTE
 					(if (eq ?j 1) then
 						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
-						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 						(bind ?ciudadActual (send ?ciudad get-Nombre))
 						(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
-					else 
+					else
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
-						
+
 						(printout t "| " crlf)
 				)
 			else
@@ -3527,12 +3526,12 @@
 					; TRANSPORTE
 					(if (eq ?j 1) then
 						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
-						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 						(bind ?ciudadActual (send ?ciudad get-Nombre))
 						(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
-					else 
+					else
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
 					(printout t "| " crlf)
@@ -3546,7 +3545,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
-		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 		(printout t "|" crlf)
@@ -3555,7 +3554,7 @@
 
 	else ;sino, una por dia
 		(bind ?numCiudadesNegativas 0)
-		
+
 		;IDA
 		(printout t "| IDA  ")
 		(printout t "| " (str-cat (upcase (sub-string 1 1 (str-cat ?ciudadOrigen))) (sub-string 2 (str-length (str-cat ?ciudadOrigen)) (str-cat ?ciudadOrigen))))
@@ -3563,7 +3562,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(printout t "| ------------     |" crlf)
-		
+
 		(loop-for-count (?i 1 ?dias) do
 			(bind ?ciudad (nth$ ?i ?ciudades))
 			(bind ?puntuacionCiudad (send ?ciudad get-PuntuacionCiudad))
@@ -3603,7 +3602,7 @@
 
 			; TRANSPORTE
 			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
-			(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+			(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 			(printout t "| " ?transp)
 			(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 			(printout t "|" crlf)
@@ -3616,7 +3615,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
-		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
+		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 		(printout t "|" crlf)
