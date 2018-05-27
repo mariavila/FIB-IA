@@ -2852,6 +2852,13 @@
 ;	(declare (salience 1))
 ;	=>
 
+(defrule precioMaximo "Regla para saber el precio maximo del viaje"
+	(declare(salience 80))
+	(nuevo_viaje)
+	=>
+	(bind ?respuesta (pregunta-opciones "Cual es el presupuesto del viaje? [bajo/medio/alto] " bajo medio alto))
+	(assert (RestriccionPresupuesto (presupuesto ?respuesta)))
+)
 
 (defrule finPreguntas "Regla para pasar al modulo de inferencia"
 	(declare (salience 1))
@@ -2863,13 +2870,7 @@
 	(focus inferir_datos)
 )
 
-(defrule precioMaximo "Regla para saber el precio maximo del viaje"
-	(declare(salience 80))
-	(nuevo_viaje)
-	=>
-	(bind ?respuesta (pregunta-opciones "Cual es el presupuesto del viaje? [bajo/medio/alto] " bajo medio alto))
-	(assert (RestriccionPresupuesto (presupuesto ?respuesta)))
-)
+
 
 ;; --------------------------------------------------------------------------------------------------------------------
 ;; ------------------------------------------------  INFRENCIA DE DATOS  ----------------------------------------------
@@ -2960,6 +2961,45 @@
 	(focus recomendaciones)
 )
 
+(defrule filtraTransportePresupuesto "Da prioridad a los transportes acordes al nivel de presupuesto dado"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(RestriccionPresupuesto (presupuesto ?presupuesto))
+	=>
+	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
+
+	(if (eq ?presupuesto alto) then
+		;(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Avion")))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?medio (send ?transporte get-MedioTransporte))
+			(if (eq (send ?medio get-NombreMedio) "Avion") then 
+				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+			)
+		)
+	else (if (eq ?presupuesto medio) then
+		;(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (or (eq ?ins:MedioTransporte:NombreMedio "Tren") (eq ?ins:MedioTransporte:NombreMedio "Barco"))))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?medio (send ?transporte get-MedioTransporte))
+			(if (or (eq (send ?medio get-NombreMedio) "Tren") (eq (send ?medio get-NombreMedio) "Barco")) then 
+				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+			)
+		)
+	else
+		;(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Autobus")))
+		(loop-for-count (?i 1 (length$ ?transportes)) do
+			(bind ?transporte (nth$ ?i ?transportes))
+			(bind ?medio (send ?transporte get-MedioTransporte))
+			(if (eq (send ?medio get-NombreMedio) "Autobus") then 
+				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
+			)
+		)
+	))
+)
 
 
 ;; --------------------------------------------------------------------------------------------------------------------
@@ -3165,9 +3205,13 @@
 (deffunction encuentraMejorTransporte (?c1 ?c2 ?arg1) "Funcion que devuelve el transporte con mas puntuacion entre dos ciudades"
 	(if (= ?arg1 2) then	; Con arg1 = 1 ?c1 es un String
 		(bind ?c1 (lowcase (send ?c1 get-Nombre)))
+		else (bind ?c1 (lowcase ?c1)) ;nos aseguramos de que sea lowcase
 	)
-	(bind ?c2 (lowcase (send ?c2 get-Nombre)))
-
+	
+	(if (= ?arg1 3) then (bind ?c2 (lowcase ?c2))  ; Con arg1 = 3 ?c2 tambien es un String
+		else (bind ?c2 (lowcase (send ?c2 get-Nombre)))) 
+		
+	;(printout t ?c1 " AAA" ?c2) ;DEBUG
 	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
 	(bind ?transportes (sort sort_transporte ?transportes))
 
@@ -3188,35 +3232,7 @@
 
 ; //////////////////////////////////////////////////
 
-(defrule filtraTransportePresupuesto "Da prioridad a los transportes acordes al nivel de presupuesto dado"
-	(declare (salience 80))
-	(restricciones-inferencia)
-	(RestriccionPresupuesto (presupuesto ?presupuesto))
-	=>
-	
-	(if (eq ?presupuesto alto) then
-		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Avion")))
-		(loop-for-count (?i 1 (length$ ?transportes)) do
-			(bind ?transporte (nth$ ?i ?transportes))
-			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
-			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
-		)
-	else (if (eq ?presupuesto medio) then
-		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (or (eq ?ins:MedioTransporte:NombreMedio "Tren") (eq ?ins:MedioTransporte:NombreMedio "Barco"))))
-		(loop-for-count (?i 1 (length$ ?transportes)) do
-			(bind ?transporte (nth$ ?i ?transportes))
-			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
-			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
-		)
-	else
-		(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) (eq ?ins:MedioTransporte:NombreMedio "Autobus")))
-		(loop-for-count (?i 1 (length$ ?transportes)) do
-			(bind ?transporte (nth$ ?i ?transportes))
-			(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
-			(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
-		)
-	))
-)
+
 
 
 
@@ -3313,7 +3329,7 @@
 					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-					(bind ?ciudadActual ?ciudad)
+					(bind ?ciudadActual (send ?ciudad get-Nombre))
 				else 
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3356,11 +3372,11 @@
 
 				; TRANSPORTE
 				(if (eq ?j 1) then
-					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+					(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
 					(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 					(printout t "| " ?transp)
 					(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-					(bind ?ciudadActual ?ciudad)
+					(bind ?ciudadActual (send ?ciudad get-Nombre))
 				else 
 					(printout t "|")
 					(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3374,11 +3390,11 @@
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
-		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-		(printout t "|" crlf)
+		(printout t "|" crlf) 
 					
 					
 					
@@ -3393,7 +3409,7 @@
 	(printout t "                                                                                                                                      " crlf)
 
 	(bind ?coste 0.0)
-
+	(bind ?ciudadActual (str-cat ?ciudadOrigen))
 
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(printout t "|                                                                                                                                      |" crlf)
@@ -3460,11 +3476,11 @@
 
 					; TRANSPORTE
 					(if (eq ?j 1) then
-						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudad 1))
+						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
 						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-						(bind ?ciudadActual ?ciudad)
+						(bind ?ciudadActual (send ?ciudad get-Nombre))
 					else 
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3507,11 +3523,11 @@
 
 					; TRANSPORTE
 					(if (eq ?j 1) then
-						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+						(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
 						(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 						(printout t "| " ?transp)
 						(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
-						(bind ?ciudadActual ?ciudad)
+						(bind ?ciudadActual (send ?ciudad get-Nombre))
 					else 
 						(printout t "|")
 						(loop-for-count (?z 1 18) do (printout t " ")))
@@ -3525,7 +3541,7 @@
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
-		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
@@ -3582,11 +3598,12 @@
 			(loop-for-count (?z 1 (- 27 (str-length (send ?hotel get-NombreAlojamiento)))) do (printout t " ")) ;espacios hasta alojamientos
 
 			; TRANSPORTE
-			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
 			(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 			(printout t "| " ?transp)
 			(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 			(printout t "|" crlf)
+			(bind ?ciudadActual (send ?ciudad get-Nombre))
 		)
 		;VUELTA
 		(printout t "|VUELTA")
@@ -3594,7 +3611,7 @@
 		(loop-for-count (?z 1 (- 15 (str-length ?ciudadOrigen))) do (printout t " ")) ;espacios hasta actividades
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
-		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 2))
+		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio)) 
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
