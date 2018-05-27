@@ -2838,9 +2838,9 @@
     (bind ?respuesta (pregunta-opciones "Ya que le gustaria disfrutar de unas vacaciones aventureras, busca actividades flojas, normales o extremas? [flojas/normales/extremas] " flojas normales extremas))
     (if (eq ?respuesta flojas) then
 	   (assert (RestriccionesRiesgos (nivel-de-riesgo 3)))
-       else (if (eq ?respuesta normales) then 
+       else (if (eq ?respuesta normales) then
 	   (assert (RestriccionesRiesgos (nivel-de-riesgo 6)))
-	   else 
+	   else
 	   (assert (RestriccionesRiesgos (nivel-de-riesgo 10)))
 	))
 )
@@ -3037,12 +3037,16 @@
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
+			(if (eq (str-cat(send ?actividad get-NombreActividad)) "Fiesta nocturna") then
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 100))
+			)
 		)
 		else
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
-			(if (eq ?para-ninos TRUE) then 
+			(if (eq ?para-ninos TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
@@ -3060,7 +3064,7 @@
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?es-espec (send ?actividad get-EsEspectaculo))
-			(if (eq ?es-espec FALSE) then 
+			(if (eq ?es-espec FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
@@ -3069,7 +3073,7 @@
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?es-espec (send ?actividad get-EsEspectaculo))
-			(if (eq ?es-espec TRUE) then 
+			(if (eq ?es-espec TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
@@ -3087,7 +3091,7 @@
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
-			(if (eq ?necesita-banador FALSE) then 
+			(if (eq ?necesita-banador FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
@@ -3096,7 +3100,7 @@
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
-			(if (eq ?necesita-banador TRUE) then 
+			(if (eq ?necesita-banador TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
@@ -3111,39 +3115,43 @@
 	(RestriccionesNinos (viaja-con-ninos ?ninos))
 	=>
 	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
-	
+
 	; Niños
 	(if (eq ?ninos TRUE) then
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?viaja-con-ninos (send ?actividad get-ParaNinos))
-			(if (eq ?viaja-con-ninos FALSE) then 
+			(if (eq ?viaja-con-ninos FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+			(if (eq (str-cat(send ?actividad get-NombreActividad)) "Fiesta nocturna") then
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 100))
 			)
 		)
 		else
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?viaja-con-ninos (send ?actividad get-ParaNinos))
-			(if (eq ?viaja-con-ninos TRUE) then 
+			(if (eq ?viaja-con-ninos TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
 	)
-	
+
 	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
 	;Riesgo (en caso de que sea actividad de aventura)
 	(if (neq ?riesgo nil) then
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?nriesgo (send ?actividad get-NivelDeRiesgo))
-			(if (> ?nriesgo ?riesgo) then 
+			(if (> ?nriesgo ?riesgo) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 30))
 			)
-			(if (< ?nriesgo ?riesgo) then 
+			(if (< ?nriesgo ?riesgo) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior (- 10 ?nriesgo)))
 			)
