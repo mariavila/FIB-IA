@@ -2709,13 +2709,16 @@
 
 
 ;; --------------------------------------------------------------------------------------------------------------------
-;; --------------------------------------------------  TEMPLATES-------------------------------------------------------
+;; --------------------------------------------------  TEMPLATES -------------------------------------------------------
 ;; --------------------------------------------------------------------------------------------------------------------
 
 (deftemplate RestriccionPresupuesto
 	(slot presupuesto (type STRING) )
 )
 
+(deftemplate RestriccionNinos
+	(slot viaja-con-ninos (type SYMBOL))
+)
 
 ;; --------------------------------------------------------------------------------------------------------------------
 ;; -----------------------------------------------------  MAIN  -------------------------------------------------------
@@ -2747,21 +2750,12 @@
 	(export ?ALL)
 )
 
-(defrule viajar-ninos ""
-	(declare (salience 10))
-	(nuevo_viaje)
-	=>
-    (if (pregunta-si-no "Va a viajar con ninos? [si/no] ")
-       then
-	   (assert (info-viaje con-ninos)))
-       else
-       (assert (info-viaje sin-ninos)))
 
 (defrule ciudad-europea ""
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-    (if (pregunta-si-no "Quiere viajar más allá de Europa? [si/no] ")
+    (if (pregunta-si-no "Quiere viajar mas alla de Europa? [si/no] ")
        then
 	   (assert (info-viaje europa-y-internacional)))
        else
@@ -2792,6 +2786,17 @@
 						 else
 						 (assert (info-viaje tipo-actividad cultural)))))
 )
+
+(defrule viajar-ninos ""
+	(declare (salience 10))
+	(nuevo_viaje)
+	(info-viaje tipo-actividad ocio)
+	=>
+    (if (pregunta-si-no "Va a viajar con ninos? [si/no] ")
+       then
+	   (assert (RestriccionNinos) (viaja-con-ninos TRUE)))
+       else
+	   (assert (RestriccionNinos) (viaja-con-ninos FALSE)))
 
 
 
@@ -2932,7 +2937,6 @@
 		(anadePuntuacionActividadTipo cultural -100)
 
 	else(if (eq ?tipoActividad aventura) then
-		(printout t "ASSSSSSSSSSSSS" crlf)
 		(anadePuntuacionActividadTipo aventura  100)
 		(anadePuntuacionActividadTipo ocio     -100)
 		(anadePuntuacionActividadTipo relax    -100)
@@ -2950,6 +2954,27 @@
 		(anadePuntuacionActividadTipo cultural  100)
 	)))
 )
+
+(defrule filtraActividadOcio "Da puntuacion a las actividades de ocio en función de si hay niños o no"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(info-viaje tipo-actividad ocio)
+	(RestriccionNinos (viaja-con-ninos ?viaja-con-ninos))
+	=>
+	(if (eq ?viaja-con-ninos TRUE) then
+		(bind ?actividades (find-all-instances ((?ins ActividadOcio)) TRUE))
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?para-ninos (send ?actividad get-Para+ninos))
+			(if (eq ?para-ninos FALSE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 50))
+			)
+		)
+	)
+)
+
+
 
 (defrule finRestricciones "Regla para pasar al modulo de recomendaciones"
 	(declare (salience 1))
