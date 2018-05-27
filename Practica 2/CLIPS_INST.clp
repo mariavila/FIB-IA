@@ -2716,8 +2716,17 @@
 	(slot presupuesto (type STRING) )
 )
 
-(deftemplate RestriccionNinos
-	(slot viaja-con-ninos (type SYMBOL))
+(deftemplate RestriccionesNinos
+	(slot viaja-con-ninos (type SYMBOL) )
+)
+(deftemplate RestriccionesEspectaculos
+	(slot es-espectaculo (type SYMBOL) )
+)
+(deftemplate RestriccionesBanadores
+	(slot banador-requerido (type SYMBOL) )
+)
+(deftemplate RestriccionesRiesgos
+	(slot nivel-de-riesgo (type INTEGER) )
 )
 
 
@@ -2791,14 +2800,50 @@
 (defrule viajar-ninos ""
 	(declare (salience 10))
 	(nuevo_viaje)
-	(info-viaje tipo-actividad ocio)
 	=>
     (if (pregunta-si-no "Va a viajar con ninos? [si/no] ")
        then
-	   (assert (RestriccionNinos) (viaja-con-ninos TRUE)))
+	   (assert (RestriccionesNinos(viaja-con-ninos TRUE)))
        else
-	   (assert (RestriccionNinos) (viaja-con-ninos FALSE)))
-
+	   (assert (RestriccionesNinos (viaja-con-ninos FALSE)))
+	)
+)
+(defrule banador-requerido ""
+	(declare (salience 10))
+	(nuevo_viaje)
+	=>
+    (if (pregunta-si-no "Le gustaria hacer alguna actividad acuatica? [si/no] ")
+       then
+	   (assert (RestriccionesBanadores (banador-requerido TRUE)))
+       else
+	   (assert (RestriccionesBanadores (banador-requerido FALSE)))
+	)
+)
+(defrule es-espectaculo ""
+	(declare (salience 10))
+	(nuevo_viaje)
+	=>
+    (if (pregunta-si-no "Le gustan los espectaculos? [si/no] ")
+       then
+	   (assert (RestriccionesEspectaculos (es-espectaculo TRUE)))
+       else
+	   (assert (RestriccionesEspectaculos (es-espectaculo FALSE)))
+	)
+)
+(defrule nivel-de-riesgo ""
+	(declare (salience 10))
+	(nuevo_viaje)
+	(info-viaje tipo-actividad aventura)
+	=>
+    (bind ?respuesta (pregunta-opciones "Ya que le gustaria disfrutar de unas vacaciones aventureras, busca actividades flojas, normales o extremas? [flojas/normales/extremas] " flojas normales extremas))
+    (if (eq ?respuesta flojas) then
+	   (assert (RestriccionesRiesgos (nivel-de-riesgo 3)))
+       else (if (eq ?respuesta normales) then 
+	   (assert (RestriccionesRiesgos (nivel-de-riesgo 6)))
+	   else 
+	   (assert (RestriccionesRiesgos (nivel-de-riesgo 10)))
+	))
+)
 
 
 (defrule caracteristicas-viaje ""
@@ -2959,17 +3004,123 @@
 (defrule filtraActividadOcio "Da puntuacion a las actividades de ocio en función de si hay niños o no"
 	(declare (salience 80))
 	(restricciones-inferencia)
-	(info-viaje tipo-actividad ocio)
-	(RestriccionNinos (viaja-con-ninos ?viaja-con-ninos))
+	(RestriccionesNinos (viaja-con-ninos ?ninos))
 	=>
-	(if (eq ?viaja-con-ninos TRUE) then
-		(bind ?actividades (find-all-instances ((?ins ActividadOcio)) TRUE))
+	(bind ?actividades (find-all-instances ((?ins ActividadOcio)) TRUE))
+	(if (eq ?ninos TRUE) then
 		(loop-for-count (?i 1 (length$ ?actividades)) do
 			(bind ?actividad (nth$ ?i ?actividades))
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
 			(if (eq ?para-ninos FALSE) then 
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 50))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+		else
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?para-ninos (send ?actividad get-Para+ninos))
+			(if (eq ?para-ninos TRUE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+	)
+)
+
+(defrule filtraActividadCultural "Da puntuacion a las actividades de ocio en función de si espectaculos o no"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(RestriccionesEspectaculos (es-espectaculo ?espec))
+	=>
+	(bind ?actividades (find-all-instances ((?ins ActividadCultural)) TRUE))
+	(if (eq ?espec TRUE) then
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?es-espec (send ?actividad get-EsEspectaculo))
+			(if (eq ?es-espec FALSE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+		else
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?es-espec (send ?actividad get-EsEspectaculo))
+			(if (eq ?es-espec TRUE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+	)
+)
+
+(defrule filtraActividadRelax "Da puntuacion a las actividades de ocio en función de si espectaculos o no"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(RestriccionesBanadores (banador-requerido ?banador))
+	=>
+	(bind ?actividades (find-all-instances ((?ins ActividadRelax)) TRUE))
+	(if (eq ?banador TRUE) then
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
+			(if (eq ?necesita-banador FALSE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+		else
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
+			(if (eq ?necesita-banador TRUE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+	)
+)
+
+(defrule filtraActividadAventrua "Da puntuacion a las actividades de ocio en función de si espectaculos o no"
+	(declare (salience 80))
+	(restricciones-inferencia)
+	(RestriccionesRiesgos (nivel-de-riesgo ?riesgo))
+	(RestriccionesNinos (viaja-con-ninos ?ninos))
+	=>
+	(printout t "KJKJBK" crlf)
+	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
+	
+	; Niños
+	(if (eq ?ninos TRUE) then
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?viaja-con-ninos (send ?actividad get-ParaNinos))
+			(if (eq ?viaja-con-ninos FALSE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+		else
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?viaja-con-ninos (send ?actividad get-ParaNinos))
+			(if (eq ?viaja-con-ninos TRUE) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+			)
+		)
+	)
+	
+	(bind ?actividades (find-all-instances ((?ins ActividadAventura)) TRUE))
+	;Riesgo (en caso de que sea actividad de aventura)
+	(if (and (neq ?riesgo nil) (neq ?riesgo 10)) then
+		(loop-for-count (?i 1 (length$ ?actividades)) do
+			(bind ?actividad (nth$ ?i ?actividades))
+			(bind ?nriesgo (send ?actividad get-NivelDeRiesgo))
+			(if (> ?nriesgo ?riesgo) then 
+				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
 	)
