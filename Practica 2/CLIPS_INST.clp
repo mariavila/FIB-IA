@@ -2756,7 +2756,7 @@
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-    (if (pregunta-si-no "Quiere viajar más allá de Europa? [si/no] ")
+    (if (pregunta-si-no "Quiere viajar mas alla de Europa? [si/no] ")
        then
 	   (assert (info-viaje europa-y-internacional)))
        else
@@ -2969,7 +2969,7 @@
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
 			(if (eq ?para-ninos FALSE) then 
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 50))
 			)
 		)
 	)
