@@ -2750,9 +2750,21 @@
 (defrule initialRule "Regla inicial"
 	(initial-fact)
 	=>
-	(printout t "====================================================================" crlf)
-  	(printout t "=         Sistema de recomendacion de viajes      			   	    =" crlf)
-	(printout t "====================================================================" crlf)
+	(printout t " \\----------------------------------\\										" crlf)
+	(printout t " \\                                  \\     __								" crlf)
+    (printout t " \\    Sistema de recomendacion      \\     | \\								" crlf)
+    (printout t " >            de viajes             >------|  \\       ______				" crlf)
+    (printout t " /        AL FIN DEL MUNDO          /       --- \\_____/**|_|_\\____   |		" crlf)
+    (printout t " /           Y MAS ALLA             /          \\_______ --------- __>-}	" crlf)
+    (printout t " /----------------------------------/              /  \\_____|_____/  |		" crlf)
+    (printout t "                                                  *         |				" crlf)
+    (printout t "                                                           {O}				" crlf)
+	(printout t "                                                                           " crlf)
+    (printout t "   /*\\       /*\\       /*\\       /*\\       /*\\       /*\\       /*\\			" crlf)
+    (printout t "  |***|     |***|     |***|     |***|     |***|     |***|     |***|		" crlf)
+    (printout t "   \\*/       \\*/ ____  \\*/       \\*/       \\*/       \\*/       \\*/			" crlf)
+    (printout t "    |         |  |  |   |         |         |         |         |			" crlf)
+	(printout t "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	" crlf)
   	(printout t crlf)
 	(printout t "¡Bienvenido al sistema de recomendacion de viajes! A continuacion se le formularan una serie de preguntas para poder recomendarle un paquete vacacional que se ajuste a sus necesidades." crlf)
 	(printout t crlf)
@@ -2787,7 +2799,7 @@
 	(declare (salience 10))
 	(nuevo_viaje)
 	=>
-	(bind ?respuesta (pregunta-numerica "Cuantos dias vas a querer estar viajando? [entre 0 - 30] " 0 30))
+	(bind ?respuesta (pregunta-numerica "Cuantos dias vas a querer estar viajando? [entre 1 - 30] " 1 30))
 	(assert (info-viaje numero-dias ?respuesta))
 )
 
@@ -2962,11 +2974,11 @@
 		(bind ?eseuropea (send ?ciudad get-Europea))
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
-			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
+			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 10000))
 			(send ?ciudad put-RazonCiudad (str-cat "Recomendamos " (send ?ciudad get-Nombre) " porque es europea"))
 			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
-			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
+			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 10000))
 			(send ?ciudad put-RazonCiudad (str-cat "No recomendamos " (send ?ciudad get-Nombre) " porque NO es europea"))
 			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
@@ -2984,11 +2996,11 @@
 		(bind ?eseuropea (send ?ciudad get-Europea))
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
-			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
+			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 10000))
 			(send ?ciudad put-RazonCiudad (str-cat "No recomendamos " (send ?ciudad get-Nombre) " porque ES europea"))
 			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
-			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
+			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 10000))
 			(send ?ciudad put-RazonCiudad (str-cat "Recomendamos " (send ?ciudad get-Nombre) " porque NO es europea"))
 			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
@@ -3172,7 +3184,7 @@
 			(bind ?nriesgo (send ?actividad get-NivelDeRiesgo))
 			(if (> ?nriesgo ?riesgo) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de aventura CON riesgo mayor que el deseado")
+				(send ?actividad put-RazonActividad (str-cat "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de aventura CON riesgo mayor que el deseado"))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 30))
 			)
 			(if (< ?nriesgo ?riesgo) then
@@ -3183,6 +3195,23 @@
 		)
 	)
 )
+(defrule suma_puntuacion_actividades "anade la puntuacion de las actividades que tiene la ciudad"
+	(declare (salience 3))
+	(restricciones-inferencia)
+	=>
+	(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
+	(loop-for-count (?i 1 (length ?ciudades)) do
+		(bind ?ciudad (nth$ ?i ?ciudades))
+		(bind ?actividadesOfrecidas (send ?ciudad get-ActividadesDisponible))
+		(loop-for-count (?j 1 (length ?actividadesOfrecidas)) do
+			(bind ?actividad (nth$ ?j ?actividadesOfrecidas))
+			(bind ?puntuacionAct (send ?actividad get-PuntuacionActividad))
+			(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
+			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior ?puntuacionAct))
+		)
+	)
+)
+
 
 (defrule printeaRazones "Imprime las razones"
 	(declare (salience 2))
@@ -3203,13 +3232,14 @@
 		(printout t (send ?a get-RazonActividad) crlf)
 	)
 
-	(if (eq ?presupuesto alto) then (printout t "Recomendamos Avion como el medio de transporte adecuado para un presupuesto Alto (siempre que sea posible)")
-	else (if (eq ?presupuesto bajo) then (printout t "Recomendamos Autobus como el medio de transporte adecuado para un presupuesto Bajo (siempre que sea posible)")
-	else (printout t "Recomendamos Barco o Tren como el medio de transporte adecuado para un presupuesto Medio (siempre que sea posible)")))
+	(if (eq ?presupuesto alto) then (printout t "Recomendamos Avion como el medio de transporte adecuado para un presupuesto Alto (siempre que sea posible)" crlf)
+	else (if (eq ?presupuesto bajo) then (printout t "Recomendamos Autobus como el medio de transporte adecuado para un presupuesto Bajo (siempre que sea posible)" crlf)
+	else (printout t "Recomendamos Barco o Tren como el medio de transporte adecuado para un presupuesto Medio (siempre que sea posible)" crlf)))
 	
-	(if (eq ?presupuesto alto) then (printout t "Recomendamos hoteles de 5* o 4* con un presupuesto Alto")
-	else (if (eq ?presupuesto bajo) then (printout t "Recomendamos hoteles de 2* o 1* con un presupuesto Bajo")
-	else (printout t "Recomendamos hoteles de 3* con un presupuesto Medio")))
+	(if (eq ?presupuesto alto) then (printout t "Recomendamos hoteles de 5* o 4* con un presupuesto Alto" crlf)
+	else (if (eq ?presupuesto bajo) then (printout t "Recomendamos hoteles de 2* o 1* con un presupuesto Bajo" crlf)
+	else (printout t "Recomendamos hoteles de 3* con un presupuesto Medio" crlf)))
+	(printout t crlf)
 )
 
 (defrule finRestricciones "Regla para pasar al modulo de recomendaciones"
@@ -3555,7 +3585,7 @@
 
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(printout t "|                                                                                                                                      |" crlf)
-	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 1 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|oooooooooooooooooooooooooooooooooooooooooo PAQUETE 1: PARA LOS QUE NO QUIEREN MOVERSE MUCHO oooooooooooooooooooooooooooooooooooooooooo|" crlf)
 	(printout t "|                                                                                                                                      |" crlf)
 	(printout t "| DIA  |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
@@ -3682,6 +3712,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
+		(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
@@ -3704,7 +3735,7 @@
 
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
 	(printout t "|                                                                                                                                      |" crlf)
-	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo PACK 2 oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
+	(printout t "|oooooooooooooooooooooooooooooooooooooooooooooo PAQUETE 2: QUIERO DAR LA VUELTA AL MUNDO oooooooooooooooooooooooooooooooooooooooooooooo|" crlf)
 	(printout t "|                                                                                                                                      |" crlf)
 	(printout t "| DIA  |     CIUDAD     |                          ACTIVIDADES                         |        ALOJAMIENTOS        |    TRANSPORTE    |" crlf)
 	(printout t "|--------------------------------------------------------------------------------------------------------------------------------------|" crlf)
@@ -3835,6 +3866,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
+		(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
@@ -3895,6 +3927,7 @@
 			(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadActual ?ciudad 1))
 			(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 			(printout t "| " ?transp)
+			(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 			(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
 			(printout t "|" crlf)
 			(bind ?ciudadActual (send ?ciudad get-Nombre))
@@ -3906,6 +3939,7 @@
 		(printout t "| -------------------------------------                        ")
 		(printout t "| -----------------------    ")
 		(bind ?transporteCiudad (encuentraMejorTransporte ?ciudadOrigen ?ciudadActual 3))
+		(bind ?coste (+ ?coste (send ?transporteCiudad get-PrecioViaje)))
 		(bind ?transp (send (send ?transporteCiudad get-MedioTransporte) get-NombreMedio))
 		(printout t "| " ?transp)
 		(loop-for-count (?z 1 (- 17 (str-length (str-cat ?transp)))) do (printout t " "))
