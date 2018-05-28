@@ -1,4 +1,4 @@
-; Sat May 26 19:20:49 CEST 2018
+; Mon May 28 19:44:13 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -24,7 +24,22 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60011]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60017]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006])
 	(AlojamientosDisponibles
 		[Ontologia_Class10014]
 		[KB_156423_Class64]
@@ -51,7 +66,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10034]
 		[Ontologia_Class10032]
@@ -77,7 +102,18 @@
 		[Ontologia_Class20015]
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[KB_156423_Class69]
 		[Ontologia_Class10044]
@@ -111,7 +147,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60018]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class40004]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[KB_156423_Class67]
 		[Ontologia_Class30096]
@@ -224,7 +270,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30054]
 		[Ontologia_Class30046]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60017]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class20000])
 	(AlojamientosDisponibles
 		[Ontologia_Class10046]
 		[Ontologia_Class10045]
@@ -528,7 +582,18 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003]
+		[Ontologia_Class40005])
 	(AlojamientosDisponibles
 		[Ontologia_Class10017]
 		[Ontologia_Class10016]
@@ -557,7 +622,18 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10038]
 		[Ontologia_Class10039]
@@ -581,7 +657,17 @@
 		[Ontologia_Class20011]
 		[Ontologia_Class20012]
 		[Ontologia_Class30045]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class50009]
+		[Ontologia_Class40006]
+		[Ontologia_Class60018]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10012]
 		[Ontologia_Class10011]
@@ -608,7 +694,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10037]
 		[Ontologia_Class10035]
@@ -636,7 +730,16 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class40004]
+		[Ontologia_Class30001])
 	(AlojamientosDisponibles
 		[Ontologia_Class10026]
 		[Ontologia_Class10027]
@@ -667,7 +770,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002]
+		[Ontologia_Class20000])
 	(AlojamientosDisponibles
 		[Ontologia_Class10050]
 		[Ontologia_Class10051]
@@ -687,7 +800,17 @@
 		[Ontologia_Class20016]
 		[Ontologia_Class20015]
 		[Ontologia_Class30045]
-		[Ontologia_Class30046])
+		[Ontologia_Class30046]
+		[Ontologia_Class40005]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30048]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10025]
 		[Ontologia_Class10024]
@@ -715,7 +838,16 @@
 		[Ontologia_Class20017]
 		[Ontologia_Class30049]
 		[Ontologia_Class30045]
-		[Ontologia_Class30046])
+		[Ontologia_Class30046]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10019]
 		[KB_156423_Class66]
@@ -738,7 +870,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60011]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10021]
 		[Ontologia_Class10022]
@@ -755,6 +895,13 @@
 	(NombreActividad "Submarinismo")
 	(ParaNinos FALSE)
 	(PrecioActividad 75.5))
+
+([Ontologia_Class20000] of  ActividadRelax
+
+	(BanadorRequerido TRUE)
+	(NombreActividad "Playa")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class20001] of  MapaDeTransportes
 
@@ -823,7 +970,7 @@
 
 ([Ontologia_Class20009] of  ActividadOcio
 
-	(NombreActividad "Parque de atracciones")
+	(NombreActividad "Parque atracciones")
 	(Para+ninos TRUE)
 	(PrecioActividad 50.0))
 
@@ -888,6 +1035,13 @@
 	(NombreActividad "Snorkel")
 	(ParaNinos TRUE)
 	(PrecioActividad 7.5))
+
+([Ontologia_Class30001] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Pasear por parque")
+	(PrecioActividad 0.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class30002] of  MapaDeTransportes
 
@@ -1180,6 +1334,59 @@
 	(MedioTransporte [KB_156423_Class57])
 	(PrecioViaje 60.0)
 	(TiempoViaje 24.0))
+
+([Ontologia_Class40002] of  ActividadRelax
+
+	(BanadorRequerido TRUE)
+	(NombreActividad "Piscina")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40003] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Rayos UVA")
+	(PrecioActividad 30.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40004] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Limpieza cutis")
+	(PrecioActividad 40.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40005] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 2)
+	(NombreActividad "Deporte")
+	(ParaNinos TRUE)
+	(PrecioActividad 10.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40006] of  ActividadAventura
+
+	(Banador+Requerido TRUE)
+	(NivelDeRiesgo 5)
+	(NombreActividad "Moto de agua")
+	(ParaNinos FALSE)
+	(PrecioActividad 25.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40007] of  ActividadOcio
+
+	(NombreActividad "Hipica")
+	(Para+ninos TRUE)
+	(PrecioActividad 30.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40008] of  ActividadOcio
+
+	(NombreActividad "Globo aerostatico")
+	(Para+ninos FALSE)
+	(PrecioActividad 40.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class40009] of  MapaDeTransportes
 
@@ -1782,6 +1989,15 @@
 	(PrecioViaje 840.0)
 	(TiempoViaje 16.0))
 
+([Ontologia_Class50009] of  ActividadAventura
+
+	(Banador+Requerido TRUE)
+	(NivelDeRiesgo 0)
+	(NombreActividad "Surf")
+	(ParaNinos FALSE)
+	(PrecioActividad 15.0)
+	(PuntuacionActividad 0))
+
 ([Ontologia_Class50010] of  MapaDeTransportes
 
 	(Ciudad1 [KB_156423_Class25])
@@ -2052,6 +2268,73 @@
 	(PuntuacionTransporte 0)
 	(TiempoViaje 15.0))
 
+([Ontologia_Class60010] of  ActividadOcio
+
+	(NombreActividad "Vela")
+	(Para+ninos FALSE)
+	(PrecioActividad 20.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60011] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 7)
+	(NombreActividad "Puenting")
+	(ParaNinos FALSE)
+	(PrecioActividad 10.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60012] of  ActividadOcio
+
+	(NombreActividad "Visita al centro")
+	(Para+ninos TRUE)
+	(PrecioActividad 2.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60013] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Exposicion")
+	(PrecioActividad 7.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60014] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 4)
+	(NombreActividad "Conduccion extrema")
+	(ParaNinos TRUE)
+	(PrecioActividad 35.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60015] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Conferencia")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60016] of  ActividadCultural
+
+	(EsEspectaculo TRUE)
+	(NombreActividad "Folclore")
+	(PrecioActividad 7.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60017] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Feria popular")
+	(PrecioActividad 12.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60018] of  ActividadCultural
+
+	(EsEspectaculo TRUE)
+	(NombreActividad "Baile regional")
+	(PrecioActividad 15.0)
+	(PuntuacionActividad 0))
+
 ([Ontologia_Class9] of  Ciudad
 
 	(ActividadesDisponible
@@ -2071,7 +2354,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60017]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10029]
 		[Ontologia_Class10031]

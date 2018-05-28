@@ -1,4 +1,4 @@
-; Sat May 26 19:20:49 CEST 2018
+; Mon May 28 19:44:13 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -7,52 +7,85 @@
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(single-slot MedioDeTransport
-		(type SYMBOL)
-		(allowed-values Avion Barco Tren Autobus)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PrecioViaje
-		(type FLOAT)
-		(range 0.0 1.0E7)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot RazonTransporte
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Ciudad2
+	(single-slot AlojamientoItinerario
 		(type INSTANCE)
-;+		(allowed-classes Ciudad)
+;+		(allowed-classes Alojamiento)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot Actividades
+	(multislot inverse_of_Ciudad2
+		(type INSTANCE)
+;+		(allowed-classes MapaDeTransportes)
+		(create-accessor read-write))
+	(multislot MonumentosImportantes
 		(type INSTANCE)
 ;+		(allowed-classes Actividad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot NombreAlojamiento
-		(type STRING)
+	(single-slot TiempoViaje
+		(type FLOAT)
+		(range 0.0 999999.9)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot AlojamientosDisponibles
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(multislot Alojamientos
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot Ontologia_Class10008
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Ontologia_Class10001
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot NombreMedio
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot EsEspectaculo
+	(single-slot Ontologia_Class10003
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot TransporteLlegada
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot ActividadesDisponible
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot Destino
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Exotica
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Ciudad1
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Nombre
-;+		(comment "Nombre de la ciudad")
+	(single-slot KB_156423_Class47
 		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot ActividadesPlaneadas
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot PrecioActividad
+		(type FLOAT)
+		(range 0.0 9999.9)
+		(default 0.0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Europea
@@ -61,53 +94,10 @@
 		(default TRUE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot TransporteLlegada
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PuntuacionActividad
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot Alojamientos
-		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot TiempoViaje
+	(single-slot PrecioViaje
 		(type FLOAT)
-		(range 0.0 999999.9)
+		(range 0.0 1.0E7)
 ;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Origen
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot MedioTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot Ciudades
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(multislot TransportesDisponibles
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot RazonActividad
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot KB_156423_Class47
-		(type STRING)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Tiempo
 ;+		(comment "Tiempo que se pasa viajando.")
@@ -115,85 +105,17 @@
 		(allowed-values Bajo Medio Alto)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrecioActividad
-		(type FLOAT)
-		(range 0.0 9999.9)
-		(default 0.0)
-;+		(cardinality 1 1)
+	(single-slot RazonTransporte
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot ParaNinos
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Caro
-;+		(comment "Si es caro o no")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot CiudadItinerario
+	(single-slot Origen
 		(type INSTANCE)
 ;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot CiudadAlojamiento
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PuntuacionTransporte
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot inverse_of_Ciudad2
-		(type INSTANCE)
-;+		(allowed-classes MapaDeTransportes)
-		(create-accessor read-write))
-	(multislot ActividadesDisponible
-		(type INSTANCE)
-;+		(allowed-classes Actividad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot Precio
-;+		(comment "Precio para ir en el medio en euros.")
-		(type FLOAT)
-		(range 1.0 %3FVARIABLE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10008
+	(single-slot NombreActividad
 		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot CiudadActividad
-;+		(comment "Ciudad donde se encuentra el monumento")
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10001
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot CalidadEstrellas
-		(type INTEGER)
-		(range 1 5)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10003
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot RazonCiudad
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Destino
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Calidad
@@ -202,22 +124,28 @@
 		(default Baja)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrecioPorNoche
-		(type FLOAT)
-		(range 1.0 %3FVARIABLE)
+	(single-slot PuntuacionActividad
+		(type INTEGER)
+		(default 0)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HabitacionesMasDe3
-;+		(comment "Si el alojamiento tiene habitaciones para más de tres personas.")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+	(multislot TransportesDisponibles
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot PuntuacionTransporte
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot CiudadAlojamiento
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Exotica
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+	(single-slot NombreItinerario
+		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot NivelDeRiesgo
@@ -227,55 +155,38 @@
 		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot AlojamientosDisponibles
+	(multislot MediosDeTransporte
 		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
+;+		(allowed-classes MedioDeTransporte)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot NombreItinerario
-		(type STRING)
+	(single-slot CalidadEstrellas
+		(type INTEGER)
+		(range 1 5)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Para+ninos
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
+	(single-slot RazonCiudad
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot MedioTransporte
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Dias
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(multislot Ciudades
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
 	(single-slot PuntuacionCiudad
 		(type INTEGER)
 		(default 0)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Nivel
-		(type SYMBOL)
-		(allowed-values Bajo Alto)
-		(default Bajo)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot MonumentosImportantes
-		(type INSTANCE)
-;+		(allowed-classes Actividad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot DuracionViaje
-;+		(comment "Duración en horas del viaje con el medio.")
-		(type FLOAT)
-		(range 0.1 %3FVARIABLE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot NombreActividad
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot MediosDeTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot BanadorRequerido
 ;+		(comment "Para actividades en piscina, spa,... ;)")
@@ -284,35 +195,119 @@
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot MedioDeTransport
+		(type SYMBOL)
+		(allowed-values Avion Barco Tren Autobus)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot Actividades
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
 	(single-slot Banador+Requerido
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot ActividadesPlaneadas
+	(single-slot RazonActividad
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot CiudadActividad
+;+		(comment "Ciudad donde se encuentra el monumento")
 		(type INSTANCE)
-;+		(allowed-classes Actividad)
+;+		(allowed-classes Ciudad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot AlojamientoItinerario
+	(single-slot PrecioPorNoche
+		(type FLOAT)
+		(range 1.0 99999.9)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Precio
+;+		(comment "Precio para ir en el medio en euros.")
+		(type FLOAT)
+		(range 1.0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Ciudad2
 		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Ciudad1
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot HabitacionesMasDe3
+;+		(comment "Si el alojamiento tiene habitaciones para más de tres personas.")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot CiudadItinerario
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Nivel
+		(type SYMBOL)
+		(allowed-values Bajo Alto)
+		(default Bajo)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot NombreAlojamiento
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot EsEspectaculo
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Nombre
+;+		(comment "Nombre de la ciudad")
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Caro
+;+		(comment "Si es caro o no")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot ParaNinos
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Para+ninos
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot DuracionViaje
+;+		(comment "Duración en horas del viaje con el medio.")
+		(type FLOAT)
+		(range 0.1 %3FVARIABLE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Ciudad
 	(is-a USER)
 	(role concrete)
-	(single-slot Nombre
-;+		(comment "Nombre de la ciudad")
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot AlojamientosDisponibles
-		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
-		(cardinality 1 ?VARIABLE)
+	(single-slot PuntuacionCiudad
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Europea
 		(type SYMBOL)
@@ -323,6 +318,11 @@
 	(single-slot RazonCiudad
 		(type STRING)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Nombre
+;+		(comment "Nombre de la ciudad")
+		(type STRING)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Calidad
 		(type SYMBOL)
@@ -335,10 +335,10 @@
 ;+		(allowed-classes Actividad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot PuntuacionCiudad
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
+	(multislot AlojamientosDisponibles
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot Exotica
 		(type SYMBOL)
@@ -350,36 +350,29 @@
 (defclass Actividad
 	(is-a USER)
 	(role abstract)
-	(single-slot NombreActividad
-		(type STRING)
+	(single-slot PrecioActividad
+		(type FLOAT)
+		(range 0.0 9999.9)
+		(default 0.0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot RazonActividad
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot NombreActividad
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot PuntuacionActividad
 		(type INTEGER)
 		(default 0)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot PrecioActividad
-		(type FLOAT)
-		(range 0.0 9999.9)
-		(default 0.0)
-;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass ActividadAventura
 	(is-a Actividad)
 	(role concrete)
-	(single-slot NivelDeRiesgo
-;+		(comment "Riesgo de muelte")
-		(type INTEGER)
-		(range 0 10)
-		(default 0)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Banador+Requerido
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
@@ -390,6 +383,13 @@
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot NivelDeRiesgo
+;+		(comment "Riesgo de muelte")
+		(type INTEGER)
+		(range 0 10)
+		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
@@ -427,13 +427,13 @@
 (defclass Alojamiento
 	(is-a USER)
 	(role concrete)
+	(single-slot NombreAlojamiento
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot CalidadEstrellas
 		(type INTEGER)
 		(range 1 5)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot NombreAlojamiento
-		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot PrecioPorNoche
@@ -460,13 +460,13 @@
 (defclass Itinerario
 	(is-a USER)
 	(role concrete)
-	(single-slot Dias
-		(type INTEGER)
+	(single-slot CiudadItinerario
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot TransporteLlegada
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
+	(single-slot Dias
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot ActividadesPlaneadas
@@ -479,37 +479,37 @@
 ;+		(allowed-classes Alojamiento)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot CiudadItinerario
+	(single-slot TransporteLlegada
 		(type INSTANCE)
-;+		(allowed-classes Ciudad)
+;+		(allowed-classes MedioDeTransporte)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass MapaDeTransportes
 	(is-a USER)
 	(role concrete)
-	(single-slot MedioTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
+	(single-slot PuntuacionTransporte
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot PrecioViaje
 		(type FLOAT)
 		(range 0.0 1.0E7)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot RazonTransporte
-		(type STRING)
-;+		(cardinality 0 1)
+	(single-slot MedioTransporte
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Ciudad2
 		(type INSTANCE)
 ;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PuntuacionTransporte
-		(type INTEGER)
-		(default 0)
+	(single-slot RazonTransporte
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot TiempoViaje

@@ -1,5 +1,5 @@
-; Sat May 26 19:20:49 CEST 2018
-;
+; Mon May 28 19:44:13 CEST 2018
+; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
 
@@ -7,52 +7,85 @@
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(single-slot MedioDeTransport
-		(type SYMBOL)
-		(allowed-values Avion Barco Tren Autobus)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PrecioViaje
-		(type FLOAT)
-		(range 0.0 1.0E7)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot RazonTransporte
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Ciudad2
+	(single-slot AlojamientoItinerario
 		(type INSTANCE)
-;+		(allowed-classes Ciudad)
+;+		(allowed-classes Alojamiento)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot Actividades
+	(multislot inverse_of_Ciudad2
+		(type INSTANCE)
+;+		(allowed-classes MapaDeTransportes)
+		(create-accessor read-write))
+	(multislot MonumentosImportantes
 		(type INSTANCE)
 ;+		(allowed-classes Actividad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot NombreAlojamiento
-		(type STRING)
+	(single-slot TiempoViaje
+		(type FLOAT)
+		(range 0.0 999999.9)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot AlojamientosDisponibles
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(multislot Alojamientos
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot Ontologia_Class10008
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Ontologia_Class10001
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot NombreMedio
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot EsEspectaculo
+	(single-slot Ontologia_Class10003
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot TransporteLlegada
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot ActividadesDisponible
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot Destino
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Exotica
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Ciudad1
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Nombre
-;+		(comment "Nombre de la ciudad")
+	(single-slot KB_156423_Class47
 		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot ActividadesPlaneadas
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot PrecioActividad
+		(type FLOAT)
+		(range 0.0 9999.9)
+		(default 0.0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Europea
@@ -61,53 +94,10 @@
 		(default TRUE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot TransporteLlegada
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PuntuacionActividad
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot Alojamientos
-		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot TiempoViaje
+	(single-slot PrecioViaje
 		(type FLOAT)
-		(range 0.0 999999.9)
+		(range 0.0 1.0E7)
 ;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Origen
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot MedioTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot Ciudades
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(multislot TransportesDisponibles
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot RazonActividad
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot KB_156423_Class47
-		(type STRING)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Tiempo
 ;+		(comment "Tiempo que se pasa viajando.")
@@ -115,85 +105,17 @@
 		(allowed-values Bajo Medio Alto)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrecioActividad
-		(type FLOAT)
-		(range 0.0 9999.9)
-		(default 0.0)
-;+		(cardinality 1 1)
+	(single-slot RazonTransporte
+		(type STRING)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot ParaNinos
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Caro
-;+		(comment "Si es caro o no")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot CiudadItinerario
+	(single-slot Origen
 		(type INSTANCE)
 ;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot CiudadAlojamiento
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PuntuacionTransporte
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot inverse_of_Ciudad2
-		(type INSTANCE)
-;+		(allowed-classes MapaDeTransportes)
-		(create-accessor read-write))
-	(multislot ActividadesDisponible
-		(type INSTANCE)
-;+		(allowed-classes Actividad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot Precio
-;+		(comment "Precio para ir en el medio en euros.")
-		(type FLOAT)
-		(range 1.0 999999.99)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10008
+	(single-slot NombreActividad
 		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot CiudadActividad
-;+		(comment "Ciudad donde se encuentra el monumento")
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10001
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot CalidadEstrellas
-		(type INTEGER)
-		(range 1 5)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Ontologia_Class10003
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot RazonCiudad
-		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Destino
-		(type INSTANCE)
-;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Calidad
@@ -202,22 +124,28 @@
 		(default Baja)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrecioPorNoche
-		(type FLOAT)
-		(range 1.0 999999.99)
+	(single-slot PuntuacionActividad
+		(type INTEGER)
+		(default 0)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HabitacionesMasDe3
-;+		(comment "Si el alojamiento tiene habitaciones para más de tres personas.")
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+	(multislot TransportesDisponibles
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot PuntuacionTransporte
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot CiudadAlojamiento
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Exotica
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default FALSE)
+	(single-slot NombreItinerario
+		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot NivelDeRiesgo
@@ -227,55 +155,38 @@
 		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot AlojamientosDisponibles
+	(multislot MediosDeTransporte
 		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
+;+		(allowed-classes MedioDeTransporte)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot NombreItinerario
-		(type STRING)
+	(single-slot CalidadEstrellas
+		(type INTEGER)
+		(range 1 5)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Para+ninos
-		(type SYMBOL)
-		(allowed-values FALSE TRUE)
-		(default TRUE)
+	(single-slot RazonCiudad
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot MedioTransporte
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Dias
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(multislot Ciudades
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
 	(single-slot PuntuacionCiudad
 		(type INTEGER)
 		(default 0)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Nivel
-		(type SYMBOL)
-		(allowed-values Bajo Alto)
-		(default Bajo)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot MonumentosImportantes
-		(type INSTANCE)
-;+		(allowed-classes Actividad)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot DuracionViaje
-;+		(comment "Duración en horas del viaje con el medio.")
-		(type FLOAT)
-		(range 0.1 999999.99)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot NombreActividad
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot MediosDeTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot BanadorRequerido
 ;+		(comment "Para actividades en piscina, spa,... ;)")
@@ -284,35 +195,119 @@
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot MedioDeTransport
+		(type SYMBOL)
+		(allowed-values Avion Barco Tren Autobus)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot Actividades
+		(type INSTANCE)
+;+		(allowed-classes Actividad)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
 	(single-slot Banador+Requerido
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default FALSE)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(multislot ActividadesPlaneadas
+	(single-slot RazonActividad
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot CiudadActividad
+;+		(comment "Ciudad donde se encuentra el monumento")
 		(type INSTANCE)
-;+		(allowed-classes Actividad)
+;+		(allowed-classes Ciudad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot AlojamientoItinerario
+	(single-slot PrecioPorNoche
+		(type FLOAT)
+		(range 1.0 99999.9)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Precio
+;+		(comment "Precio para ir en el medio en euros.")
+		(type FLOAT)
+		(range 1.0 99999.9)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Ciudad2
 		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Ciudad1
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot HabitacionesMasDe3
+;+		(comment "Si el alojamiento tiene habitaciones para más de tres personas.")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot CiudadItinerario
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Nivel
+		(type SYMBOL)
+		(allowed-values Bajo Alto)
+		(default Bajo)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot NombreAlojamiento
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot EsEspectaculo
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Nombre
+;+		(comment "Nombre de la ciudad")
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Caro
+;+		(comment "Si es caro o no")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot ParaNinos
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Para+ninos
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot DuracionViaje
+;+		(comment "Duración en horas del viaje con el medio.")
+		(type FLOAT)
+		(range 0.1 99999.9)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Ciudad
 	(is-a USER)
 	(role concrete)
-	(single-slot Nombre
-;+		(comment "Nombre de la ciudad")
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot AlojamientosDisponibles
-		(type INSTANCE)
-;+		(allowed-classes Alojamiento)
-		(cardinality 1 ?VARIABLE)
+	(single-slot PuntuacionCiudad
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Europea
 		(type SYMBOL)
@@ -323,6 +318,11 @@
 	(single-slot RazonCiudad
 		(type STRING)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Nombre
+;+		(comment "Nombre de la ciudad")
+		(type STRING)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Calidad
 		(type SYMBOL)
@@ -335,10 +335,10 @@
 ;+		(allowed-classes Actividad)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
-	(single-slot PuntuacionCiudad
-		(type INTEGER)
-		(default 0)
-;+		(cardinality 0 1)
+	(multislot AlojamientosDisponibles
+		(type INSTANCE)
+;+		(allowed-classes Alojamiento)
+		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot Exotica
 		(type SYMBOL)
@@ -350,36 +350,29 @@
 (defclass Actividad
 	(is-a USER)
 	(role abstract)
-	(single-slot NombreActividad
-		(type STRING)
+	(single-slot PrecioActividad
+		(type FLOAT)
+		(range 0.0 9999.9)
+		(default 0.0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot RazonActividad
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot NombreActividad
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot PuntuacionActividad
 		(type INTEGER)
 		(default 0)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot PrecioActividad
-		(type FLOAT)
-		(range 0.0 9999.9)
-		(default 0.0)
-;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass ActividadAventura
 	(is-a Actividad)
 	(role concrete)
-	(single-slot NivelDeRiesgo
-;+		(comment "Riesgo de muelte")
-		(type INTEGER)
-		(range 0 10)
-		(default 0)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Banador+Requerido
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
@@ -390,6 +383,13 @@
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
 		(default TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot NivelDeRiesgo
+;+		(comment "Riesgo de muelte")
+		(type INTEGER)
+		(range 0 10)
+		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
@@ -427,18 +427,18 @@
 (defclass Alojamiento
 	(is-a USER)
 	(role concrete)
+	(single-slot NombreAlojamiento
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot CalidadEstrellas
 		(type INTEGER)
 		(range 1 5)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot NombreAlojamiento
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot PrecioPorNoche
 		(type FLOAT)
-		(range 1.0 999999.99)
+		(range 1.0 99999.9)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot HabitacionesMasDe3
@@ -460,13 +460,13 @@
 (defclass Itinerario
 	(is-a USER)
 	(role concrete)
-	(single-slot Dias
-		(type INTEGER)
+	(single-slot CiudadItinerario
+		(type INSTANCE)
+;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot TransporteLlegada
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
+	(single-slot Dias
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(multislot ActividadesPlaneadas
@@ -479,37 +479,37 @@
 ;+		(allowed-classes Alojamiento)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot CiudadItinerario
+	(single-slot TransporteLlegada
 		(type INSTANCE)
-;+		(allowed-classes Ciudad)
+;+		(allowed-classes MedioDeTransporte)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass MapaDeTransportes
 	(is-a USER)
 	(role concrete)
-	(single-slot MedioTransporte
-		(type INSTANCE)
-;+		(allowed-classes MedioDeTransporte)
-;+		(cardinality 1 1)
+	(single-slot PuntuacionTransporte
+		(type INTEGER)
+		(default 0)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot PrecioViaje
 		(type FLOAT)
 		(range 0.0 1.0E7)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot RazonTransporte
-		(type STRING)
-;+		(cardinality 0 1)
+	(single-slot MedioTransporte
+		(type INSTANCE)
+;+		(allowed-classes MedioDeTransporte)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Ciudad2
 		(type INSTANCE)
 ;+		(allowed-classes Ciudad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PuntuacionTransporte
-		(type INTEGER)
-		(default 0)
+	(single-slot RazonTransporte
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot TiempoViaje
@@ -529,8 +529,8 @@
 ;; --------------------------------------------------------------------------------------------------------------------
 
 (definstances Instancias
-	; Sat May 26 19:20:49 CEST 2018
-;
+; Mon May 28 19:44:13 CEST 2018
+; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
 
@@ -555,7 +555,22 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60011]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60017]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006])
 	(AlojamientosDisponibles
 		[Ontologia_Class10014]
 		[KB_156423_Class64]
@@ -582,7 +597,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10034]
 		[Ontologia_Class10032]
@@ -608,7 +633,18 @@
 		[Ontologia_Class20015]
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[KB_156423_Class69]
 		[Ontologia_Class10044]
@@ -642,7 +678,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60018]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class40004]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[KB_156423_Class67]
 		[Ontologia_Class30096]
@@ -755,7 +801,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30054]
 		[Ontologia_Class30046]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60017]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class20000])
 	(AlojamientosDisponibles
 		[Ontologia_Class10046]
 		[Ontologia_Class10045]
@@ -1059,7 +1113,18 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002]
+		[Ontologia_Class40003]
+		[Ontologia_Class40005])
 	(AlojamientosDisponibles
 		[Ontologia_Class10017]
 		[Ontologia_Class10016]
@@ -1088,7 +1153,18 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10038]
 		[Ontologia_Class10039]
@@ -1112,7 +1188,17 @@
 		[Ontologia_Class20011]
 		[Ontologia_Class20012]
 		[Ontologia_Class30045]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class50009]
+		[Ontologia_Class40006]
+		[Ontologia_Class60018]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10012]
 		[Ontologia_Class10011]
@@ -1139,7 +1225,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class40005]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60012]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10037]
 		[Ontologia_Class10035]
@@ -1167,7 +1261,16 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class40006]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class40004]
+		[Ontologia_Class30001])
 	(AlojamientosDisponibles
 		[Ontologia_Class10026]
 		[Ontologia_Class10027]
@@ -1198,7 +1301,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40008]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class40002]
+		[Ontologia_Class20000])
 	(AlojamientosDisponibles
 		[Ontologia_Class10050]
 		[Ontologia_Class10051]
@@ -1218,7 +1331,17 @@
 		[Ontologia_Class20016]
 		[Ontologia_Class20015]
 		[Ontologia_Class30045]
-		[Ontologia_Class30046])
+		[Ontologia_Class30046]
+		[Ontologia_Class40005]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60013]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class60010]
+		[Ontologia_Class60012]
+		[Ontologia_Class30048]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10025]
 		[Ontologia_Class10024]
@@ -1246,7 +1369,16 @@
 		[Ontologia_Class20017]
 		[Ontologia_Class30049]
 		[Ontologia_Class30045]
-		[Ontologia_Class30046])
+		[Ontologia_Class30046]
+		[Ontologia_Class40006]
+		[Ontologia_Class50009]
+		[Ontologia_Class60018]
+		[Ontologia_Class60017]
+		[Ontologia_Class60016]
+		[Ontologia_Class60010]
+		[Ontologia_Class40004]
+		[Ontologia_Class20000]
+		[Ontologia_Class40003])
 	(AlojamientosDisponibles
 		[Ontologia_Class10019]
 		[KB_156423_Class66]
@@ -1269,7 +1401,15 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60011]
+		[Ontologia_Class60018]
+		[Ontologia_Class60015]
+		[Ontologia_Class60016]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10021]
 		[Ontologia_Class10022]
@@ -1286,6 +1426,13 @@
 	(NombreActividad "Submarinismo")
 	(ParaNinos FALSE)
 	(PrecioActividad 75.5))
+
+([Ontologia_Class20000] of  ActividadRelax
+
+	(BanadorRequerido TRUE)
+	(NombreActividad "Playa")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class20001] of  MapaDeTransportes
 
@@ -1354,7 +1501,7 @@
 
 ([Ontologia_Class20009] of  ActividadOcio
 
-	(NombreActividad "Parque de atracciones")
+	(NombreActividad "Parque atracciones")
 	(Para+ninos TRUE)
 	(PrecioActividad 50.0))
 
@@ -1419,6 +1566,13 @@
 	(NombreActividad "Snorkel")
 	(ParaNinos TRUE)
 	(PrecioActividad 7.5))
+
+([Ontologia_Class30001] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Pasear por parque")
+	(PrecioActividad 0.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class30002] of  MapaDeTransportes
 
@@ -1711,6 +1865,59 @@
 	(MedioTransporte [KB_156423_Class57])
 	(PrecioViaje 60.0)
 	(TiempoViaje 24.0))
+
+([Ontologia_Class40002] of  ActividadRelax
+
+	(BanadorRequerido TRUE)
+	(NombreActividad "Piscina")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40003] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Rayos UVA")
+	(PrecioActividad 30.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40004] of  ActividadRelax
+
+	(BanadorRequerido FALSE)
+	(NombreActividad "Limpieza cutis")
+	(PrecioActividad 40.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40005] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 2)
+	(NombreActividad "Deporte")
+	(ParaNinos TRUE)
+	(PrecioActividad 10.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40006] of  ActividadAventura
+
+	(Banador+Requerido TRUE)
+	(NivelDeRiesgo 5)
+	(NombreActividad "Moto de agua")
+	(ParaNinos FALSE)
+	(PrecioActividad 25.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40007] of  ActividadOcio
+
+	(NombreActividad "Hipica")
+	(Para+ninos TRUE)
+	(PrecioActividad 30.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class40008] of  ActividadOcio
+
+	(NombreActividad "Globo aerostatico")
+	(Para+ninos FALSE)
+	(PrecioActividad 40.0)
+	(PuntuacionActividad 0))
 
 ([Ontologia_Class40009] of  MapaDeTransportes
 
@@ -2313,6 +2520,15 @@
 	(PrecioViaje 840.0)
 	(TiempoViaje 16.0))
 
+([Ontologia_Class50009] of  ActividadAventura
+
+	(Banador+Requerido TRUE)
+	(NivelDeRiesgo 0)
+	(NombreActividad "Surf")
+	(ParaNinos FALSE)
+	(PrecioActividad 15.0)
+	(PuntuacionActividad 0))
+
 ([Ontologia_Class50010] of  MapaDeTransportes
 
 	(Ciudad1 [KB_156423_Class25])
@@ -2583,6 +2799,73 @@
 	(PuntuacionTransporte 0)
 	(TiempoViaje 15.0))
 
+([Ontologia_Class60010] of  ActividadOcio
+
+	(NombreActividad "Vela")
+	(Para+ninos FALSE)
+	(PrecioActividad 20.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60011] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 7)
+	(NombreActividad "Puenting")
+	(ParaNinos FALSE)
+	(PrecioActividad 10.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60012] of  ActividadOcio
+
+	(NombreActividad "Visita al centro")
+	(Para+ninos TRUE)
+	(PrecioActividad 2.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60013] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Exposicion")
+	(PrecioActividad 7.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60014] of  ActividadAventura
+
+	(Banador+Requerido FALSE)
+	(NivelDeRiesgo 4)
+	(NombreActividad "Conduccion extrema")
+	(ParaNinos TRUE)
+	(PrecioActividad 35.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60015] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Conferencia")
+	(PrecioActividad 5.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60016] of  ActividadCultural
+
+	(EsEspectaculo TRUE)
+	(NombreActividad "Folclore")
+	(PrecioActividad 7.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60017] of  ActividadCultural
+
+	(EsEspectaculo FALSE)
+	(NombreActividad "Feria popular")
+	(PrecioActividad 12.0)
+	(PuntuacionActividad 0))
+
+([Ontologia_Class60018] of  ActividadCultural
+
+	(EsEspectaculo TRUE)
+	(NombreActividad "Baile regional")
+	(PrecioActividad 15.0)
+	(PuntuacionActividad 0))
+
 ([Ontologia_Class9] of  Ciudad
 
 	(ActividadesDisponible
@@ -2602,7 +2885,17 @@
 		[Ontologia_Class30045]
 		[Ontologia_Class30046]
 		[Ontologia_Class30054]
-		[Ontologia_Class30049])
+		[Ontologia_Class30049]
+		[Ontologia_Class60014]
+		[Ontologia_Class40005]
+		[Ontologia_Class60015]
+		[Ontologia_Class60013]
+		[Ontologia_Class60017]
+		[Ontologia_Class40008]
+		[Ontologia_Class40007]
+		[Ontologia_Class60012]
+		[Ontologia_Class30001]
+		[Ontologia_Class40002])
 	(AlojamientosDisponibles
 		[Ontologia_Class10029]
 		[Ontologia_Class10031]
@@ -2611,6 +2904,8 @@
 	(Europea TRUE)
 	(Exotica FALSE)
 	(Nombre "Londres"))
+
+
 )
 
 
@@ -3028,24 +3323,24 @@
 	(info-viaje tipo-actividad ?tipoActividad)
 	=>
 	(if (eq ?tipoActividad ocio) then
-		(anadePuntuacionActividadTipo aventura -100)
+		(anadePuntuacionActividadTipo aventura -200)
 		(anadePuntuacionActividadTipo ocio      100)
-		(anadePuntuacionActividadTipo relax    -100)
+		(anadePuntuacionActividadTipo relax    -200)
 		(anadePuntuacionActividadTipo cultural -100)
 
 	else(if (eq ?tipoActividad aventura) then
 		(anadePuntuacionActividadTipo aventura  100)
 		(anadePuntuacionActividadTipo ocio     -100)
-		(anadePuntuacionActividadTipo relax    -100)
+		(anadePuntuacionActividadTipo relax    -800)
 		(anadePuntuacionActividadTipo cultural -100)
 
 	else(if (eq ?tipoActividad relax) then
-		(anadePuntuacionActividadTipo aventura -100)
-		(anadePuntuacionActividadTipo ocio     -100)
+		(anadePuntuacionActividadTipo aventura -800)
+		(anadePuntuacionActividadTipo ocio     -400)
 		(anadePuntuacionActividadTipo relax     100)
 		(anadePuntuacionActividadTipo cultural -100)
 	else
-		(anadePuntuacionActividadTipo aventura -100)
+		(anadePuntuacionActividadTipo aventura -400)
 		(anadePuntuacionActividadTipo ocio     -100)
 		(anadePuntuacionActividadTipo relax    -100)
 		(anadePuntuacionActividadTipo cultural  100)
