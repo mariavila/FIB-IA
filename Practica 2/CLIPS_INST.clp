@@ -2706,6 +2706,18 @@
     ?lista
 )
 
+(deffunction obtenerTodasLasActividades () "Hace la lista de todas las actividades"
+	(bind ?actividadesCulturales (find-all-instances ((?ins ActividadCultural)) TRUE))
+	(bind ?actividadesOcio 		 (find-all-instances ((?ins ActividadOcio)) TRUE))
+	(bind ?actividadesRelax      (find-all-instances ((?ins ActividadRelax)) TRUE))
+	(bind ?actividadesAventura   (find-all-instances ((?ins ActividadAventura)) TRUE))
+
+	(bind ?lista (create$ ?actividadesOcio ?actividadesCulturales))
+	(bind ?lista (create$ ?lista ?actividadesRelax))
+	(bind ?lista (create$ ?lista ?actividadesAventura))
+
+	?lista
+)
 
 
 ;; --------------------------------------------------------------------------------------------------------------------
@@ -2951,9 +2963,11 @@
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
 			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
+			(send ?ciudad put-RazonCiudad "Recomendamos " (send ?ciudad get-Nombre) " porque es europea")
 			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
 			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
+			(send ?ciudad put-RazonCiudad "No recomendamos " (send ?ciudad get-Nombre) " porque NO es europea")
 			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
 	)
@@ -2971,9 +2985,11 @@
 		(bind ?puntuacionAnterior (send ?ciudad get-PuntuacionCiudad))
 		(if (eq ?eseuropea TRUE) then
 			(send ?ciudad put-PuntuacionCiudad (- ?puntuacionAnterior 500))
+			(send ?ciudad put-RazonCiudad "Recomendamos " (send ?ciudad get-Nombre) " porque no es europea")
 			;(printout t "Ciudad 1: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		else
 			(send ?ciudad put-PuntuacionCiudad (+ ?puntuacionAnterior 500))
+			(send ?ciudad put-RazonCiudad "Recomendamos " (send ?ciudad get-Nombre) " porque ES europea")
 			;(printout t "Ciudad 2: " (send ?ciudad get-Nombre) " Punt: " (send ?ciudad get-PuntuacionCiudad) crlf)
 		)
 	)
@@ -2988,7 +3004,8 @@
 	(loop-for-count (?i 1 (length$ ?actividades)) do
 		(bind ?actividad (nth$ ?i ?actividades))
 		(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-
+		(if (< ?valor 0) then (send ?actividad put-RazonActividad "Recomendamos " (send ?actividad get-NombreActividad) " porque es del tipo " ?tipo) 
+		else (send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es del tipo " ?tipo))
 		(send ?actividad put-PuntuacionActividad (+ ?puntuacionAnterior ?valor))
 	)
 )
@@ -3035,11 +3052,13 @@
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
 			(if (eq ?para-ninos FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque NO es una actividad de ocio para ninos")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 			(if (eq (str-cat(send ?actividad get-NombreActividad)) "Fiesta nocturna") then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 100))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es la actividad de ocio menos adecuada para ninos")
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 1000))
 			)
 		)
 		else
@@ -3048,7 +3067,8 @@
 			(bind ?para-ninos (send ?actividad get-Para+ninos))
 			(if (eq ?para-ninos TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque ES una actividad de ocio para ninos")
+				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 1000))
 			)
 		)
 	)
@@ -3066,6 +3086,7 @@
 			(bind ?es-espec (send ?actividad get-EsEspectaculo))
 			(if (eq ?es-espec FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad cultural y NO espectaulo")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
@@ -3075,6 +3096,7 @@
 			(bind ?es-espec (send ?actividad get-EsEspectaculo))
 			(if (eq ?es-espec TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad cultural Y espectaulo")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
@@ -3093,7 +3115,9 @@
 			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
 			(if (eq ?necesita-banador FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de relax SIN necesidad de banador")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
+				
 			)
 		)
 		else
@@ -3102,6 +3126,7 @@
 			(bind ?necesita-banador (send ?actividad get-BanadorRequerido))
 			(if (eq ?necesita-banador TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de relax CON necesidad de banador")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
@@ -3124,10 +3149,7 @@
 			(if (eq ?viaja-con-ninos FALSE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
-			)
-			(if (eq (str-cat(send ?actividad get-NombreActividad)) "Fiesta nocturna") then
-				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
-				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 100))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de aventura NO adecuada para ninos")
 			)
 		)
 		else
@@ -3136,6 +3158,7 @@
 			(bind ?viaja-con-ninos (send ?actividad get-ParaNinos))
 			(if (eq ?viaja-con-ninos TRUE) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de avemtura SI adecuada para ninos")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 10))
 			)
 		)
@@ -3149,17 +3172,31 @@
 			(bind ?nriesgo (send ?actividad get-NivelDeRiesgo))
 			(if (> ?nriesgo ?riesgo) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "No recomendamos " (send ?actividad get-NombreActividad) " porque es una actividad de aventura CON riesgo mayor que el deseado")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior 30))
 			)
 			(if (< ?nriesgo ?riesgo) then
 				(bind ?puntuacionAnterior (send ?actividad get-PuntuacionActividad))
+				(send ?actividad put-RazonActividad "Recomendamos con advertencias " (send ?actividad get-NombreActividad) " porque es una actividad de aventura CON riesgo menor pero cercano al deseado")
 				(send ?actividad put-PuntuacionActividad (- ?puntuacionAnterior (- 10 ?nriesgo)))
 			)
 		)
 	)
 )
 
+(defrule printeaRazones "Imprime las razones"
+	(declare (salience 2))
+	(restricciones-inferencia)
+	=>
+	(printout t " --------------------- RAZONES -------------------- " crlf)
+	(bind ?transportes (find-all-instances ((?ins MapaDeTransportes)) TRUE))
+	(bind ?todasActividades (obtenerTodasLasActividades))
+	(bind ?ciudades (find-all-instances ((?ins Ciudad)) TRUE))
+	
+	;;;; IMPRIMIR POR TODAS LAS INSTANCIAS LAS RAZONES
 
+
+)
 
 (defrule finRestricciones "Regla para pasar al modulo de recomendaciones"
 	(declare (salience 1))
@@ -3184,6 +3221,7 @@
 			(bind ?medio (send ?transporte get-MedioTransporte))
 			(if (eq (send ?medio get-NombreMedio) "Avion") then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?medio put-RazonActividad "Recomendamos " (send ?medio get-NombreMedio) " porque es una medio acorde con un presupuesto alto")
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
 		)
@@ -3194,6 +3232,7 @@
 			(bind ?medio (send ?transporte get-MedioTransporte))
 			(if (or (eq (send ?medio get-NombreMedio) "Tren") (eq (send ?medio get-NombreMedio) "Barco")) then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?medio put-RazonActividad "Recomendamos " (send ?medio get-NombreMedio) " porque es una medio acorde con un presupuesto medio")
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
 		)
@@ -3204,6 +3243,7 @@
 			(bind ?medio (send ?transporte get-MedioTransporte))
 			(if (eq (send ?medio get-NombreMedio) "Autobus") then
 				(bind ?puntuacionAnterior (send ?transporte get-PuntuacionTransporte))
+				(send ?medio put-RazonActividad "Recomendamos " (send ?medio get-NombreMedio) " porque es una medio acorde con un presupuesto bajo")
 				(send ?transporte put-PuntuacionTransporte (+ ?puntuacionAnterior 100))
 			)
 		)
@@ -3235,18 +3275,6 @@
 	(assert (recomendacion-ready))
 )
 
-(deffunction obtenerTodasLasActividades () "Hace la lista de todas las actividades"
-	(bind ?actividadesCulturales (find-all-instances ((?ins ActividadCultural)) TRUE))
-	(bind ?actividadesOcio 		 (find-all-instances ((?ins ActividadOcio)) TRUE))
-	(bind ?actividadesRelax      (find-all-instances ((?ins ActividadRelax)) TRUE))
-	(bind ?actividadesAventura   (find-all-instances ((?ins ActividadAventura)) TRUE))
-
-	(bind ?lista (create$ ?actividadesOcio ?actividadesCulturales))
-	(bind ?lista (create$ ?lista ?actividadesRelax))
-	(bind ?lista (create$ ?lista ?actividadesAventura))
-
-	?lista
-)
 (deffunction buscaActividadesOfrecidas (?ciudad ?todasActividades) "Busca todas las actividades que se pueden realizar en esa ciudad"
 	(bind ?actividadesOfrecidasPorCiudad (send ?ciudad get-ActividadesDisponible))
 	(bind ?actividadesOfrecidas (create$))
