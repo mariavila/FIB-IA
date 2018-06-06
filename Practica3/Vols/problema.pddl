@@ -21,10 +21,11 @@
 		(hotel_ciudad c4 h8)
 		(hotel_ciudad c5 h9)
 		(hotel_ciudad c5 h10)
-
+		
+		(hotel_asignado)
 		(= (numero_ciudades_visitadas) 0)
 	)
   	(:goal 
-		(= (numero_ciudades_visitadas) 4)
+		(and (= (numero_ciudades_visitadas) 4) (hotel_asignado))
 	)
   )
