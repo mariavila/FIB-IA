@@ -2,18 +2,18 @@
 #include <string>
 #include <random>
 #include <vector>
-#define MAX_CIUDADES 10
+#define MAX_CIUDADES 10000
 #define MIN_CIUDADES 4
 #define MIN_CIUDADES_VISITAR 1
 #define MAX_CIUDADES_VISITAR MAX_CIUDADES
-#define MIN_HOTELES MAX_CIUDADES
-#define MAX_HOTELES 20
+#define MIN_HOTELES MIN_CIUDADES
+#define MAX_HOTELES 30000
 #define MIN_VIAJE 1
 #define MAX_VIAJE 100
 #define MIN_NDIAS 1
 #define MAX_NDIAS 8
 #define MIN_PRECIO 1
-#define MAX_PRECIO 10000
+#define MAX_PRECIO 1000000000
 
 using namespace std;
 int nCiudades, nHoteles, nCVisitar, nDias, dMin, dMax, pMin, pMax;
