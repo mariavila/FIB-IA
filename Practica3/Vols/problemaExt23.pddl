@@ -70,5 +70,5 @@
         )
 	)
 
-    (:metric minimize (+ (* 100 (numero_interes-total)) (+ (* 1 (precio-hoteles-total)) (* 1.5 (precio-viaje-total))) ))
+    (:metric minimize (+ (* 100 (numero_interes-total)) (+ (* 1 (precio-hoteles-total)) (* 1 (precio-viaje-total))) ))
 )
