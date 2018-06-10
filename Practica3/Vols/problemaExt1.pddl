@@ -22,7 +22,6 @@
 		(hotel_ciudad c5 h9)
 		(hotel_ciudad c5 h10)
 
-		(hotel_asignado)
 		(= (numero_ciudades_visitadas) 0)
 		(= (numero_minimo_dias_por_ciudad) 2)
 		(= (numero_maximo_dias_por_ciudad) 4)
