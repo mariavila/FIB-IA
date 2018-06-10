@@ -4,6 +4,8 @@
 #include <vector>
 #define MAX_CIUDADES 10
 #define MIN_CIUDADES 4
+#define MIN_CIUDADES_VISITAR 1
+#define MAX_CIUDADES_VISITAR MAX_CIUDADES
 #define MIN_HOTELES MAX_CIUDADES
 #define MAX_HOTELES 20
 #define MIN_VIAJE 1
@@ -14,7 +16,7 @@
 #define MAX_PRECIO 10000
 
 using namespace std;
-int nCiudades, nHoteles, nDias, dMin, dMax, pMin, pMax;
+int nCiudades, nHoteles, nCVisitar, nDias, dMin, dMax, pMin, pMax;
 
 void help(){
     cout << " ---------- Generador de problemas Ten Cities ---------- " << endl;
@@ -23,6 +25,7 @@ void help(){
     cout << "-c <num>\t\tNúmero de ciudades para el problema"<<endl;
     cout << "-h <num>\t\tNúmero de hoteles para el problema"<<endl;
     cout << "-v <num>\t\tNúmero de días para el problema"<<endl<<endl;
+    cout << "-cs <num>\t\tNúmero de ciudades a visitar el problema"<<endl<<endl;
     cout << "-nmin <num>\t\tNúmero de días mínimo por cada ciudad"<<endl;
     cout << "-nmax <num>\t\tNúmero de días máximo por cada ciudad"<<endl;
     cout << "-pmin <num>\t\tNúmero de precio mínimo total"<<endl;
@@ -71,7 +74,14 @@ void input(int argc, char* argv[]){
                 exit(-1);
             }
             nDias = stoi(string(argv[i+1]));
-        }              
+        }    
+        else if(arg == "-cs"){
+            if (i+1 >= argc or !checkIfInteger(string(argv[i+1]), MIN_CIUDADES_VISITAR, MAX_CIUDADES_VISITAR)){
+                cerr << "-cs requiere un parámetro dentro de los límites " << MIN_CIUDADES_VISITAR << " y " << MAX_CIUDADES_VISITAR <<endl;
+                exit(-1);
+            }
+            nCVisitar = stoi(string(argv[i+1]));
+        }            
             
         else if(arg == "-nmin"){
             if (i+1 >= argc or stoi(string(argv[i+1])) < MIN_NDIAS){
@@ -119,12 +129,11 @@ void insertaObjetos(){
     } cout << "- hotel" <<endl<<"\t)"<<endl;
 }
 
-vector< vector<bool> > conectadas;
-void insertaConectadas(){
-    vector< vector<bool> > conectadas (nCiudades, vector<bool>(nCiudades,false)); //actualiza matriz;
-    
+
+
+void insertaConectadas(vector< vector<bool> >& conectadas){
     for (int c = 1; c <= nCiudades; ++c){ //Para cada ciudad
-        int nConex = random(1,nCiudades); //Su numero de conextions
+        int nConex = random(1,nCiudades); //Su numero de conexiones
         for (int conex = 0; conex < nConex; ++conex){ //Para cada conexion
             int cDestino = c;
             do{ //Nos aseguramos que sea una ciudad distinta
@@ -144,7 +153,64 @@ void insertaConectadas(){
     }
 
 }
+
+void insertaHotelCiudad(){
+    int restantes = nHoteles - nCiudades;
+    int h = 1;
+    for (int c = 1; c <= nCiudades; ++c){ //Para cada ciudad
+        cout << "\t\t(hotel_ciudad c" << c << " h" << h << ")" <<endl; //Asigna el primero
+        int extras = random(0,restantes); restantes-=extras; //Asigna hoteles extra aleatoriamente 
+        for (int e = 1; e <= extras; ++e)
+             cout << "\t\t(hotel_ciudad c" << c << " h" << h+e << ")" <<endl;
+        h+=extras+1;
+        if (c == nCiudades){
+            for (int r = 0;r < restantes; ++r) cout << "\t\t(hotel_ciudad c" << c << " h" << h+r << ")" <<endl;
+        } //Asigna los restantes en la ultima si no hemos llenado
+    }
+    
+    cout << "\t\t(hotel_asignado)" << endl << endl;
+}
+
+void insertaInfoCiudades(){
+    cout << "\t\t(= (numero_ciudades_visitadas) 0)" <<endl;
+    cout << "\t\t(= (numero_minimo_dias_por_ciudad) " << dMin << ")" <<endl;
+    cout << "\t\t(= (numero_maximo_dias_por_ciudad) " << dMax << ")" <<endl;
+    cout << endl;
+}
+
+void insertaIntereses(){
+    for (int c = 1; c <= nCiudades; ++c){
+        int interes = random(1,3);
+        cout << "\t\t(= (numero_interes c" << c << " " << interes << ")" <<endl;
+    }
+    cout << "\t\t(= (numero_interes-total) 0)" <<endl<<endl;
+}
+
+void insertaPrecioHoteles(){
+    for (int h = 1; h <= nHoteles; ++h){
+        int precio = random(50, 400);
+        cout << "\t\t(= (precio-hotel h" << h << " " << precio << ")" <<endl;
+    }
+    cout << "\t\t(= (precio-hotel-total) 0)" <<endl;
+    cout << "\t\t(= (numero_minimo_precio_hoteles) " << pMin << ")" <<endl;
+    cout << "\t\t(= (numero_maximo_precio_hoteles) " << pMax << ")" <<endl<<endl;
+}
+
+void insertaPrecioViajes(const vector< vector<bool> >& conectadas){
+    for (int c1 = 1; c1 <= nCiudades; ++c1){
+        for (int c2 = 1; c2 <= nCiudades; ++c2){
+            if (conectadas[c1-1][c2-1]){
+                int precio = random(50,400);
+                cout << "\t\t(= (precio-viaje c" << c1 << " c" << c2 << ") " << precio << ")" <<endl;
+            }
+        }
+    }
+    cout << "\t\t(= (precio-viaje-total) 0)" <<endl;
+}
+
 void escribeProblema(){
+    vector< vector<bool> > conectadas (nCiudades, vector<bool>(nCiudades,false)); //guarda info sobre las conexiones de las ciudades
+
     cout << 
     "(define (problem ten-cities)" <<endl<<"\t"<<
     "(:domain agencia_viajes)" <<endl<<"\t"<<
@@ -153,15 +219,33 @@ void escribeProblema(){
      
     cout <<
     "\t(:init"<<endl;
-        insertaConectadas();
+        insertaConectadas(conectadas);
+        insertaHotelCiudad();
+        insertaInfoCiudades();
+        insertaIntereses();
+        insertaPrecioHoteles();
+        insertaPrecioViajes(conectadas);
+
+    cout <<
+    "\t(:goal"<<endl<<"\t\t" <<
+        "(and"<<endl<<"\t\t" <<
+        "(= (numero_ciudades_visitadas) " << nCVisitar << ")" <<endl<<"\t\t" <<
+        "(hotel_asignado)" <<endl<<"\t\t" <<
+        "(>= (numero_dias_viaje) " << nDias << ")"  <<endl<<"\t\t" <<
+        "(>= (numero_dias_ciudad) (numero_minimo_dias_por_ciudad))" <<endl<<"\t\t" <<
+        "(>= (+ (precio-hotel-total) (precio-viaje-total)) (numero_minimo_precio_hoteles))" <<endl<<"\t\t" <<
+        "(<= (+ (precio-hotel-total) (precio-viaje-total)) (numero_maximo_precio_hoteles))" <<endl<<"\t\t" <<
+        ")" <<endl <<
+    "\t)" << endl <<
+    "\t(:metric minimize (+ (* 100 (numero_interes-total)) (+ (* 1 (precio-hoteles-total)) (* 1 (precio-viaje-total))) ))" <<endl;
+    ")";
         
-
-
+    
     cout << endl;
 }
 
 int main(int argc, char* argv[]){
-    if (argc != 7*2+1 or string(argv[1]) == "--help") help();
+    if (argc != 8*2+1 or string(argv[1]) == "--help") help();
    
     input(argc, argv);
     escribeProblema();
