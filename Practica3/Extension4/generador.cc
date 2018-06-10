@@ -167,8 +167,7 @@ void insertaHotelCiudad(){
             for (int r = 0;r < restantes; ++r) cout << "\t\t(hotel_ciudad c" << c << " h" << h+r << ")" <<endl;
         } //Asigna los restantes en la ultima si no hemos llenado
     }
-    
-    cout << "\t\t(hotel_asignado)" << endl << endl;
+    cout << endl;
 }
 
 void insertaInfoCiudades(){
