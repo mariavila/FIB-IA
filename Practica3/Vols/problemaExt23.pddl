@@ -29,7 +29,7 @@
 
         (= (numero_interes c1) 3)
         (= (numero_interes c2) 3)
-        (= (numero_interes c3) 3)
+        (= (numero_interes c3) 20)
         (= (numero_interes c4) 1)
         (= (numero_interes c5) 1)
         (= (numero_interes_maximo) 0)
@@ -42,11 +42,11 @@
         (= (precio-hotel h6) 100)
         (= (precio-hotel h7) 200)
         (= (precio-hotel h8) 100)
-        (= (precio-hotel h9) 200)
-        (= (precio-hotel h10) 100)
+        (= (precio-hotel h9) 100)
+        (= (precio-hotel h10) 200)
         (= (precio-hotel-maximo) 0)
         (= (numero_minimo_precio_hoteles) 1400)
-		(= (numero_maximo_precio_hoteles) 1600)
+	(= (numero_maximo_precio_hoteles) 1600)
 
 	)
   	(:goal
