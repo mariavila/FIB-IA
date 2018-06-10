@@ -181,7 +181,7 @@ void insertaInfoCiudades(){
 void insertaIntereses(){
     for (int c = 1; c <= nCiudades; ++c){
         int interes = random(1,3);
-        cout << "\t\t(= (numero_interes c" << c << " " << interes << ")" <<endl;
+        cout << "\t\t(= (numero_interes c" << c << ") " << interes << ")" <<endl;
     }
     cout << "\t\t(= (numero_interes-total) 0)" <<endl<<endl;
 }
@@ -189,7 +189,7 @@ void insertaIntereses(){
 void insertaPrecioHoteles(){
     for (int h = 1; h <= nHoteles; ++h){
         int precio = random(50, 400);
-        cout << "\t\t(= (precio-hotel h" << h << " " << precio << ")" <<endl;
+        cout << "\t\t(= (precio-hotel h" << h << ") " << precio << ")" <<endl;
     }
     cout << "\t\t(= (precio-hotel-total) 0)" <<endl;
     cout << "\t\t(= (numero_minimo_precio_hoteles) " << pMin << ")" <<endl;
@@ -225,7 +225,7 @@ void escribeProblema(){
         insertaIntereses();
         insertaPrecioHoteles();
         insertaPrecioViajes(conectadas);
-
+    cout << "\t)" << endl;
     cout <<
     "\t(:goal"<<endl<<"\t\t" <<
         "(and"<<endl<<"\t\t" <<
@@ -237,8 +237,8 @@ void escribeProblema(){
         "(<= (+ (precio-hotel-total) (precio-viaje-total)) (numero_maximo_precio_hoteles))" <<endl<<"\t\t" <<
         ")" <<endl <<
     "\t)" << endl <<
-    "\t(:metric minimize (+ (* 100 (numero_interes-total)) (+ (* 1 (precio-hoteles-total)) (* 1 (precio-viaje-total))) ))" <<endl;
-    ")";
+    "\t(:metric minimize (+ (* 100 (numero_interes-total)) (+ (* 1 (precio-hoteles-total)) (* 1 (precio-viaje-total))) ))" <<endl <<
+    ")" << endl;
         
     
     cout << endl;
