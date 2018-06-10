@@ -27,7 +27,7 @@
 			?c_sig -ciudad
 		)
 		:precondition(
-			and (= (numero_ciudades_visitadas) 0) (hotel_asignado)
+			and (= (numero_ciudades_visitadas) 0)
 		)
 		:effect(
 			and (increase (numero_ciudades_visitadas) 1) (ciudad_actual ?c_sig) (ciudad_visitada ?c_sig) (not(hotel_asignado)) (assign (numero_dias_viaje) 0) (assign (numero_dias_ciudad) 0)

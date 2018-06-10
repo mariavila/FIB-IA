@@ -21,7 +21,7 @@
         (precio-hotel-total)
 		(numero_minimo_precio_hoteles)
 		(numero_maximo_precio_hoteles)
-        
+
         (precio-viaje ?c1 - ciudad ?c2 - ciudad)
         (precio-viaje-total)
 
@@ -32,7 +32,7 @@
 		;;(numero_ciudades_visitadas ?nv)
 		(hotel_asignado)
         (hotel_actual ?h - hotel)
-  
+
 		(ciudad_actual ?c - ciudad)
 		(ciudad_visitada ?c - ciudad)
 	)
@@ -42,7 +42,7 @@
 			?c_sig -ciudad
 		)
 		:precondition(
-			and (= (numero_ciudades_visitadas) 0) (hotel_asignado)
+			and (= (numero_ciudades_visitadas) 0)
 		)
 		:effect(
 			and (increase (numero_ciudades_visitadas) 1) (ciudad_actual ?c_sig) (ciudad_visitada ?c_sig) (not(hotel_asignado)) (assign (numero_dias_viaje) 0) (assign (numero_dias_ciudad) 0)
@@ -78,16 +78,16 @@
 		)
 		:effect(
             and	(hotel_asignado) (hotel_actual ?h_asignado)
-            
+
 		)
 	)
-    
+
 	(:action PASAR_DIA_EN_CIUDAD
 		:parameters(
-            ?c_act - ciudad     
-            ?h_asignado - hotel  
+            ?c_act - ciudad
+            ?h_asignado - hotel
         )
-		:precondition( 
+		:precondition(
 			and (< (numero_dias_ciudad) (numero_maximo_dias_por_ciudad)) (hotel_asignado) (ciudad_actual ?c_act) (hotel_actual ?h_asignado)
 		)
 		:effect(
