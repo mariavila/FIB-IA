@@ -14,13 +14,17 @@
 
         ;;Extension 2
         (numero_interes ?c - ciudad)
-        (numero_interes_maximo)
+        (numero_interes-total)
 
         ;;Extension 3
         (precio-hotel ?h -hotel)
-        (precio-hotel-maximo)
+        (precio-hotel-total)
 		(numero_minimo_precio_hoteles)
 		(numero_maximo_precio_hoteles)
+        
+        (precio-viaje ?c1 - ciudad ?c2 - ciudad)
+        (precio-viaje-total)
+
 	)
 	(:predicates
 		(hotel_ciudad ?c - ciudad ?h - hotel)
@@ -42,7 +46,7 @@
 		)
 		:effect(
 			and (increase (numero_ciudades_visitadas) 1) (ciudad_actual ?c_sig) (ciudad_visitada ?c_sig) (not(hotel_asignado)) (assign (numero_dias_viaje) 0) (assign (numero_dias_ciudad) 0)
-           (increase (numero_interes_maximo) (numero_interes ?c_sig))
+           (increase (numero_interes-total) (numero_interes ?c_sig))
 		)
 	)
 
@@ -60,7 +64,7 @@
 		:effect(
 			and
                 (not(ciudad_actual ?c_act)) (ciudad_actual ?c_siguiente) (increase (numero_ciudades_visitadas) 1) (ciudad_visitada ?c_siguiente) (not(hotel_asignado)) (not(hotel_actual ?h_act)) (assign (numero_dias_ciudad) 0)
-                (increase (numero_interes_maximo) (numero_interes ?c_siguiente))
+                (increase (precio-viaje-total) (precio-viaje ?c_act ?c_siguiente))
 		)
 	)
 
@@ -88,8 +92,8 @@
 		)
 		:effect(
 			and (increase (numero_dias_ciudad) 1) (increase (numero_dias_viaje) 1)
-            (increase (numero_interes_maximo) (numero_interes ?c_act))
-            (increase (precio-hotel-maximo) (precio-hotel ?h_asignado))
+            (increase (numero_interes-total) (numero_interes ?c_act))
+            (increase (precio-hotel-total) (precio-hotel ?h_asignado))
 		)
 	)
 )
